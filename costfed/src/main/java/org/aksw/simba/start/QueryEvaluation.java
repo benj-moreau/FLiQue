@@ -49,49 +49,11 @@ public class QueryEvaluation {
 		String repfile = args.length > 1 ? args[1] : null;
 		
 		String host = "localhost";
-		//String host = "ws24348.avicomp.com";
-		//String host = "192.168.0.145";
 		//String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8";
-		String queries = "C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8";
+		String queries = "L1 L2 L3 L4 L5 L6 L7 L8";
 		//String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C6 C7 C8 C9 C10";
 		// String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10";
 		//String queries = "CH3"; // S3 C6 C2
-		
-		List<String> endpointsMin = Arrays.asList(
-			 "http://" + host + ":8890/sparql",
-			 "http://" + host + ":8891/sparql",
-			 "http://" + host + ":8892/sparql",
-			 "http://" + host + ":8893/sparql",
-			 "http://" + host + ":8894/sparql",
-			 "http://" + host + ":8895/sparql",
-			 "http://" + host + ":8896/sparql",
-			 "http://" + host + ":8897/sparql",
-			 "http://" + host + ":8898/sparql"
-		);
-		
-		List<String> endpointsMax = Arrays.asList(
-			 "http://" + host + ":8890/sparql",
-			 "http://" + host + ":8891/sparql",
-			 "http://" + host + ":8892/sparql",
-			 "http://" + host + ":8893/sparql",
-			 "http://" + host + ":8894/sparql",
-			 "http://" + host + ":8895/sparql",
-			 "http://" + host + ":8896/sparql",
-			 "http://" + host + ":8897/sparql",
-			 "http://" + host + ":8898/sparql"
-			 
-			 , "http://" + host + ":8887/sparql"
-			 , "http://" + host + ":8888/sparql"
-			 , "http://" + host + ":8889/sparql"
-			 , "http://" + host + ":8899/sparql"
-		);
-			
-		List<String> endpointsTest = Arrays.asList(
-				   "http://" + host + ":8887/sparql"
-				 , "http://" + host + ":8888/sparql"
-				 , "http://" + host + ":8889/sparql"
-				 , "http://" + host + ":8899/sparql"	
-		);
 	
 		List<String> endpointsMin2 = Arrays.asList(
 			 "http://" + host + ":8890/sparql",
@@ -104,11 +66,6 @@ public class QueryEvaluation {
 			 "http://" + host + ":8897/sparql",
 			 "http://" + host + ":8898/sparql",
 			 "http://" + host + ":8899/sparql"
-		);
-
-		List<String> endpointsSake = Arrays.asList(
-		        "http://144.76.166.111:8900/sparql",
-		        "http://144.76.166.111:8901/sparql"
 		);
 		
 		List<String> endpoints = endpointsMin2;
