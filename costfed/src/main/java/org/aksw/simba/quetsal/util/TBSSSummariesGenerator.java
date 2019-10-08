@@ -229,7 +229,7 @@ public class TBSSSummariesGenerator {
 		        "http://" + host + ":8887/sparql"
 		);
 		
-		List<String> endpoints = endpointsExt;
+		List<String> endpoints = endpointsMin2;
 		//List<String> endpoints = endpointsMin2;
 		//String outputFile = "summaries/sumX-localhost5.n3";
 		//String outputFile = "summaries/sum-localhost.n3";

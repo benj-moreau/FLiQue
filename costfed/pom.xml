@@ -2,12 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.aksw</groupId>
-    <artifactId>CostFed</artifactId>
+    <groupId>org.ods</groupId>
+    <artifactId>FLiQuE</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>costfed-core</artifactId>
+  <artifactId>costfed</artifactId>
 
   <build>
     <plugins>
@@ -63,7 +63,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.aksw</groupId>
+      <groupId>org.ods</groupId>
       <artifactId>fedx</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
@@ -71,20 +71,20 @@
     <dependency>
       <groupId>org.eclipse.rdf4j</groupId>
       <artifactId>rdf4j-runtime</artifactId>
-      <version>[2.4.0,)</version>
+      <version>2.3.2</version>
       <scope>runtime</scope>
     </dependency>
       
     <dependency>
       <groupId>org.eclipse.rdf4j</groupId>
       <artifactId>rdf4j-repository-sail</artifactId>
-      <version>[2.4.0,)</version>
+      <version>2.3.2</version>
     </dependency>
     
     <dependency>
       <groupId>org.eclipse.rdf4j</groupId>
       <artifactId>rdf4j-sail-memory</artifactId>
-      <version>[2.4.0,)</version>
+      <version>2.3.2</version>
     </dependency>
     
     <dependency>

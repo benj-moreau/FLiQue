@@ -58,5 +58,6 @@
         <module>fedx</module>
         <module>costfed</module>
         <module>costfed-web</module>
+      <module>flique</module>
   </modules>
 </project>

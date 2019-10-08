@@ -15,7 +15,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="archive" name="costfed-core-0.0.1-SNAPSHOT.jar">
-            <element id="module-output" name="costfed-core" />
+            <element id="module-output" name="costfed" />
           </element>
           <element id="archive" name="fedx-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="fedx" />

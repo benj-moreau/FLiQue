@@ -1,0 +1,1536 @@
+@prefix ds:<http://aksw.org/quetsal/> .
+#---------------------http://localhost:8890/sparql Summaries-------------------------------
+[] a ds:Service ;
+     ds:url   <http://localhost:8890/sparql> ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ;
+           ds:topSbjs
+             [ ds:subject <http://www.w3.org/2002/07/owl#incompatibleWith>; ds:card 2 ],
+             [ ds:subject <http://www.w3.org/2002/07/owl#imports>; ds:card 2 ],
+             [ ds:subject <http://www.w3.org/2002/07/owl#backwardCompatibleWith>; ds:card 2 ],
+             [ ds:subject <http://www.w3.org/2002/07/owl#versionInfo>; ds:card 2 ],
+             [ ds:subject <http://www.w3.org/2002/07/owl#priorVersion>; ds:card 2 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/ns/chebi#Compound>; ds:card 50477 ],
+             [ ds:object <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>; ds:card 23 ],
+             [ ds:object <http://www.w3.org/2000/01/rdf-schema#Class>; ds:card 15 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#AnnotationProperty>; ds:card 5 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#OntologyProperty>; ds:card 4 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Class>; ds:card 3 ],
+             [ ds:object <http://www.w3.org/ns/sparql-service-description#Service>; ds:card 1 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Ontology>; ds:card 1 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2000/01/rdf-schema#"; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl"; ds:unique 41; ds:card 46 ],
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 9974; ds:card 10857 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 9374; ds:card 10283 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9976; ds:card 10909 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 9977; ds:card 10961 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2784; ds:card 3051 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 1016; ds:card 1102 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 1009; ds:card 1102 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 1013; ds:card 1103 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 1018; ds:card 1109 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 50794 ;
+           ds:distinctObjs  20 ;
+           ds:triples    50799 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#_1> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes [];
+           ds:objPrefixes [];
+           ds:distinctSbjs 66 ;
+           ds:distinctObjs  56 ;
+           ds:triples    66 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#_2> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes [];
+           ds:objPrefixes [];
+           ds:distinctSbjs 13 ;
+           ds:distinctObjs  7 ;
+           ds:triples    13 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#_3> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes [];
+           ds:objPrefixes [];
+           ds:distinctSbjs 10 ;
+           ds:distinctObjs  6 ;
+           ds:triples    10 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#_4> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes [];
+           ds:objPrefixes [];
+           ds:distinctSbjs 3 ;
+           ds:distinctObjs  3 ;
+           ds:triples    3 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#_5> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes [];
+           ds:objPrefixes [];
+           ds:distinctSbjs 3 ;
+           ds:distinctObjs  3 ;
+           ds:triples    3 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#subPropertyOf> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#equivalentClass"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#equivalentProperty"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/2000/01/rdf-schema#subPropertyOf"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2000/01/rdf-schema#subClassOf"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 2 ;
+           ds:distinctObjs  2 ;
+           ds:triples    2 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://purl.org/dc/terms/created> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/DAV//home/"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://localhost:8890/DAV//."; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://localhost:8890/DAV//VAD/"; ds:unique 731; ds:card 738 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 743 ;
+           ds:distinctObjs  15 ;
+           ds:triples    743 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://purl.org/dc/terms/modified> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/DAV//home/"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://localhost:8890/DAV//."; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://localhost:8890/DAV//VAD/"; ds:unique 731; ds:card 738 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 743 ;
+           ds:distinctObjs  16 ;
+           ds:triples    743 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://purl.org/dc/terms/extent> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/DAV//VAD/conductor/"; ds:unique 726; ds:card 726 ],
+             [ ds:prefix "http://localhost:8890/DAV//."; ds:unique 4; ds:card 4 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 730 ;
+           ds:distinctObjs  664 ;
+           ds:triples    730 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#label> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#A"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#priorVersion"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#equivalent"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#c"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#D"; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#di"; ds:unique 3; ds:card 3 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#FunctionalProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#i"; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#SymmetricProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#hasValue"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#versionInfo"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#backwardCompatibleWith"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#m"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Nothing"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#unionOf"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#O"; ds:unique 3; ds:card 3 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Restriction"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#s"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#T"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#allValuesFrom"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Class"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#on"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 9976; ds:card 10857 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 9374; ds:card 10283 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9976; ds:card 10909 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 9977; ds:card 10961 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2783; ds:card 3051 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 1016; ds:card 1102 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 1009; ds:card 1102 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 1013; ds:card 1103 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 1018; ds:card 1109 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 50517 ;
+           ds:distinctObjs  50517 ;
+           ds:triples    50517 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes [];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Nothing"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 2 ;
+           ds:distinctObjs  2 ;
+           ds:triples    2 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2002/07/owl#complementOf> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Nothing"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Thing"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Nothing"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 2 ;
+           ds:distinctObjs  2 ;
+           ds:triples    2 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes [];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 2 ;
+           ds:distinctObjs  2 ;
+           ds:triples    2 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2002/07/owl#unionOf> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Thing"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  1 ;
+           ds:triples    1 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#domain> ;
+           ds:topSbjs [];
+           ds:topObjs
+             [ ds:object <http://www.w3.org/2002/07/owl#Restriction>; ds:card 7 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Class>; ds:card 5 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Ontology>; ds:card 4 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Thing>; ds:card 2 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#priorVersion"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#s"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#c"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#di"; ds:unique 3; ds:card 3 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#equivalentClass"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#allValuesFrom"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#i"; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#hasValue"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#backwardCompatibleWith"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#m"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#unionOf"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#on"; ds:unique 2; ds:card 2 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/2000/01/rdf-schema#Class"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#"; ds:unique 6; ds:card 20 ];
+           ds:distinctSbjs 21 ;
+           ds:distinctObjs  7 ;
+           ds:triples    21 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#range> ;
+           ds:topSbjs [];
+           ds:topObjs
+             [ ds:object <http://www.w3.org/1999/02/22-rdf-syntax-ns#List>; ds:card 4 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Ontology>; ds:card 4 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Class>; ds:card 3 ],
+             [ ds:object <http://www.w3.org/2001/XMLSchema#nonNegativeInteger>; ds:card 3 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#Thing>; ds:card 2 ],
+             [ ds:object <http://www.w3.org/2000/01/rdf-schema#Class>; ds:card 2 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl#priorVersion"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#s"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#c"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#di"; ds:unique 3; ds:card 3 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#equivalentClass"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#allValuesFrom"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#i"; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#backwardCompatibleWith"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#m"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#unionOf"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#on"; ds:unique 2; ds:card 2 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/200"; ds:unique 6; ds:card 15 ],
+             [ ds:prefix "http://www.w3.org/1999/02/22-rdf-syntax-ns#"; ds:unique 2; ds:card 5 ];
+           ds:distinctSbjs 20 ;
+           ds:distinctObjs  8 ;
+           ds:triples    20 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2002/07/owl#imports> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/2000/01/rdf-schema"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  1 ;
+           ds:triples    1 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#isDefinedBy> ;
+           ds:topSbjs
+             [ ds:subject <http://www.w3.org/2002/07/owl>; ds:card 3 ];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl"; ds:unique 1; ds:card 3 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/TR/2004/REC-owl-test-20040210/"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/TR/2004/REC-owl-semantics-20040210/"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/TR/2004/REC-owl-features-20040210/"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  3 ;
+           ds:triples    3 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#comment> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:16991>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29044>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33697>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33349>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:38403>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:38401>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:5407>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:5186>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33024>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15562>; ds:card 2 ];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7781"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 58; ds:card 60 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 37; ds:card 38 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 89; ds:card 94 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 48; ds:card 48 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 18; ds:card 20 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 6; ds:card 6 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 3; ds:card 3 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 261 ;
+           ds:distinctObjs  205 ;
+           ds:triples    271 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2002/07/owl#versionInfo> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  1 ;
+           ds:triples    1 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2002/07/owl#priorVersion> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w3.org/2002/07/owl"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.daml.org/2001/03/daml+oil"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  1 ;
+           ds:triples    1 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#seeAlso> ;
+           ds:topSbjs [];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:16703>; ds:card 15 ],
+             [ ds:object <http://bio2rdf.org/chebi:17202>; ds:card 11 ],
+             [ ds:object <http://bio2rdf.org/chebi:16027>; ds:card 11 ],
+             [ ds:object <http://bio2rdf.org/chebi:16728>; ds:card 10 ],
+             [ ds:object <http://bio2rdf.org/chebi:17509>; ds:card 10 ],
+             [ ds:object <http://bio2rdf.org/chebi:17345>; ds:card 10 ],
+             [ ds:object <http://bio2rdf.org/chebi:15377>; ds:card 10 ],
+             [ ds:object <http://bio2rdf.org/chebi:16171>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:16134>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:16749>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:27859>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:17842>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:17716>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:16110>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:50998>; ds:card 9 ],
+             [ ds:middle <http://bio2rdf.org/chebi:16057>,<http://bio2rdf.org/chebi:18358>,<http://bio2rdf.org/chebi:18274>,<http://bio2rdf.org/chebi:18241>,<http://bio2rdf.org/chebi:16699>,<http://bio2rdf.org/chebi:16695>,<http://bio2rdf.org/chebi:17515>,<http://bio2rdf.org/chebi:15414>,<http://bio2rdf.org/chebi:28890>,<http://bio2rdf.org/chebi:17504>,<http://bio2rdf.org/chebi:17478>,<http://bio2rdf.org/chebi:15570>,<http://bio2rdf.org/chebi:15918>,<http://bio2rdf.org/chebi:17106>,<http://bio2rdf.org/chebi:16858>; ds:card 8 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 5999; ds:card 6388 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 4233; ds:card 4514 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 962; ds:card 1040 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 1850; ds:card 2021 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 436; ds:card 483 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 422; ds:card 460 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 550; ds:card 586 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 449; ds:card 494 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 393; ds:card 436 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 3003; ds:card 9451 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 1708; ds:card 3775 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 654; ds:card 1547 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 713; ds:card 1456 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 91; ds:card 193 ];
+           ds:distinctSbjs 16422 ;
+           ds:distinctObjs  6169 ;
+           ds:triples    16422 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/bio2rdf#formula> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:50697>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50687>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:7003>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50727>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:32216>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:2402>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17536>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:2761>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:2638>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:2619>; ds:card 4 ];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 3479; ds:card 7230 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 2783; ds:card 6596 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 5113; ds:card 14485 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 1702; ds:card 4439 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 1478; ds:card 3953 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 420; ds:card 711 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 413; ds:card 643 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 386; ds:card 698 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 416; ds:card 798 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 17044 ;
+           ds:distinctObjs  13664 ;
+           ds:triples    39553 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/2000/01/rdf-schema#subClassOf> ;
+           ds:topSbjs [];
+           ds:topObjs
+             [ ds:object <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>; ds:card 6 ],
+             [ ds:object <http://www.w3.org/2002/07/owl#ObjectProperty>; ds:card 3 ],
+             [ ds:object <http://www.w2.org/ns/ldp#Container>; ds:card 3 ],
+             [ ds:object <http://www.w3.org/2000/01/rdf-schema#Class>; ds:card 2 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://www.w2.org/ns/ldp#DirectContainer"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w2.org/ns/ldp#IndirectContainer"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w2.org/ns/ldp#BasicContainer"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Restriction"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#InverseFunctionalProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#D"; ds:unique 3; ds:card 3 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#AnnotationProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#TransitiveProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#FunctionalProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#SymmetricProperty"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#Class"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/2002/07/owl#O"; ds:unique 2; ds:card 2 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w2.org/ns/ldp#Container"; ds:unique 1; ds:card 3 ],
+             [ ds:prefix "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"; ds:unique 1; ds:card 6 ],
+             [ ds:prefix "http://www.w3.org/200"; ds:unique 3; ds:card 6 ];
+           ds:distinctSbjs 15 ;
+           ds:distinctObjs  5 ;
+           ds:triples    15 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/ns/sparql-service-description#endpoint> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  1 ;
+           ds:triples    1 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/ns/sparql-service-description#feature> ;
+           ds:topSbjs
+             [ ds:subject <http://localhost:8890/sparql>; ds:card 2 ];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 2 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/ns/sparql-service-description#UnionDefaultGraph"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/ns/sparql-service-description#DereferencesURIs"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  2 ;
+           ds:triples    2 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/ns/sparql-service-description#resultFormat> ;
+           ds:topSbjs
+             [ ds:subject <http://localhost:8890/sparql>; ds:card 8 ];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 8 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/ns/formats/Turtle"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://www.w3.org/ns/formats/RDF"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://www.w3.org/ns/formats/SPARQL_Results_"; ds:unique 3; ds:card 3 ],
+             [ ds:prefix "http://www.w3.org/ns/formats/N"; ds:unique 2; ds:card 2 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  8 ;
+           ds:triples    8 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/ns/sparql-service-description#supportedLanguage> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes
+             [ ds:prefix "http://www.w3.org/ns/sparql-service-description#SPARQL10Query"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  1 ;
+           ds:triples    1 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://www.w3.org/ns/sparql-service-description#url> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 1 ];
+           ds:objPrefixes
+             [ ds:prefix "http://localhost:8890/sparql"; ds:unique 1; ds:card 1 ];
+           ds:distinctSbjs 1 ;
+           ds:distinctObjs  1 ;
+           ds:triples    1 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/bio2rdf#synonym> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:7917>; ds:card 27 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50095>; ds:card 19 ],
+             [ ds:subject <http://bio2rdf.org/chebi:44884>; ds:card 18 ],
+             [ ds:subject <http://bio2rdf.org/chebi:31725>; ds:card 18 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27732>; ds:card 17 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3797>; ds:card 17 ],
+             [ ds:subject <http://bio2rdf.org/chebi:8815>; ds:card 17 ],
+             [ ds:subject <http://bio2rdf.org/chebi:31823>; ds:card 17 ],
+             [ ds:subject <http://bio2rdf.org/chebi:26849>; ds:card 17 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17935>; ds:card 17 ],
+             [ ds:subject <http://bio2rdf.org/chebi:5445>; ds:card 16 ],
+             [ ds:subject <http://bio2rdf.org/chebi:8516>; ds:card 16 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50101>; ds:card 16 ],
+             [ ds:middle <http://bio2rdf.org/chebi:17907>,<http://bio2rdf.org/chebi:37869>,<http://bio2rdf.org/chebi:34648>,<http://bio2rdf.org/chebi:48058>,<http://bio2rdf.org/chebi:28398>,<http://bio2rdf.org/chebi:51064>,<http://bio2rdf.org/chebi:39445>; ds:card 15 ];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 2131; ds:card 5584 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 2709; ds:card 6731 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 4949; ds:card 13115 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 1341; ds:card 3229 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 1372; ds:card 3115 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 284; ds:card 762 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 242; ds:card 595 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 255; ds:card 748 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 298; ds:card 816 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 13952 ;
+           ds:distinctObjs  34372 ;
+           ds:triples    34695 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/bio2rdf#url> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 4363; ds:card 4469 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 5368; ds:card 5769 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9271; ds:card 9869 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 8438; ds:card 8940 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2440; ds:card 2568 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 624; ds:card 642 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 489; ds:card 516 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 587; ds:card 609 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 651; ds:card 673 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 34055 ;
+           ds:distinctObjs  34055 ;
+           ds:triples    34055 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://purl.org/dc/elements/1.1/identifier> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 4363; ds:card 4469 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 5368; ds:card 5769 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9271; ds:card 9869 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 8438; ds:card 8940 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2440; ds:card 2568 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 624; ds:card 642 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 489; ds:card 516 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 587; ds:card 609 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 651; ds:card 673 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 34055 ;
+           ds:distinctObjs  34055 ;
+           ds:triples    34055 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://purl.org/dc/elements/1.1/modified> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 4363; ds:card 4469 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 5368; ds:card 5769 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9271; ds:card 9869 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 8438; ds:card 8940 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2440; ds:card 2568 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 624; ds:card 642 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 489; ds:card 516 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 587; ds:card 609 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 651; ds:card 673 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 34055 ;
+           ds:distinctObjs  172 ;
+           ds:triples    34055 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://purl.org/dc/elements/1.1/title> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 4363; ds:card 4469 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 5368; ds:card 5769 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9271; ds:card 9869 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 8438; ds:card 8940 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2440; ds:card 2568 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 624; ds:card 642 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 489; ds:card 516 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 587; ds:card 609 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 651; ds:card 673 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 34055 ;
+           ds:distinctObjs  33922 ;
+           ds:triples    34055 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/bio2rdf#image> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 4363; ds:card 4469 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 5368; ds:card 5769 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9271; ds:card 9869 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 8438; ds:card 8940 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2440; ds:card 2568 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 624; ds:card 642 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 489; ds:card 516 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 587; ds:card 609 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 651; ds:card 673 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 34055 ;
+           ds:distinctObjs  34055 ;
+           ds:triples    34055 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#Status> ;
+           ds:topSbjs [];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:status-C>; ds:card 30981 ],
+             [ ds:object <http://bio2rdf.org/chebi:status-E>; ds:card 19310 ],
+             [ ds:object <http://bio2rdf.org/chebi:status-O>; ds:card 186 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 9980; ds:card 10857 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 9374; ds:card 10283 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9976; ds:card 10909 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 9977; ds:card 10961 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2783; ds:card 3051 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 1016; ds:card 1102 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 1009; ds:card 1102 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 1013; ds:card 1103 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 1018; ds:card 1109 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:status-C"; ds:unique 1; ds:card 30981 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:status-E"; ds:unique 1; ds:card 19310 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:status-O"; ds:unique 1; ds:card 186 ];
+           ds:distinctSbjs 50477 ;
+           ds:distinctObjs  3 ;
+           ds:triples    50477 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#xSource> ;
+           ds:topSbjs [];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:source-ChEBI>; ds:card 18868 ],
+             [ ds:object <http://bio2rdf.org/chebi:source-KEGG_COMPOUND>; ds:card 8194 ],
+             [ ds:object <http://bio2rdf.org/chebi:source-MSDchem>; ds:card 6432 ],
+             [ ds:object <http://bio2rdf.org/chebi:source-IntEnz>; ds:card 561 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 4363; ds:card 4469 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 5368; ds:card 5769 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9271; ds:card 9869 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 8438; ds:card 8940 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2440; ds:card 2568 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 624; ds:card 642 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 489; ds:card 516 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 587; ds:card 609 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 651; ds:card 673 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:source-KEGG_COMPOUND"; ds:unique 1; ds:card 8194 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:source-MSDchem"; ds:unique 1; ds:card 6432 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:source-IntEnz"; ds:unique 1; ds:card 561 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:source-ChEBI"; ds:unique 1; ds:card 18868 ];
+           ds:distinctSbjs 34055 ;
+           ds:distinctObjs  4 ;
+           ds:triples    34055 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/bio2rdf#xRef> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:38803>; ds:card 14 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27543>; ds:card 11 ],
+             [ ds:subject <http://bio2rdf.org/chebi:6794>; ds:card 10 ],
+             [ ds:subject <http://bio2rdf.org/chebi:6723>; ds:card 9 ],
+             [ ds:subject <http://bio2rdf.org/chebi:2676>; ds:card 9 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17698>; ds:card 9 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17263>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:31444>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:5613>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:5441>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:5132>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50438>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27565>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3766>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:9445>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:8435>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:8382>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:6938>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3723>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3638>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:6715>; ds:card 8 ],
+             [ ds:middle <http://bio2rdf.org/chebi:15551>,<http://bio2rdf.org/chebi:28971>,<http://bio2rdf.org/chebi:27958>,<http://bio2rdf.org/chebi:27899>,<http://bio2rdf.org/chebi:10104>,<http://bio2rdf.org/chebi:2637>,<http://bio2rdf.org/chebi:2679>,<http://bio2rdf.org/chebi:2379>,<http://bio2rdf.org/chebi:3441>,<http://bio2rdf.org/chebi:3437>,<http://bio2rdf.org/chebi:3347>,<http://bio2rdf.org/chebi:3223>,<http://bio2rdf.org/chebi:32184>,<http://bio2rdf.org/chebi:31941>,<http://bio2rdf.org/chebi:3181>,<http://bio2rdf.org/chebi:31767>,<http://bio2rdf.org/chebi:6456>,<http://bio2rdf.org/chebi:6413>,<http://bio2rdf.org/chebi:5959>,<http://bio2rdf.org/chebi:5790>,<http://bio2rdf.org/chebi:5779>,<http://bio2rdf.org/chebi:3175>,<http://bio2rdf.org/chebi:2639>,<http://bio2rdf.org/chebi:5296>,<http://bio2rdf.org/chebi:3090>,<http://bio2rdf.org/chebi:5101>,<http://bio2rdf.org/chebi:301>,<http://bio2rdf.org/chebi:4913>,<http://bio2rdf.org/chebi:4912>,<http://bio2rdf.org/chebi:4868>,<http://bio2rdf.org/chebi:4814>,<http://bio2rdf.org/chebi:4798>,<http://bio2rdf.org/chebi:4708>,<http://bio2rdf.org/chebi:4657>,<http://bio2rdf.org/chebi:4638>,<http://bio2rdf.org/chebi:4495>,<http://bio2rdf.org/chebi:4466>,<http://bio2rdf.org/chebi:4453>,<http://bio2rdf.org/chebi:2968>,<http://bio2rdf.org/chebi:38255>,<http://bio2rdf.org/chebi:9622>,<http://bio2rdf.org/chebi:37941>,<http://bio2rdf.org/chebi:9352>,<http://bio2rdf.org/chebi:8716>,<http://bio2rdf.org/chebi:37937>,<http://bio2rdf.org/chebi:2956>,<http://bio2rdf.org/chebi:8364>,<http://bio2rdf.org/chebi:8355>,<http://bio2rdf.org/chebi:8080>,<http://bio2rdf.org/chebi:8069>,<http://bio2rdf.org/chebi:8028>,<http://bio2rdf.org/chebi:7915>,<http://bio2rdf.org/chebi:7872>,<http://bio2rdf.org/chebi:7772>,<http://bio2rdf.org/chebi:7630>,<http://bio2rdf.org/chebi:7627>,<http://bio2rdf.org/chebi:7573>,<http://bio2rdf.org/chebi:7492>,<http://bio2rdf.org/chebi:7447>,<http://bio2rdf.org/chebi:6950>,<http://bio2rdf.org/chebi:3750>,<http://bio2rdf.org/chebi:6887>,<http://bio2rdf.org/chebi:2955>,<http://bio2rdf.org/chebi:3651>; ds:card 7 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/patent:EP1870402>; ds:card 26 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2007030963>; ds:card 15 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1849759>; ds:card 14 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1852409>; ds:card 10 ],
+             [ ds:object <http://bio2rdf.org/patent:FR2872511>; ds:card 7 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1849762>; ds:card 7 ],
+             [ ds:object <http://bio2rdf.org/drugbank:DB00443>; ds:card 6 ],
+             [ ds:object <http://bio2rdf.org/drugbank:DB00741>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2005063693>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/cas:1811-31-0>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/cas:50-99-7>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/cas:2236-60-4>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/drugbank:DB00412>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/cas:87-69-4>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/drugbank:DB01062>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/drugbank:DB00751>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/cas:69-79-4>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/drugbank:DB00571>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/drugbank:DB00505>; ds:card 4 ],
+             [ ds:middle <http://bio2rdf.org/patent:EP1852414>,<http://bio2rdf.org/patent:EP1852416>,<http://bio2rdf.org/patent:EP1873139>,<http://bio2rdf.org/cas:100-66-3>,<http://bio2rdf.org/cas:101-31-5>,<http://bio2rdf.org/cas:1045-69-8>,<http://bio2rdf.org/cas:1071-23-4>,<http://bio2rdf.org/cas:107-97-1>,<http://bio2rdf.org/cas:106-44-5>,<http://bio2rdf.org/cas:106-42-3>,<http://bio2rdf.org/cas:106-46-7>,<http://bio2rdf.org/cas:106-25-2>,<http://bio2rdf.org/cas:106-24-1>,<http://bio2rdf.org/cas:103-81-1>,<http://bio2rdf.org/cas:100-83-4>,<http://bio2rdf.org/cas:100-63-0>,<http://bio2rdf.org/cas:100-51-6>,<http://bio2rdf.org/cas:100-02-7>,<http://bio2rdf.org/patent:EP1873143>,<http://bio2rdf.org/patent:US2007060645>,<http://bio2rdf.org/patent:EP1873140>,<http://bio2rdf.org/patent:WO2006114364>,<http://bio2rdf.org/cas:108-39-4>,<http://bio2rdf.org/cas:141-78-6>,<http://bio2rdf.org/cas:138-86-3>,<http://bio2rdf.org/cas:138-59-0>,<http://bio2rdf.org/cas:135-97-7>,<http://bio2rdf.org/cas:135-16-0>,<http://bio2rdf.org/cas:1333-74-0>,<http://bio2rdf.org/cas:131-01-1>,<http://bio2rdf.org/cas:130-95-0>,<http://bio2rdf.org/cas:129-43-1>,<http://bio2rdf.org/cas:127-18-4>,<http://bio2rdf.org/cas:124-13-0>,<http://bio2rdf.org/cas:123-51-3>,<http://bio2rdf.org/cas:123-08-0>,<http://bio2rdf.org/cas:121-33-5>,<http://bio2rdf.org/cas:120-92-3>,<http://bio2rdf.org/cas:120-73-0>,<http://bio2rdf.org/cas:120-29-6>,<http://bio2rdf.org/cas:119-84-6>,<http://bio2rdf.org/cas:119-24-4>,<http://bio2rdf.org/cas:1188-37-0>,<http://bio2rdf.org/cas:1188-21-2>,<http://bio2rdf.org/cas:116-31-4>,<http://bio2rdf.org/cas:115-20-8>,<http://bio2rdf.org/cas:112-85-6>,<http://bio2rdf.org/cas:111-87-5>,<http://bio2rdf.org/cas:110-65-6>,<http://bio2rdf.org/cas:110-60-1>,<http://bio2rdf.org/cas:109-52-4>,<http://bio2rdf.org/cas:50-70-4>,<http://bio2rdf.org/cas:50-36-2>,<http://bio2rdf.org/cas:50-23-7>,<http://bio2rdf.org/cas:50-22-6>,<http://bio2rdf.org/cas:108-19-0>,<http://bio2rdf.org/cas:501-98-4>,<http://bio2rdf.org/cas:501-52-0>,<http://bio2rdf.org/cas:503-74-2>,<http://bio2rdf.org/cas:506-24-1>,<http://bio2rdf.org/cas:504-63-2>,<http://bio2rdf.org/cas:504-07-4>,<http://bio2rdf.org/cas:502-44-3>,<http://bio2rdf.org/cas:494-97-3>,<http://bio2rdf.org/cas:497-09-6>,<http://bio2rdf.org/cas:488-84-6>,<http://bio2rdf.org/cas:484-20-8>,<http://bio2rdf.org/cas:475-31-0>,<http://bio2rdf.org/cas:471-53-4>,<http://bio2rdf.org/cas:471-29-4>,<http://bio2rdf.org/cas:462-20-4>,<http://bio2rdf.org/cas:4602-84-0>,<http://bio2rdf.org/cas:458-35-5>,<http://bio2rdf.org/cas:453-17-8>,<http://bio2rdf.org/cas:4573-78-8>,<http://bio2rdf.org/cas:434-13-9>,<http://bio2rdf.org/cas:434-16-2>,<http://bio2rdf.org/cas:4205-90-7>,<http://bio2rdf.org/cas:4151-19-3>,<http://bio2rdf.org/cas:3790-71-4>,<http://bio2rdf.org/cas:373-49-9>; ds:card 3 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 2736; ds:card 4883 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 3307; ds:card 5567 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 4015; ds:card 8433 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 2414; ds:card 3939 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 1133; ds:card 2395 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 440; ds:card 1009 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 457; ds:card 887 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 405; ds:card 960 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 443; ds:card 1074 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/p"; ds:unique 620; ds:card 731 ],
+             [ ds:prefix "http://bio2rdf.org/c"; ds:unique 12147; ds:card 15046 ],
+             [ ds:prefix "http://bio2rdf.org/um-bbd:c"; ds:unique 567; ds:card 572 ],
+             [ ds:prefix "http://bio2rdf.org/g"; ds:unique 3047; ds:card 3133 ],
+             [ ds:prefix "http://bio2rdf.org/resid:AA0"; ds:unique 42; ds:card 42 ],
+             [ ds:prefix "http://bio2rdf.org/webelements:"; ds:unique 110; ds:card 111 ],
+             [ ds:prefix "http://bio2rdf.org/m"; ds:unique 1786; ds:card 1831 ],
+             [ ds:prefix "http://bio2rdf.org/dr"; ds:unique 962; ds:card 1116 ],
+             [ ds:prefix "http://bio2rdf.org/beilstein:"; ds:unique 6553; ds:card 6565 ];
+           ds:distinctSbjs 16444 ;
+           ds:distinctObjs  25965 ;
+           ds:triples    29147 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#iupacName> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:26836>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17137>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29139>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29137>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16240>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17544>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30114>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30112>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29199>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:13857>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16503>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16301>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17929>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17837>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17632>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16136>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29203>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29150>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17359>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29149>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16189>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16743>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29125>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:28229>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27899>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16710>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:25567>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:25152>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:24857>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18367>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30635>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30634>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30626>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30588>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30530>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30496>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30495>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30469>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30468>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30464>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30462>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30435>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30434>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30426>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30392>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30355>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30352>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30335>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30334>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30297>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30274>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30235>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30205>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30202>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30127>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18212>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18210>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29825>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29813>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29412>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29225>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:51214>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:49094>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:37771>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:37289>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:37117>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:35852>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:35458>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33502>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33495>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33398>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33141>; ds:card 4 ],
+             [ ds:middle <http://bio2rdf.org/chebi:13173>,<http://bio2rdf.org/chebi:17883>,<http://bio2rdf.org/chebi:16349>,<http://bio2rdf.org/chebi:15076>,<http://bio2rdf.org/chebi:15226>,<http://bio2rdf.org/chebi:16234>,<http://bio2rdf.org/chebi:17316>,<http://bio2rdf.org/chebi:18211>,<http://bio2rdf.org/chebi:28024>,<http://bio2rdf.org/chebi:27913>,<http://bio2rdf.org/chebi:17245>,<http://bio2rdf.org/chebi:26837>,<http://bio2rdf.org/chebi:18022>,<http://bio2rdf.org/chebi:26675>,<http://bio2rdf.org/chebi:26067>,<http://bio2rdf.org/chebi:26078>,<http://bio2rdf.org/chebi:25942>,<http://bio2rdf.org/chebi:25545>,<http://bio2rdf.org/chebi:15836>,<http://bio2rdf.org/chebi:25518>,<http://bio2rdf.org/chebi:25517>,<http://bio2rdf.org/chebi:25198>,<http://bio2rdf.org/chebi:25158>,<http://bio2rdf.org/chebi:16793>,<http://bio2rdf.org/chebi:16023>,<http://bio2rdf.org/chebi:24757>,<http://bio2rdf.org/chebi:23958>,<http://bio2rdf.org/chebi:30076>; ds:card 3 ];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 2777; ds:card 3097 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 2340; ds:card 2919 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 4867; ds:card 6024 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 1327; ds:card 1507 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 1188; ds:card 1349 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 136; ds:card 151 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 93; ds:card 101 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 126; ds:card 136 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 161; ds:card 174 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 13249 ;
+           ds:distinctObjs  15423 ;
+           ds:triples    15458 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/bio2rdf#inchi> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 2656; ds:card 2678 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 1988; ds:card 2024 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 4164; ds:card 4232 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 1184; ds:card 1212 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 1055; ds:card 1077 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 129; ds:card 130 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 89; ds:card 93 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 123; ds:card 128 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 160; ds:card 162 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 11736 ;
+           ds:distinctObjs  11677 ;
+           ds:triples    11736 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/bio2rdf#smiles> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 2719; ds:card 2740 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 2032; ds:card 2068 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 4224; ds:card 4281 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 1209; ds:card 1238 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 1082; ds:card 1105 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 129; ds:card 130 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 90; ds:card 94 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 122; ds:card 128 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 162; ds:card 164 ];
+           ds:objPrefixes [];
+           ds:distinctSbjs 11948 ;
+           ds:distinctObjs  11838 ;
+           ds:triples    11948 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#has_functional_parent> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:48414>; ds:card 3 ],
+             [ ds:subject <http://bio2rdf.org/chebi:2807>; ds:card 3 ],
+             [ ds:subject <http://bio2rdf.org/chebi:11614>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:11814>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:13043>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:1395>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:14261>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15345>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15461>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15471>; ds:card 2 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:23355>; ds:card 67 ],
+             [ ds:object <http://bio2rdf.org/chebi:15346>; ds:card 55 ],
+             [ ds:object <http://bio2rdf.org/chebi:30768>; ds:card 51 ],
+             [ ds:object <http://bio2rdf.org/chebi:15366>; ds:card 49 ],
+             [ ds:object <http://bio2rdf.org/chebi:30772>; ds:card 46 ],
+             [ ds:object <http://bio2rdf.org/chebi:30746>; ds:card 46 ],
+             [ ds:object <http://bio2rdf.org/chebi:17568>; ds:card 34 ],
+             [ ds:object <http://bio2rdf.org/chebi:15741>; ds:card 34 ],
+             [ ds:object <http://bio2rdf.org/chebi:27856>; ds:card 27 ],
+             [ ds:object <http://bio2rdf.org/chebi:17268>; ds:card 25 ],
+             [ ds:object <http://bio2rdf.org/chebi:30776>; ds:card 24 ],
+             [ ds:object <http://bio2rdf.org/chebi:26067>; ds:card 23 ],
+             [ ds:object <http://bio2rdf.org/chebi:16150>; ds:card 23 ],
+             [ ds:object <http://bio2rdf.org/chebi:32816>; ds:card 22 ],
+             [ ds:middle <http://bio2rdf.org/chebi:17418>; ds:card 22 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 1027; ds:card 1097 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 845; ds:card 897 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 820; ds:card 865 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 524; ds:card 559 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 179; ds:card 192 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 34; ds:card 35 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 42; ds:card 43 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 28; ds:card 31 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 40; ds:card 41 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 474; ds:card 1460 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 355; ds:card 779 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 544; ds:card 1107 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 159; ds:card 235 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 71; ds:card 101 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 19; ds:card 24 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 13; ds:card 15 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 10; ds:card 14 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 16; ds:card 25 ];
+           ds:distinctSbjs 3552 ;
+           ds:distinctObjs  1663 ;
+           ds:triples    3760 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#has_parent_hydride> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:48695>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27776>; ds:card 2 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:35517>; ds:card 27 ],
+             [ ds:object <http://bio2rdf.org/chebi:8386>; ds:card 25 ],
+             [ ds:object <http://bio2rdf.org/chebi:49155>; ds:card 15 ],
+             [ ds:object <http://bio2rdf.org/chebi:35515>; ds:card 15 ],
+             [ ds:object <http://bio2rdf.org/chebi:35649>; ds:card 10 ],
+             [ ds:object <http://bio2rdf.org/chebi:23966>; ds:card 10 ],
+             [ ds:object <http://bio2rdf.org/chebi:35542>; ds:card 9 ],
+             [ ds:object <http://bio2rdf.org/chebi:50459>; ds:card 8 ],
+             [ ds:object <http://bio2rdf.org/chebi:26775>; ds:card 8 ],
+             [ ds:object <http://bio2rdf.org/chebi:26773>; ds:card 7 ],
+             [ ds:object <http://bio2rdf.org/chebi:35911>; ds:card 7 ],
+             [ ds:object <http://bio2rdf.org/chebi:30672>; ds:card 7 ],
+             [ ds:middle <http://bio2rdf.org/chebi:20652>,<http://bio2rdf.org/chebi:17579>,<http://bio2rdf.org/chebi:17590>; ds:card 6 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 92; ds:card 92 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 107; ds:card 108 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 191; ds:card 192 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 90; ds:card 91 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 51; ds:card 52 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 12; ds:card 12 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 13; ds:card 13 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 8; ds:card 9 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 15; ds:card 15 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 22; ds:card 52 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 42; ds:card 89 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 163; ds:card 335 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 22; ds:card 47 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 15; ds:card 31 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7613"; ds:unique 1; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:83"; ds:unique 2; ds:card 26 ];
+           ds:distinctSbjs 582 ;
+           ds:distinctObjs  269 ;
+           ds:triples    584 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#has_part> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:39332>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:39334>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:39314>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:6104>; ds:card 3 ],
+             [ ds:subject <http://bio2rdf.org/chebi:24866>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27307>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30224>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30215>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33250>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30213>; ds:card 2 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:48885>; ds:card 6 ],
+             [ ds:object <http://bio2rdf.org/chebi:48625>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:30056>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/chebi:30329>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/chebi:48508>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/chebi:10545>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/chebi:50658>; ds:card 3 ],
+             [ ds:object <http://bio2rdf.org/chebi:50594>; ds:card 3 ],
+             [ ds:object <http://bio2rdf.org/chebi:9701>; ds:card 3 ],
+             [ ds:object <http://bio2rdf.org/chebi:8354>; ds:card 3 ],
+             [ ds:object <http://bio2rdf.org/chebi:48311>; ds:card 3 ],
+             [ ds:object <http://bio2rdf.org/chebi:39338>; ds:card 3 ],
+             [ ds:middle <http://bio2rdf.org/chebi:39336>,<http://bio2rdf.org/chebi:26248>,<http://bio2rdf.org/chebi:39335>,<http://bio2rdf.org/chebi:37401>,<http://bio2rdf.org/chebi:51174>,<http://bio2rdf.org/chebi:51699>,<http://bio2rdf.org/chebi:8435>,<http://bio2rdf.org/chebi:8356>,<http://bio2rdf.org/chebi:5818>,<http://bio2rdf.org/chebi:51354>,<http://bio2rdf.org/chebi:51350>,<http://bio2rdf.org/chebi:51173>,<http://bio2rdf.org/chebi:51029>,<http://bio2rdf.org/chebi:50393>,<http://bio2rdf.org/chebi:50275>,<http://bio2rdf.org/chebi:50212>,<http://bio2rdf.org/chebi:35449>,<http://bio2rdf.org/chebi:30214>,<http://bio2rdf.org/chebi:48596>,<http://bio2rdf.org/chebi:17630>,<http://bio2rdf.org/chebi:45951>,<http://bio2rdf.org/chebi:30053>,<http://bio2rdf.org/chebi:39337>,<http://bio2rdf.org/chebi:17303>; ds:card 2 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 25; ds:card 26 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 81; ds:card 84 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 276; ds:card 307 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 53; ds:card 55 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 121; ds:card 127 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 12; ds:card 14 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 11; ds:card 11 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 21; ds:card 22 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 21; ds:card 22 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 37; ds:card 42 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 108; ds:card 109 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 250; ds:card 266 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 51; ds:card 67 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 110; ds:card 125 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 8; ds:card 8 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 8; ds:card 8 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 22; ds:card 26 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 15; ds:card 17 ];
+           ds:distinctSbjs 621 ;
+           ds:distinctObjs  610 ;
+           ds:triples    668 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#has_role> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:18145>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:34611>; ds:card 7 ],
+             [ ds:subject <http://bio2rdf.org/chebi:32888>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27958>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:38729>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:38728>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:9544>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:8491>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:7735>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:51137>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:38508>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3766>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3651>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3390>; ds:card 6 ],
+             [ ds:middle <http://bio2rdf.org/chebi:17823>,<http://bio2rdf.org/chebi:38990>,<http://bio2rdf.org/chebi:3994>,<http://bio2rdf.org/chebi:5121>,<http://bio2rdf.org/chebi:47781>,<http://bio2rdf.org/chebi:2781>,<http://bio2rdf.org/chebi:38549>,<http://bio2rdf.org/chebi:38539>,<http://bio2rdf.org/chebi:38476>,<http://bio2rdf.org/chebi:2653>,<http://bio2rdf.org/chebi:34761>,<http://bio2rdf.org/chebi:34682>,<http://bio2rdf.org/chebi:34690>,<http://bio2rdf.org/chebi:27928>,<http://bio2rdf.org/chebi:29678>,<http://bio2rdf.org/chebi:3205>,<http://bio2rdf.org/chebi:9654>,<http://bio2rdf.org/chebi:38746>,<http://bio2rdf.org/chebi:9566>,<http://bio2rdf.org/chebi:8707>,<http://bio2rdf.org/chebi:3903>,<http://bio2rdf.org/chebi:8459>,<http://bio2rdf.org/chebi:8435>,<http://bio2rdf.org/chebi:8093>,<http://bio2rdf.org/chebi:4031>,<http://bio2rdf.org/chebi:6838>,<http://bio2rdf.org/chebi:6835>,<http://bio2rdf.org/chebi:6651>,<http://bio2rdf.org/chebi:51364>; ds:card 5 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:51217>; ds:card 116 ],
+             [ ds:object <http://bio2rdf.org/chebi:33286>; ds:card 113 ],
+             [ ds:object <http://bio2rdf.org/chebi:38462>; ds:card 93 ],
+             [ ds:object <http://bio2rdf.org/chebi:35610>; ds:card 73 ],
+             [ ds:object <http://bio2rdf.org/chebi:22153>; ds:card 63 ],
+             [ ds:object <http://bio2rdf.org/chebi:25435>; ds:card 40 ],
+             [ ds:object <http://bio2rdf.org/chebi:39116>; ds:card 34 ],
+             [ ds:object <http://bio2rdf.org/chebi:35674>; ds:card 33 ],
+             [ ds:object <http://bio2rdf.org/chebi:37733>; ds:card 29 ],
+             [ ds:object <http://bio2rdf.org/chebi:35475>; ds:card 27 ],
+             [ ds:object <http://bio2rdf.org/chebi:38461>; ds:card 26 ],
+             [ ds:object <http://bio2rdf.org/chebi:48279>; ds:card 24 ],
+             [ ds:object <http://bio2rdf.org/chebi:37890>; ds:card 24 ],
+             [ ds:middle <http://bio2rdf.org/chebi:27333>,<http://bio2rdf.org/chebi:48887>,<http://bio2rdf.org/chebi:35620>,<http://bio2rdf.org/chebi:35469>,<http://bio2rdf.org/chebi:48876>,<http://bio2rdf.org/chebi:48561>,<http://bio2rdf.org/chebi:35476>,<http://bio2rdf.org/chebi:24852>,<http://bio2rdf.org/chebi:22333>,<http://bio2rdf.org/chebi:27027>,<http://bio2rdf.org/chebi:26619>; ds:card 19 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 105; ds:card 148 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 345; ds:card 424 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 440; ds:card 780 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 140; ds:card 203 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 240; ds:card 336 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 58; ds:card 112 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 29; ds:card 49 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 47; ds:card 113 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 47; ds:card 97 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 86; ds:card 539 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 154; ds:card 1160 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 39; ds:card 210 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 98; ds:card 353 ];
+           ds:distinctSbjs 1460 ;
+           ds:distinctObjs  377 ;
+           ds:triples    2262 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#is_a> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:28485>; ds:card 8 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27984>; ds:card 7 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47742>; ds:card 7 ],
+             [ ds:subject <http://bio2rdf.org/chebi:38943>; ds:card 7 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29012>; ds:card 7 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27620>; ds:card 7 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27495>; ds:card 7 ],
+             [ ds:subject <http://bio2rdf.org/chebi:26661>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:38942>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:37913>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:34764>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:3077>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:28135>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:28688>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47746>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47745>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47744>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47743>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:23051>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47502>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47486>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47428>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47163>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47113>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:47097>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:44326>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:43787>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:41191>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:41074>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:39956>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:9122>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:7805>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50106>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:48575>; ds:card 6 ],
+             [ ds:subject <http://bio2rdf.org/chebi:48339>; ds:card 6 ],
+             [ ds:middle <http://bio2rdf.org/chebi:16688>,<http://bio2rdf.org/chebi:16962>,<http://bio2rdf.org/chebi:38243>,<http://bio2rdf.org/chebi:27951>,<http://bio2rdf.org/chebi:36674>,<http://bio2rdf.org/chebi:36624>,<http://bio2rdf.org/chebi:35995>,<http://bio2rdf.org/chebi:35720>,<http://bio2rdf.org/chebi:35622>,<http://bio2rdf.org/chebi:27709>,<http://bio2rdf.org/chebi:34003>,<http://bio2rdf.org/chebi:4461>,<http://bio2rdf.org/chebi:44541>,<http://bio2rdf.org/chebi:44329>,<http://bio2rdf.org/chebi:31620>,<http://bio2rdf.org/chebi:44189>,<http://bio2rdf.org/chebi:44021>,<http://bio2rdf.org/chebi:31441>,<http://bio2rdf.org/chebi:43765>,<http://bio2rdf.org/chebi:43574>,<http://bio2rdf.org/chebi:43564>,<http://bio2rdf.org/chebi:43544>,<http://bio2rdf.org/chebi:43438>,<http://bio2rdf.org/chebi:43368>,<http://bio2rdf.org/chebi:41638>,<http://bio2rdf.org/chebi:41209>,<http://bio2rdf.org/chebi:9654>,<http://bio2rdf.org/chebi:17650>,<http://bio2rdf.org/chebi:8871>,<http://bio2rdf.org/chebi:8382>,<http://bio2rdf.org/chebi:8378>,<http://bio2rdf.org/chebi:41126>,<http://bio2rdf.org/chebi:6472>,<http://bio2rdf.org/chebi:6123>,<http://bio2rdf.org/chebi:51607>,<http://bio2rdf.org/chebi:5135>,<http://bio2rdf.org/chebi:27584>,<http://bio2rdf.org/chebi:48833>,<http://bio2rdf.org/chebi:48742>,<http://bio2rdf.org/chebi:48735>,<http://bio2rdf.org/chebi:48732>,<http://bio2rdf.org/chebi:40496>,<http://bio2rdf.org/chebi:48461>,<http://bio2rdf.org/chebi:40491>,<http://bio2rdf.org/chebi:47750>,<http://bio2rdf.org/chebi:47749>,<http://bio2rdf.org/chebi:47748>,<http://bio2rdf.org/chebi:47747>,<http://bio2rdf.org/chebi:40306>,<http://bio2rdf.org/chebi:40153>,<http://bio2rdf.org/chebi:40038>,<http://bio2rdf.org/chebi:17310>,<http://bio2rdf.org/chebi:39911>,<http://bio2rdf.org/chebi:39727>,<http://bio2rdf.org/chebi:39687>,<http://bio2rdf.org/chebi:47485>,<http://bio2rdf.org/chebi:47441>,<http://bio2rdf.org/chebi:47439>,<http://bio2rdf.org/chebi:47438>,<http://bio2rdf.org/chebi:39627>,<http://bio2rdf.org/chebi:47417>,<http://bio2rdf.org/chebi:47369>,<http://bio2rdf.org/chebi:47315>,<http://bio2rdf.org/chebi:47300>,<http://bio2rdf.org/chebi:47240>; ds:card 5 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:27189>; ds:card 12602 ],
+             [ ds:object <http://bio2rdf.org/chebi:36683>; ds:card 238 ],
+             [ ds:object <http://bio2rdf.org/chebi:37143>; ds:card 203 ],
+             [ ds:object <http://bio2rdf.org/chebi:38101>; ds:card 167 ],
+             [ ds:object <http://bio2rdf.org/chebi:35358>; ds:card 158 ],
+             [ ds:object <http://bio2rdf.org/chebi:38338>; ds:card 151 ],
+             [ ds:object <http://bio2rdf.org/chebi:29347>; ds:card 124 ],
+             [ ds:object <http://bio2rdf.org/chebi:25384>; ds:card 110 ],
+             [ ds:object <http://bio2rdf.org/chebi:27171>; ds:card 94 ],
+             [ ds:object <http://bio2rdf.org/chebi:38418>; ds:card 87 ],
+             [ ds:object <http://bio2rdf.org/chebi:23003>; ds:card 83 ],
+             [ ds:object <http://bio2rdf.org/chebi:36807>; ds:card 82 ],
+             [ ds:middle <http://bio2rdf.org/chebi:26151>,<http://bio2rdf.org/chebi:38785>,<http://bio2rdf.org/chebi:38700>; ds:card 73 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 3654; ds:card 4304 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 6184; ds:card 7985 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 9014; ds:card 11938 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 7804; ds:card 10579 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 2379; ds:card 2921 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 649; ds:card 732 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 534; ds:card 626 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 642; ds:card 722 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 661; ds:card 759 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 408; ds:card 1017 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 2151; ds:card 22988 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 2447; ds:card 12310 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 755; ds:card 2475 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 641; ds:card 1705 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 9; ds:card 24 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 12; ds:card 18 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 11; ds:card 19 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 5; ds:card 10 ];
+           ds:distinctSbjs 33450 ;
+           ds:distinctObjs  6456 ;
+           ds:triples    40566 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#is_conjugate_acid_of> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:30095>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:32451>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:35806>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:32445>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30887>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:32458>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15429>; ds:card 2 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:17514>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:29446>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:29445>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:29811>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:32456>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:32449>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:39006>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:39046>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:39067>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:36837>; ds:card 2 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 275; ds:card 276 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 362; ds:card 362 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 430; ds:card 436 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 93; ds:card 93 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 37; ds:card 37 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 6; ds:card 6 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 6; ds:card 6 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 7; ds:card 7 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 13; ds:card 13 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 336; ds:card 338 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 320; ds:card 324 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 436; ds:card 446 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 80; ds:card 81 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 37; ds:card 37 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 6; ds:card 6 ];
+           ds:distinctSbjs 1229 ;
+           ds:distinctObjs  1219 ;
+           ds:triples    1236 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#is_conjugate_base_of> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:17514>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29446>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29445>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29811>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:32456>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:32449>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:39006>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:39046>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:39067>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:36837>; ds:card 2 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:30095>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:32451>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:35806>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:32445>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:30887>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:32458>; ds:card 2 ],
+             [ ds:object <http://bio2rdf.org/chebi:15429>; ds:card 2 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 336; ds:card 338 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 320; ds:card 324 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 436; ds:card 446 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 80; ds:card 81 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 37; ds:card 37 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 6; ds:card 6 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 275; ds:card 276 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 362; ds:card 362 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 430; ds:card 436 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 93; ds:card 93 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 37; ds:card 37 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 6; ds:card 6 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 6; ds:card 6 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 7; ds:card 7 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 13; ds:card 13 ];
+           ds:distinctSbjs 1219 ;
+           ds:distinctObjs  1229 ;
+           ds:triples    1236 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#is_enantiomer_of> ;
+           ds:topSbjs [];
+           ds:topObjs [];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 186; ds:card 191 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 133; ds:card 136 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 520; ds:card 522 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 184; ds:card 186 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 87; ds:card 87 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 10; ds:card 10 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 4; ds:card 4 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 187; ds:card 191 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 133; ds:card 136 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 520; ds:card 522 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 184; ds:card 186 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 87; ds:card 87 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 10; ds:card 10 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 2; ds:card 2 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 4; ds:card 4 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 4; ds:card 4 ];
+           ds:distinctSbjs 1142 ;
+           ds:distinctObjs  1142 ;
+           ds:triples    1142 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#is_substituent_group_from> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:30931>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50127>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:48855>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:48090>; ds:card 2 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30930>; ds:card 2 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:30443>; ds:card 8 ],
+             [ ds:object <http://bio2rdf.org/chebi:29389>; ds:card 8 ],
+             [ ds:object <http://bio2rdf.org/chebi:16183>; ds:card 8 ],
+             [ ds:object <http://bio2rdf.org/chebi:16015>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:22660>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:27947>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:30149>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:27570>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:18237>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:15971>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:17053>; ds:card 5 ],
+             [ ds:middle <http://bio2rdf.org/chebi:15966>,<http://bio2rdf.org/chebi:16296>,<http://bio2rdf.org/chebi:16398>,<http://bio2rdf.org/chebi:16855>,<http://bio2rdf.org/chebi:16828>,<http://bio2rdf.org/chebi:17196>,<http://bio2rdf.org/chebi:17561>,<http://bio2rdf.org/chebi:17895>,<http://bio2rdf.org/chebi:22653>,<http://bio2rdf.org/chebi:24632>,<http://bio2rdf.org/chebi:25094>,<http://bio2rdf.org/chebi:28159>,<http://bio2rdf.org/chebi:28479>,<http://bio2rdf.org/chebi:28300>,<http://bio2rdf.org/chebi:29016>,<http://bio2rdf.org/chebi:27897>,<http://bio2rdf.org/chebi:30181>,<http://bio2rdf.org/chebi:30278>,<http://bio2rdf.org/chebi:30419>,<http://bio2rdf.org/chebi:26986>,<http://bio2rdf.org/chebi:18186>,<http://bio2rdf.org/chebi:22636>,<http://bio2rdf.org/chebi:18257>,<http://bio2rdf.org/chebi:18050>,<http://bio2rdf.org/chebi:18019>,<http://bio2rdf.org/chebi:17061>,<http://bio2rdf.org/chebi:16857>,<http://bio2rdf.org/chebi:15356>,<http://bio2rdf.org/chebi:15366>,<http://bio2rdf.org/chebi:15816>,<http://bio2rdf.org/chebi:15729>,<http://bio2rdf.org/chebi:16134>,<http://bio2rdf.org/chebi:16467>; ds:card 4 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 3; ds:card 3 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 201; ds:card 201 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 357; ds:card 359 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 99; ds:card 101 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 39; ds:card 40 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 116; ds:card 265 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 98; ds:card 181 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 154; ds:card 193 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 37; ds:card 42 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 15; ds:card 17 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7613"; ds:unique 1; ds:card 1 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 3; ds:card 5 ];
+           ds:distinctSbjs 699 ;
+           ds:distinctObjs  424 ;
+           ds:triples    704 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#is_tautomer_of> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:46814>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:46811>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:49051>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:46823>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:46817>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17775>; ds:card 5 ],
+             [ ds:subject <http://bio2rdf.org/chebi:36422>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:36425>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:36424>; ds:card 4 ],
+             [ ds:subject <http://bio2rdf.org/chebi:36423>; ds:card 4 ],
+             [ ds:middle <http://bio2rdf.org/chebi:27543>,<http://bio2rdf.org/chebi:36623>,<http://bio2rdf.org/chebi:36641>,<http://bio2rdf.org/chebi:37931>,<http://bio2rdf.org/chebi:46820>,<http://bio2rdf.org/chebi:37933>,<http://bio2rdf.org/chebi:3028>,<http://bio2rdf.org/chebi:36429>,<http://bio2rdf.org/chebi:36428>,<http://bio2rdf.org/chebi:36427>,<http://bio2rdf.org/chebi:36426>,<http://bio2rdf.org/chebi:35588>,<http://bio2rdf.org/chebi:35586>,<http://bio2rdf.org/chebi:35589>,<http://bio2rdf.org/chebi:36639>,<http://bio2rdf.org/chebi:37935>,<http://bio2rdf.org/chebi:37934>,<http://bio2rdf.org/chebi:46824>,<http://bio2rdf.org/chebi:46822>,<http://bio2rdf.org/chebi:46821>; ds:card 3 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/chebi:46814>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:46811>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:49051>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:46823>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:46817>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:17775>; ds:card 5 ],
+             [ ds:object <http://bio2rdf.org/chebi:36422>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/chebi:36425>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/chebi:36424>; ds:card 4 ],
+             [ ds:object <http://bio2rdf.org/chebi:36423>; ds:card 4 ],
+             [ ds:middle <http://bio2rdf.org/chebi:27543>,<http://bio2rdf.org/chebi:36623>,<http://bio2rdf.org/chebi:36641>,<http://bio2rdf.org/chebi:37931>,<http://bio2rdf.org/chebi:46820>,<http://bio2rdf.org/chebi:37933>,<http://bio2rdf.org/chebi:3028>,<http://bio2rdf.org/chebi:36429>,<http://bio2rdf.org/chebi:36428>,<http://bio2rdf.org/chebi:36427>,<http://bio2rdf.org/chebi:36426>,<http://bio2rdf.org/chebi:35588>,<http://bio2rdf.org/chebi:35586>,<http://bio2rdf.org/chebi:35589>,<http://bio2rdf.org/chebi:36639>,<http://bio2rdf.org/chebi:37935>,<http://bio2rdf.org/chebi:37934>,<http://bio2rdf.org/chebi:46824>,<http://bio2rdf.org/chebi:46822>,<http://bio2rdf.org/chebi:46821>; ds:card 3 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 33; ds:card 43 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 28; ds:card 35 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 133; ds:card 205 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 59; ds:card 96 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 6; ds:card 6 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 2; ds:card 3 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 33; ds:card 43 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 28; ds:card 35 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 133; ds:card 205 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 59; ds:card 96 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 6; ds:card 6 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 2; ds:card 3 ];
+           ds:distinctSbjs 262 ;
+           ds:distinctObjs  262 ;
+           ds:triples    388 ;
+         ] ;
+     ds:capability
+         [
+           ds:predicate  <http://bio2rdf.org/ns/chebi#xReferencedBy> ;
+           ds:topSbjs
+             [ ds:subject <http://bio2rdf.org/chebi:36080>; ds:card 245489 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16541>; ds:card 239894 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15422>; ds:card 68715 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30616>; ds:card 67738 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18367>; ds:card 58477 ],
+             [ ds:subject <http://bio2rdf.org/chebi:35780>; ds:card 55411 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15377>; ds:card 51067 ],
+             [ ds:subject <http://bio2rdf.org/chebi:37527>; ds:card 44725 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29888>; ds:card 35812 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18361>; ds:card 35580 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16991>; ds:card 35076 ],
+             [ ds:subject <http://bio2rdf.org/chebi:24870>; ds:card 33619 ],
+             [ ds:subject <http://bio2rdf.org/chebi:35782>; ds:card 33181 ],
+             [ ds:subject <http://bio2rdf.org/chebi:50906>; ds:card 32675 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16761>; ds:card 31301 ],
+             [ ds:subject <http://bio2rdf.org/chebi:24636>; ds:card 30450 ],
+             [ ds:subject <http://bio2rdf.org/chebi:46882>; ds:card 30128 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33697>; ds:card 29145 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33252>; ds:card 29084 ],
+             [ ds:subject <http://bio2rdf.org/chebi:17843>; ds:card 28336 ],
+             [ ds:subject <http://bio2rdf.org/chebi:24433>; ds:card 27191 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18111>; ds:card 24825 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15339>; ds:card 23726 ],
+             [ ds:subject <http://bio2rdf.org/chebi:25555>; ds:card 23543 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33709>; ds:card 23542 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29320>; ds:card 22857 ],
+             [ ds:subject <http://bio2rdf.org/chebi:26833>; ds:card 22621 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18420>; ds:card 22238 ],
+             [ ds:subject <http://bio2rdf.org/chebi:37712>; ds:card 21629 ],
+             [ ds:subject <http://bio2rdf.org/chebi:45522>; ds:card 21610 ],
+             [ ds:subject <http://bio2rdf.org/chebi:25805>; ds:card 21481 ],
+             [ ds:subject <http://bio2rdf.org/chebi:25107>; ds:card 21233 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33260>; ds:card 20857 ],
+             [ ds:subject <http://bio2rdf.org/chebi:33704>; ds:card 20815 ],
+             [ ds:subject <http://bio2rdf.org/chebi:18248>; ds:card 20500 ],
+             [ ds:subject <http://bio2rdf.org/chebi:29105>; ds:card 20246 ],
+             [ ds:subject <http://bio2rdf.org/chebi:27363>; ds:card 20117 ],
+             [ ds:subject <http://bio2rdf.org/chebi:30185>; ds:card 20114 ],
+             [ ds:subject <http://bio2rdf.org/chebi:16134>; ds:card 19219 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15379>; ds:card 19085 ],
+             [ ds:subject <http://bio2rdf.org/chebi:15378>; ds:card 18980 ],
+             [ ds:middle <http://bio2rdf.org/chebi:16027>,<http://bio2rdf.org/chebi:17115>,<http://bio2rdf.org/chebi:16015>,<http://bio2rdf.org/chebi:17997>; ds:card 15869 ];
+           ds:topObjs
+             [ ds:object <http://bio2rdf.org/patent:WO2007103687>; ds:card 285 ],
+             [ ds:object <http://bio2rdf.org/patent:US2007207222>; ds:card 281 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2007112581>; ds:card 172 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2007128349>; ds:card 163 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1661886>; ds:card 136 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1422218>; ds:card 136 ],
+             [ ds:object <http://bio2rdf.org/patent:US2007027154>; ds:card 135 ],
+             [ ds:object <http://bio2rdf.org/patent:US2005080087>; ds:card 124 ],
+             [ ds:object <http://bio2rdf.org/patent:US2005009870>; ds:card 124 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2005016286>; ds:card 123 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1829527>; ds:card 122 ],
+             [ ds:object <http://bio2rdf.org/patent:US2005014786>; ds:card 120 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1815846>; ds:card 119 ],
+             [ ds:object <http://bio2rdf.org/patent:EP1829528>; ds:card 119 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2005037199>; ds:card 119 ],
+             [ ds:object <http://bio2rdf.org/patent:US2005267169>; ds:card 118 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2005063761>; ds:card 117 ],
+             [ ds:object <http://bio2rdf.org/patent:US2008255073>; ds:card 116 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2008128647>; ds:card 114 ],
+             [ ds:object <http://bio2rdf.org/patent:US2005187267>; ds:card 113 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2005007628>; ds:card 112 ],
+             [ ds:object <http://bio2rdf.org/patent:US2004254182>; ds:card 111 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2005077925>; ds:card 110 ],
+             [ ds:object <http://bio2rdf.org/patent:US2007196453>; ds:card 109 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2007089745>; ds:card 109 ],
+             [ ds:object <http://bio2rdf.org/patent:WO2005063762>; ds:card 108 ],
+             [ ds:object <http://bio2rdf.org/patent:US2007184076>; ds:card 106 ],
+             [ ds:middle <http://bio2rdf.org/patent:EP1685843>,<http://bio2rdf.org/patent:US2007189977>,<http://bio2rdf.org/patent:WO2007100902>,<http://bio2rdf.org/patent:US2004142904>,<http://bio2rdf.org/patent:US2007248537>,<http://bio2rdf.org/patent:US2007196452>,<http://bio2rdf.org/patent:WO2005023198>,<http://bio2rdf.org/patent:US2007184114>; ds:card 102 ];
+           ds:subjPrefixes
+             [ ds:prefix "http://bio2rdf.org/chebi:1"; ds:unique 2904; ds:card 1814665 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:2"; ds:unique 2676; ds:card 895343 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:3"; ds:unique 4902; ds:card 1092485 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:4"; ds:unique 1877; ds:card 280384 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:5"; ds:unique 1034; ds:card 87316 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:6"; ds:unique 113; ds:card 7114 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:7"; ds:unique 86; ds:card 5938 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:8"; ds:unique 115; ds:card 15299 ],
+             [ ds:prefix "http://bio2rdf.org/chebi:9"; ds:unique 141; ds:card 6626 ];
+           ds:objPrefixes
+             [ ds:prefix "http://bio2rdf.org/uniprot:"; ds:unique 395269; ds:card 3840708 ],
+             [ ds:prefix "http://bio2rdf.org/p"; ds:unique 53116; ds:card 309870 ],
+             [ ds:prefix "http://bio2rdf.org/reactome:REACT_"; ds:unique 1360; ds:card 5048 ],
+             [ ds:prefix "http://bio2rdf.org/b"; ds:unique 3041; ds:card 9571 ],
+             [ ds:prefix "http://bio2rdf.org/intact:EBI-"; ds:unique 232; ds:card 248 ],
+             [ ds:prefix "http://bio2rdf.org/arrayexpress:E-"; ds:unique 30; ds:card 67 ],
+             [ ds:prefix "http://bio2rdf.org/sabio-rk:"; ds:unique 8215; ds:card 39658 ];
+           ds:distinctSbjs 14095 ;
+           ds:distinctObjs  462352 ;
+           ds:triples    4205170 ;
+         ] ;
+     ds:totalSbj 51559 ; 
+     ds:totalObj 504410 ; 
+     ds:totalTriples 4775464 ; 
+             .

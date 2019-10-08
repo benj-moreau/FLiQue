@@ -6,16 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="costfed-core" />
+        <module name="costfed" />
         <module name="costfed-web" />
         <module name="fedx" />
+        <module name="flique" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="costfed-core" target="1.8" />
+      <module name="costfed" target="1.8" />
       <module name="costfed-web" target="1.8" />
       <module name="fedx" target="1.8" />
       <module name="FLiQuE" target="1.8" />
+      <module name="flique" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
