@@ -17,5 +17,11 @@
             <artifactId>costfed</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>3.13.0</version>
+        </dependency>
     </dependencies>
 </project>
