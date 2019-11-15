@@ -1,16 +1,17 @@
-package start;
+package org.ods.start;
 
 import com.fluidops.fedx.Config;
+import com.fluidops.fedx.EndpointManager;
 import com.fluidops.fedx.FedXFactory;
+import com.fluidops.fedx.algebra.StatementSource;
+import com.fluidops.fedx.optimizer.SourceSelection;
 import com.fluidops.fedx.structures.QueryInfo;
-import org.aksw.simba.quetsal.core.TBSSSourceSelection;
 import org.aksw.simba.start.QueryProvider;
 import org.apache.commons.io.FileUtils;
-import org.eclipse.rdf4j.query.BindingSet;
-import org.eclipse.rdf4j.query.QueryLanguage;
-import org.eclipse.rdf4j.query.TupleQuery;
-import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.query.*;
+import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
+import org.ods.core.license.LicenseChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,21 +112,30 @@ public class QueryEvaluation {
 				TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
 			   	long startTime = System.currentTimeMillis();
 			   	res = query.evaluate();
-				QueryInfo query_info = QueryInfo.queryInfo.get();
-			    long count = 0;
-			
+			   	// This is where FLiQuE is inserted
+				QueryInfo queryInfo = QueryInfo.queryInfo.get();
+				SourceSelection sourceSelection = queryInfo.getSourceSelection();
+				Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
+				// 1. Verifier licences des sources
+				LicenseChecker licenseChecker = new LicenseChecker("summaries/fedbench.n3");
+				EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+				licenseChecker.evaluate(sourceSelection, endpointManager);
+				// Now we can execute the query with FedX
+			   	long count = 0;
+				// TODO Uncomment next to execute query
+				/*
 			    while (res.hasNext()) {
 			    	BindingSet row = res.next();
 			    	System.out.println(count+": "+ row);
 			    	count++;
 			    }
-			  
+			    */
 			    long runTime = System.currentTimeMillis() - startTime;
 			    reportRow.add((Long)count); reportRow.add((Long)runTime);
 			    sstReportRow.add((Long)count);
-			    sstReportRow.add(QueryInfo.queryInfo.get().numSources.longValue());
-			    sstReportRow.add(QueryInfo.queryInfo.get().totalSources.longValue());
-			    log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source count: " + QueryInfo.queryInfo.get().numSources.longValue());
+			    sstReportRow.add(queryInfo.numSources.longValue());
+			    sstReportRow.add(queryInfo.totalSources.longValue());
+			    log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source count: " + queryInfo.numSources.longValue());
 			    //log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source Selection Time: " + QueryInfo.queryInfo.get().getSourceSelection().time);
 			} catch (Throwable e) {
 				e.printStackTrace();
