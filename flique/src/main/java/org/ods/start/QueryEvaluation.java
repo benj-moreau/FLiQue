@@ -119,7 +119,8 @@ public class QueryEvaluation {
 				// 1. Verifier licences des sources
 				LicenseChecker licenseChecker = new LicenseChecker("summaries/fedbench.n3");
 				EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
-				licenseChecker.evaluate(sourceSelection, endpointManager);
+				Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
+				HashMap<String, Integer> endpointLicenseConflicts = licenseChecker.getEndpointlicenseConflicts();
 				// Now we can execute the query with FedX
 			   	long count = 0;
 				// TODO Uncomment next to execute query

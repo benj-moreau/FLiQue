@@ -11,16 +11,14 @@ import org.slf4j.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.ref.Reference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class LicenseChecker {
     protected static final Logger log = LoggerFactory.getLogger(LicenseChecker.class);
-
     public Model summary =  ModelFactory.createDefaultModel() ;
+    public HashMap<String, String> sourceLicenses;
+    public Set<String> licenses;
 
 
     /**
@@ -35,22 +33,48 @@ public class LicenseChecker {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        this.sourceLicenses = new HashMap<>();
+        this.licenses = new HashSet<>();
+
     }
 
     /**
-     * Checks if all licenses of sources are compatible.
-     * Returns a report that represent license conflicts.
+     * Returns sources and its number of license conflicts
      * */
-    public int evaluate(SourceSelection sourceSelection, EndpointManager endpointManager) {
+    public HashMap<String, Integer> getEndpointlicenseConflicts() {
+        HashMap<String, Integer> EndpointlicenseConflicts = new HashMap<>();
+        HashMap<String, Integer> licenseConflicts = new HashMap<>();
+        for (String license1: this.licenses) {
+            int conflicts = 0;
+            for (String license2: this.licenses) {
+                if (!license1.equals(license2) && getCompliantLicenses(license1, license2).isEmpty()){
+                    conflicts++;
+                }
+            }
+            licenseConflicts.put(license1, conflicts);
+        }
+        for (Map.Entry<String, String> entry : this.sourceLicenses.entrySet()) {
+            String source = entry.getKey();
+            String license = entry.getValue();
+            EndpointlicenseConflicts.put(source, licenseConflicts.get(license));
+        }
+        return EndpointlicenseConflicts;
+    }
+
+    /**
+     * Returns a set of licenses that can protect the result of the query
+     * */
+    public Set<String> getConsistentLicenses(SourceSelection sourceSelection, EndpointManager endpointManager) {
         Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
         stmtToSources.forEach((stmt, sources) -> {
             sources.forEach(source -> {
                 String endpointURL = endpointManager.getEndpoint(source.getEndpointID()).getEndpoint();
                 String license = getLicense(endpointURL);
-                List<String> compatibleLicenses = getCompatibleLicenses(license);
+                this.sourceLicenses.put(endpointURL, license);
+                this.licenses.add(license);
             });
         });
-        return 1;
+        return getCompliantLicenses(this.licenses);
     }
 
     private String getLicense(String endpoint) {
@@ -58,13 +82,31 @@ public class LicenseChecker {
         return license.getURI();
     }
 
-    private List<String> getCompatibleLicenses(String license) {
-        List<String> compatibleLicenses = new ArrayList<>();
+    private Set<String> getCompliantLicenses(String license) {
+        Set<String> compatibleLicenses = new HashSet<>();
         compatibleLicenses.add(license);
         NodeIterator iter = this.summary.listObjectsOfProperty(ResourceFactory.createResource(license), ResourceFactory.createProperty("http://schema.theodi.org/odrs#compatibleWith"));
         while (iter.hasNext()) {
             Resource compatibleLicense = (Resource) iter.next();
             compatibleLicenses.add(compatibleLicense.getURI());
+        }
+        return compatibleLicenses;
+    }
+
+    private Set<String> getCompliantLicenses(String license1, String license2) {
+        Set<String> compatibleLicenses = new HashSet<>(getCompliantLicenses(license1));
+        compatibleLicenses.retainAll(getCompliantLicenses(license2));
+        return compatibleLicenses;
+    }
+
+    private Set<String> getCompliantLicenses(Set<String> licenses) {
+        Set<String> compatibleLicenses = new HashSet<>();
+        if (!licenses.isEmpty()){
+            Iterator<String> licenseIterator = licenses.iterator();
+            compatibleLicenses = new HashSet<>(getCompliantLicenses(licenseIterator.next()));
+            while (licenseIterator.hasNext()) {
+                compatibleLicenses.retainAll(getCompliantLicenses(licenseIterator.next()));
+            }
         }
         return compatibleLicenses;
     }
