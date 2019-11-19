@@ -120,7 +120,12 @@ public class QueryEvaluation {
 				LicenseChecker licenseChecker = new LicenseChecker("summaries/fedbench.n3");
 				EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
 				Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
-				HashMap<String, Integer> endpointLicenseConflicts = licenseChecker.getEndpointlicenseConflicts();
+				if (consistentLicenses.isEmpty()) {
+					// a license compatible with licenses of sources does not exists
+					// We need to eliminate sources
+					HashMap<String, Integer> endpointLicenseConflicts = licenseChecker.getEndpointlicenseConflicts();
+					ArrayList<String> sourcesToRemove = licenseChecker.getSourcesToRemove(endpointLicenseConflicts);
+				}
 				// Now we can execute the query with FedX
 			   	long count = 0;
 				// TODO Uncomment next to execute query
@@ -138,6 +143,7 @@ public class QueryEvaluation {
 			    sstReportRow.add(queryInfo.totalSources.longValue());
 			    log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source count: " + queryInfo.numSources.longValue());
 			    //log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source Selection Time: " + QueryInfo.queryInfo.get().getSourceSelection().time);
+				log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
 			} catch (Throwable e) {
 				e.printStackTrace();
 				log.error("", e);

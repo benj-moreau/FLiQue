@@ -48,6 +48,7 @@ public class LicenseChecker {
             int conflicts = 0;
             for (String license2: this.licenses) {
                 if (!license1.equals(license2) && getCompliantLicenses(license1, license2).isEmpty()){
+                    log.info("Conflict detected between license " + getLabelLicenses(license1) + "and licence" + getLabelLicenses(license2));
                     conflicts++;
                 }
             }
@@ -109,5 +110,45 @@ public class LicenseChecker {
             }
         }
         return compatibleLicenses;
+    }
+
+    public String getLabelLicenses(Set<String> licenses) {
+        ArrayList<String> labels = new ArrayList<>();
+        for (String licenseURI: licenses) {
+            NodeIterator iter = this.summary.listObjectsOfProperty(ResourceFactory.createResource(licenseURI), ResourceFactory.createProperty("http://www.w3.org/2000/01/rdf-schema#label"));
+            while (iter.hasNext()) {
+                labels.add(iter.next().toString());
+            }
+        }
+        return labels.toString();
+    }
+
+    public String getLabelLicenses(String license) {
+        ArrayList<String> labels = new ArrayList<>();
+        NodeIterator iter = this.summary.listObjectsOfProperty(ResourceFactory.createResource(license), ResourceFactory.createProperty("http://www.w3.org/2000/01/rdf-schema#label"));
+        while (iter.hasNext()) {
+            labels.add(iter.next().toString());
+        }
+        return labels.toString();
+    }
+
+    /**
+     * Returns the list of sources that have the most license conflicts with other sources.
+     * */
+    public ArrayList<String> getSourcesToRemove(HashMap<String, Integer> EndpointlicenseConflicts) {
+        ArrayList<String> sourcesToRemove = new ArrayList<>();
+        int conflicts = 0;
+        for (Map.Entry<String, Integer> entry : EndpointlicenseConflicts.entrySet()) {
+            String source = entry.getKey();
+            if (entry.getValue() > conflicts) {
+                conflicts = entry.getValue();
+                sourcesToRemove = new ArrayList<>();
+                sourcesToRemove.add(source);
+            } else if (entry.getValue() == conflicts) {
+                sourcesToRemove.add(source);
+            }
+        }
+        log.info(sourcesToRemove.toString() + "will be removed from sources because of " + conflicts + "license conflicts");
+        return sourcesToRemove;
     }
 }
