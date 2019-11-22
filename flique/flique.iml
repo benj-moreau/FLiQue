@@ -21,8 +21,6 @@
     <orderEntry type="library" name="Maven: org.eclipse.rdf4j:rdf4j-repository-http:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.rdf4j:rdf4j-sail-nativerdf:2.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.rdf4j:rdf4j-queryresultio-sparqljson:2.3.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.8" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.rdf4j:rdf4j-queryrender:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-runtime:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-config:2.3.2" level="project" />
@@ -30,10 +28,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: ch.qos.logback:logback-core:1.1.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-console:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-client:2.3.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.4" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.8" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.8" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:jcl-over-slf4j:1.7.10" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-storage:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.lucene:lucene-backward-codecs:5.5.4" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.lucene:lucene-memory:5.5.4" level="project" />
@@ -101,9 +95,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-rio-binary:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-rio-datatypes:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-rio-jsonld:2.3.2" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: com.github.jsonld-java:jsonld-java:0.11.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.2" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.httpcomponents:httpclient-cache:4.5.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-rio-languages:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-rio-n3:2.3.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.rdf4j:rdf4j-rio-nquads:2.3.2" level="project" />
@@ -146,10 +137,21 @@
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.13" level="project" />
     <orderEntry type="library" name="Maven: org.apache.jena:jena-base:3.13.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-shaded-guava:3.13.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-csv:1.7" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.19" level="project" />
     <orderEntry type="library" name="Maven: com.github.andrewoma.dexx:collection:0.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.jena:jena-arq:3.13.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.jena:jena-shaded-guava:3.13.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.12" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jsonld-java:jsonld-java:0.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.10" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.10" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient-cache:4.5.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.12.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.26" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.9" level="project" />
   </component>
 </module>

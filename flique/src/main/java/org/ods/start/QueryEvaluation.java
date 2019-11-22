@@ -12,6 +12,7 @@ import org.eclipse.rdf4j.query.*;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.ods.core.license.LicenseChecker;
+import org.ods.core.relaxation.QueryRelaxationLattice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,12 +48,7 @@ public class QueryEvaluation {
 		String repfile = args.length > 1 ? args[1] : null;
 		
 		String host = "localhost";
-		//String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8";
-		// String queries = "L1 L2 L3 L4 L5 L6 L7 L8";
-		String queries = "L1";
-		//String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C6 C7 C8 C9 C10";
-		// String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10";
-		//String queries = "CH3"; // S3 C6 C2
+		String queries = "CH1";
 	
 		List<String> endpointsMin2 = Arrays.asList(
 			 "http://" + host + ":8890/sparql",
@@ -64,7 +60,8 @@ public class QueryEvaluation {
 			 "http://" + host + ":8896/sparql",
 			 "http://" + host + ":8897/sparql",
 			 "http://" + host + ":8898/sparql",
-			 "http://" + host + ":8899/sparql"
+			 "http://" + host + ":8899/sparql",
+			 "http://" + host + ":8889/sparql"
 		);
 		
 		List<String> endpoints = endpointsMin2;
@@ -112,37 +109,56 @@ public class QueryEvaluation {
 				TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
 			   	long startTime = System.currentTimeMillis();
 			   	res = query.evaluate();
+			   	//TODO Remove that !
+				QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery );
 			   	// This is where FLiQuE is inserted
 				QueryInfo queryInfo = QueryInfo.queryInfo.get();
 				SourceSelection sourceSelection = queryInfo.getSourceSelection();
 				Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
+				log.info(stmtToSources.toString());
 				// 1. Verifier licences des sources
 				LicenseChecker licenseChecker = new LicenseChecker("summaries/fedbench.n3");
 				EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
 				Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
-				if (consistentLicenses.isEmpty()) {
+				while (consistentLicenses.isEmpty()) {
 					// a license compatible with licenses of sources does not exists
 					// We need to eliminate sources
 					HashMap<String, Integer> endpointLicenseConflicts = licenseChecker.getEndpointlicenseConflicts();
 					ArrayList<String> sourcesToRemove = licenseChecker.getSourcesToRemove(endpointLicenseConflicts);
+					//remove endpoints
+					endpoints.removeIf(enpoint -> (sourcesToRemove.contains(enpoint)));
+					// on retry
+					repo = FedXFactory.initializeSparqlFederation(config, endpoints);
+					query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
+					res = query.evaluate();
+					queryInfo = QueryInfo.queryInfo.get();
+					sourceSelection = queryInfo.getSourceSelection();
+					stmtToSources = sourceSelection.getStmtToSources();
+					log.info(stmtToSources.toString());
+					// ReVerifier licences des sources
+					endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+					consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
 				}
+				// Here, we resolved all license conflicts
+				while (!res.hasNext()) {
+					// Here we relax the query until we get at least one result
+					break;
+				}
+
 				// Now we can execute the query with FedX
 			   	long count = 0;
 				// TODO Uncomment next to execute query
-				/*
 			    while (res.hasNext()) {
 			    	BindingSet row = res.next();
 			    	System.out.println(count+": "+ row);
 			    	count++;
 			    }
-			    */
 			    long runTime = System.currentTimeMillis() - startTime;
 			    reportRow.add((Long)count); reportRow.add((Long)runTime);
 			    sstReportRow.add((Long)count);
 			    sstReportRow.add(queryInfo.numSources.longValue());
 			    sstReportRow.add(queryInfo.totalSources.longValue());
 			    log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source count: " + queryInfo.numSources.longValue());
-			    //log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source Selection Time: " + QueryInfo.queryInfo.get().getSourceSelection().time);
 				log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
 			} catch (Throwable e) {
 				e.printStackTrace();

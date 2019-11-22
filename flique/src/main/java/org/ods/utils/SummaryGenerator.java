@@ -32,7 +32,8 @@ public class SummaryGenerator {
                 "http://localhost:8896/sparql",
                 "http://localhost:8897/sparql",
                 "http://localhost:8898/sparql",
-                "http://localhost:8899/sparql"
+                "http://localhost:8899/sparql",
+                "http://localhost:8889/sparql"
         );
         String outputFile = "summaries/fedbench.n3"; // The summary will be generated in this file
         String caliFile = "../cali-ordering/fedbench_cali_ordering.n3"; // CaLi ordering is in this file

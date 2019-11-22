@@ -148,7 +148,7 @@ public class LicenseChecker {
                 sourcesToRemove.add(source);
             }
         }
-        log.info(sourcesToRemove.toString() + "will be removed from sources because of " + conflicts + "license conflicts");
+        log.info(sourcesToRemove.toString() + " will be removed from sources because of " + conflicts + " license conflicts");
         return sourcesToRemove;
     }
 }
