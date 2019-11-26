@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class QueryRelaxationLattice {
-    private ArrayList<TreeSet> levels;
+    private ArrayList<TreeSet> levels = new ArrayList<>();
 
     public QueryRelaxationLattice(String originalQuery) {
         TreeSet<RelaxedQuery> firstLevel = new TreeSet<>();

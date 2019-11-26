@@ -48,7 +48,7 @@ public class QueryEvaluation {
 		String repfile = args.length > 1 ? args[1] : null;
 		
 		String host = "localhost";
-		String queries = "CH1";
+		String queries = "CH6";
 	
 		List<String> endpointsMin2 = Arrays.asList(
 			 "http://" + host + ":8890/sparql",
@@ -110,7 +110,7 @@ public class QueryEvaluation {
 			   	long startTime = System.currentTimeMillis();
 			   	res = query.evaluate();
 			   	//TODO Remove that !
-				QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery );
+				// QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery );
 			   	// This is where FLiQuE is inserted
 				QueryInfo queryInfo = QueryInfo.queryInfo.get();
 				SourceSelection sourceSelection = queryInfo.getSourceSelection();
@@ -120,6 +120,7 @@ public class QueryEvaluation {
 				LicenseChecker licenseChecker = new LicenseChecker("summaries/fedbench.n3");
 				EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
 				Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
+				/*
 				while (consistentLicenses.isEmpty()) {
 					// a license compatible with licenses of sources does not exists
 					// We need to eliminate sources
@@ -139,6 +140,7 @@ public class QueryEvaluation {
 					endpointManager = queryInfo.getFedXConnection().getEndpointManager();
 					consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
 				}
+				*/
 				// Here, we resolved all license conflicts
 				while (!res.hasNext()) {
 					// Here we relax the query until we get at least one result

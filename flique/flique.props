@@ -4,7 +4,7 @@ boundJoinBlockSize=20
 enforceMaxQueryTime=30
 enableMonitoring=false
 monitoring.enableJMX=false
-monitoring.logQueryPlan=false
+monitoring.logQueryPlan=true
 monitoring.logQueries=false
 sourceSelectionClass=org.aksw.simba.quetsal.core.TBSSSourceSelection
 extensionClass=org.aksw.simba.quetsal.configuration.QuetzalConfig
@@ -14,7 +14,7 @@ endpointProviderClass=org.aksw.simba.quetsal.configuration.EndpointListFromDirec
 #quetzal.mode=INDEX_DOMINANT
 quetzal.mode=ASK_DOMINANT
 quetzal.inputCommonPredThreshold=0.33
-quetzal.fedSummaries=summaries/fedbench.n3
+quetzal.fedSummaries=summaries/complete-largeRDFBench-summaries.n3
 
 statementGroupOptimizerClass=org.aksw.simba.quetsal.core.JoinOrderOptimizer
 sparqlEvaluationStrategy=org.aksw.simba.quetsal.core.TBSSFederationEvalStrategy
