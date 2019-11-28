@@ -1,21 +1,16 @@
-org.eclipse.rdf4j.query.QueryEvaluationException: java.lang.RuntimeException: internal error: subject is not null
-	at org.eclipse.rdf4j.repository.sail.SailTupleQuery.evaluate(SailTupleQuery.java:64)
-	at org.ods.start.QueryEvaluation.evaluate(QueryEvaluation.java:111)
+java.util.NoSuchElementException
+	at java.base/java.util.HashMap$HashIterator.nextNode(HashMap.java:1495)
+	at java.base/java.util.HashMap$KeyIterator.next(HashMap.java:1516)
+	at org.apache.jena.util.iterator.WrappedIterator.next(WrappedIterator.java:94)
+	at org.apache.jena.util.iterator.Map1Iterator.next(Map1Iterator.java:46)
+	at org.apache.jena.util.iterator.WrappedIterator.next(WrappedIterator.java:94)
+	at org.apache.jena.rdf.model.impl.NodeIteratorImpl.next(NodeIteratorImpl.java:28)
+	at org.ods.core.license.LicenseChecker.getLicense(LicenseChecker.java:82)
+	at org.ods.core.license.LicenseChecker.lambda$getConsistentLicenses$0(LicenseChecker.java:73)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.ods.core.license.LicenseChecker.lambda$getConsistentLicenses$1(LicenseChecker.java:71)
+	at java.base/java.util.concurrent.ConcurrentHashMap.forEach(ConcurrentHashMap.java:1603)
+	at org.ods.core.license.LicenseChecker.getConsistentLicenses(LicenseChecker.java:70)
+	at org.ods.start.QueryEvaluation.evaluate(QueryEvaluation.java:122)
 	at org.ods.start.QueryEvaluation.multyEvaluate(QueryEvaluation.java:191)
 	at org.ods.start.QueryEvaluation.main(QueryEvaluation.java:69)
-Caused by: org.eclipse.rdf4j.sail.SailException: java.lang.RuntimeException: internal error: subject is not null
-	at com.fluidops.fedx.FedXConnection.evaluateInternal(FedXConnection.java:336)
-	at org.eclipse.rdf4j.sail.helpers.AbstractSailConnection.evaluate(AbstractSailConnection.java:267)
-	at org.eclipse.rdf4j.repository.sail.SailTupleQuery.evaluate(SailTupleQuery.java:54)
-	... 3 more
-Caused by: java.lang.RuntimeException: internal error: subject is not null
-	at org.aksw.simba.quetsal.configuration.CostFedSummary.lookupSbjPrefixes(CostFedSummary.java:578)
-	at org.aksw.simba.quetsal.core.TBSSSourceSelection.getFedSumDMatchingSbjAuthorities(TBSSSourceSelection.java:1023)
-	at org.aksw.simba.quetsal.core.TBSSSourceSelection.lambda$pruneSources$3(TBSSSourceSelection.java:710)
-	at org.aksw.simba.quetsal.core.TBSSSourceSelection.handleEdge(TBSSSourceSelection.java:582)
-	at org.aksw.simba.quetsal.core.TBSSSourceSelection.handleStatement(TBSSSourceSelection.java:610)
-	at org.aksw.simba.quetsal.core.TBSSSourceSelection.pruneSources(TBSSSourceSelection.java:710)
-	at org.aksw.simba.quetsal.core.TBSSSourceSelection.performSourceSelection(TBSSSourceSelection.java:227)
-	at com.fluidops.fedx.optimizer.Optimizer.optimize(Optimizer.java:87)
-	at com.fluidops.fedx.FedXConnection.evaluateInternal(FedXConnection.java:333)
-	... 5 more

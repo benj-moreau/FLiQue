@@ -152,7 +152,7 @@ public class TBSSSourceSelection extends SourceSelection {
 				{
 					if (s == null && p == null && o == null)
 					{
-						for (Endpoint e : endpoints) 
+						for (Endpoint e : this.endpoints)
 							addSource(stmt, new StatementSource(e.getId(), StatementSourceType.REMOTE));
 					}
 					else if (p != null)
@@ -172,7 +172,7 @@ public class TBSSSourceSelection extends SourceSelection {
 				{
 					if (s == null && p == null && o == null)
 					{
-						for (Endpoint e : endpoints) 
+						for (Endpoint e : this.endpoints)
 							addSource(stmt, new StatementSource(e.getId(), StatementSourceType.REMOTE));
 					}
 					else if (s != null || p != null)
@@ -304,7 +304,7 @@ public class TBSSSourceSelection extends SourceSelection {
 
 		SubQuery q = new SubQuery(stmt);
 		// check for each current federation member (cache or remote ASK)
-		for (Endpoint e : endpoints)
+		for (Endpoint e : this.endpoints)
 		{
 			StatementSourceAssurance a = cache.canProvideStatements(q, e);
 			if (a == StatementSourceAssurance.HAS_LOCAL_STATEMENTS) 
@@ -471,10 +471,21 @@ public class TBSSSourceSelection extends SourceSelection {
 			List<StatementSource> sources = stmtToSources.get(stmt);
 			synchronized (sources) {
 				for (String id : ids) {
-					sources.add(new StatementSource(id, StatementSourceType.REMOTE));
+					if (isInEndpoints(id)) {
+						sources.add(new StatementSource(id, StatementSourceType.REMOTE));
+					}
 				}
 			}
 		}
+	}
+
+	public boolean isInEndpoints(String id) {
+		for (Endpoint endpoint : this.endpoints) {
+			if (id.equals(endpoint.getId())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -489,7 +500,9 @@ public class TBSSSourceSelection extends SourceSelection {
 			List<StatementSource> sources = stmtToSources.get(stmt);
 			synchronized (sources) {
 				for (String id : ids) {
-					sources.add(new StatementSource(id, StatementSourceType.REMOTE));
+					if (isInEndpoints(id)) {
+						sources.add(new StatementSource(id, StatementSourceType.REMOTE));
+					}
 				}
 			}
 		}

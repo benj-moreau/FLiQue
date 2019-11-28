@@ -19,6 +19,8 @@ public class LicenseChecker {
     public Model summary =  ModelFactory.createDefaultModel() ;
     public HashMap<String, String> sourceLicenses;
     public Set<String> licenses;
+    public HashMap<String, Integer> endpointLicenseConflicts;
+    public HashMap<String, Integer> licenseConflicts;
 
 
     /**
@@ -35,31 +37,30 @@ public class LicenseChecker {
         }
         this.sourceLicenses = new HashMap<>();
         this.licenses = new HashSet<>();
-
+        this.endpointLicenseConflicts = new HashMap<>();
+        this.licenseConflicts = new HashMap<>();
     }
 
     /**
      * Returns sources and its number of license conflicts
      * */
     public HashMap<String, Integer> getEndpointlicenseConflicts() {
-        HashMap<String, Integer> EndpointlicenseConflicts = new HashMap<>();
-        HashMap<String, Integer> licenseConflicts = new HashMap<>();
         for (String license1: this.licenses) {
             int conflicts = 0;
             for (String license2: this.licenses) {
                 if (!license1.equals(license2) && getCompliantLicenses(license1, license2).isEmpty()){
-                    log.info("Conflict detected between license " + getLabelLicenses(license1) + "and licence" + getLabelLicenses(license2));
+                    log.info("Conflict detected between license " + getLabelLicenses(license1) + " and license " + getLabelLicenses(license2));
                     conflicts++;
                 }
             }
-            licenseConflicts.put(license1, conflicts);
+            this.licenseConflicts.put(license1, conflicts);
         }
         for (Map.Entry<String, String> entry : this.sourceLicenses.entrySet()) {
             String source = entry.getKey();
             String license = entry.getValue();
-            EndpointlicenseConflicts.put(source, licenseConflicts.get(license));
+            this.endpointLicenseConflicts.put(source, this.licenseConflicts.get(license));
         }
-        return EndpointlicenseConflicts;
+        return this.endpointLicenseConflicts;
     }
 
     /**
@@ -133,19 +134,29 @@ public class LicenseChecker {
     }
 
     /**
-     * Returns the list of sources that have the most license conflicts with other sources.
+     * Returns the list of sources that are protected with the license that have the most conflicts with other licenses.
+     * If conflicts are equals, we remove the least reusable
      * */
-    public ArrayList<String> getSourcesToRemove(HashMap<String, Integer> EndpointlicenseConflicts) {
+    public ArrayList<String> getSourcesToRemove() {
         ArrayList<String> sourcesToRemove = new ArrayList<>();
         int conflicts = 0;
-        for (Map.Entry<String, Integer> entry : EndpointlicenseConflicts.entrySet()) {
-            String source = entry.getKey();
+        String licenseTothrow = "";
+        for (Map.Entry<String, Integer> entry : this.licenseConflicts.entrySet()) {
+            String license = entry.getKey();
             if (entry.getValue() > conflicts) {
                 conflicts = entry.getValue();
-                sourcesToRemove = new ArrayList<>();
-                sourcesToRemove.add(source);
+                licenseTothrow = license;
             } else if (entry.getValue() == conflicts) {
-                sourcesToRemove.add(source);
+                // If conflicts are equal, we take the least reusable
+                if (getCompliantLicenses(licenseTothrow).size() > getCompliantLicenses(license).size()){
+                    licenseTothrow = license;
+                }
+            }
+        }
+        for (Map.Entry<String, String> entry : this.sourceLicenses.entrySet()) {
+            String license = entry.getValue();
+            if (license.equals(licenseTothrow)) {
+                sourcesToRemove.add(entry.getKey());
             }
         }
         log.info(sourcesToRemove.toString() + " will be removed from sources because of " + conflicts + " license conflicts");

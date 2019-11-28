@@ -1,8 +1,6 @@
 package org.ods.start;
 
-import com.fluidops.fedx.Config;
-import com.fluidops.fedx.EndpointManager;
-import com.fluidops.fedx.FedXFactory;
+import com.fluidops.fedx.*;
 import com.fluidops.fedx.algebra.StatementSource;
 import com.fluidops.fedx.optimizer.SourceSelection;
 import com.fluidops.fedx.structures.QueryInfo;
@@ -48,7 +46,7 @@ public class QueryEvaluation {
 		String repfile = args.length > 1 ? args[1] : null;
 		
 		String host = "localhost";
-		String queries = "CH6";
+		String queries = "CH3";
 	
 		List<String> endpointsMin2 = Arrays.asList(
 			 "http://" + host + ":8890/sparql",
@@ -91,98 +89,92 @@ public class QueryEvaluation {
 		List<String> qnames = Arrays.asList(queries.split(" "));
 		for (String curQueryName : qnames)
 		{
-			List<Object> reportRow = new ArrayList<Object>();
-			report.add(reportRow);
-			String curQuery = qp.getQuery(curQueryName);
-			reportRow.add(curQueryName);
-			
-			List<Object> sstReportRow = new ArrayList<Object>();
-			sstreport.add(sstReportRow);
-			sstReportRow.add(curQueryName);
-			
-			Config config = new Config(cfgName);
-			SailRepository repo = null;
-			TupleQueryResult res = null;
-			
-			try {
-				repo = FedXFactory.initializeSparqlFederation(config, endpoints);
-				TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
-			   	long startTime = System.currentTimeMillis();
-			   	res = query.evaluate();
-			   	//TODO Remove that !
-				// QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery );
-			   	// This is where FLiQuE is inserted
-				QueryInfo queryInfo = QueryInfo.queryInfo.get();
-				SourceSelection sourceSelection = queryInfo.getSourceSelection();
-				Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
-				log.info(stmtToSources.toString());
-				// 1. Verifier licences des sources
-				LicenseChecker licenseChecker = new LicenseChecker("summaries/fedbench.n3");
-				EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
-				Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
-				/*
-				while (consistentLicenses.isEmpty()) {
-					// a license compatible with licenses of sources does not exists
-					// We need to eliminate sources
-					HashMap<String, Integer> endpointLicenseConflicts = licenseChecker.getEndpointlicenseConflicts();
-					ArrayList<String> sourcesToRemove = licenseChecker.getSourcesToRemove(endpointLicenseConflicts);
-					//remove endpoints
-					endpoints.removeIf(enpoint -> (sourcesToRemove.contains(enpoint)));
-					// on retry
-					repo = FedXFactory.initializeSparqlFederation(config, endpoints);
-					query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
-					res = query.evaluate();
-					queryInfo = QueryInfo.queryInfo.get();
-					sourceSelection = queryInfo.getSourceSelection();
-					stmtToSources = sourceSelection.getStmtToSources();
-					log.info(stmtToSources.toString());
-					// ReVerifier licences des sources
-					endpointManager = queryInfo.getFedXConnection().getEndpointManager();
-					consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
-				}
-				*/
-				// Here, we resolved all license conflicts
-				while (!res.hasNext()) {
-					// Here we relax the query until we get at least one result
-					break;
-				}
-
-				// Now we can execute the query with FedX
-			   	long count = 0;
-				// TODO Uncomment next to execute query
-			    while (res.hasNext()) {
-			    	BindingSet row = res.next();
-			    	System.out.println(count+": "+ row);
-			    	count++;
-			    }
-			    long runTime = System.currentTimeMillis() - startTime;
-			    reportRow.add((Long)count); reportRow.add((Long)runTime);
-			    sstReportRow.add((Long)count);
-			    sstReportRow.add(queryInfo.numSources.longValue());
-			    sstReportRow.add(queryInfo.totalSources.longValue());
-			    log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source count: " + queryInfo.numSources.longValue());
-				log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
-			} catch (Throwable e) {
-				e.printStackTrace();
-				log.error("", e);
-				File f = new File("results/" + curQueryName + ".error.txt");
-				ByteArrayOutputStream os = new ByteArrayOutputStream();
-				PrintStream ps = new PrintStream(os);
-				e.printStackTrace(ps);
-				ps.flush();
-				FileUtils.write(f, os.toString("UTF8"));
-				reportRow.add(null); reportRow.add(null);
-			} finally {
-				if (null != res) {
-		    		res.close();
-		    	}
-				
-		    	if (null != repo) {
-		    	    repo.shutDown();
-		    	}
-	        }
+			execute(curQueryName, cfgName, endpoints, report, sstreport);
 		}
 		return result;
+	}
+
+	public void execute(String curQueryName, String cfgName, List<String> endpoints, List<List<Object>> report, List<List<Object>> sstreport) throws Exception {
+		List<Object> reportRow = new ArrayList<Object>();
+		report.add(reportRow);
+		String curQuery = qp.getQuery(curQueryName);
+		if (!reportRow.contains(curQueryName)) {reportRow.add(curQueryName);}
+		List<Object> sstReportRow = new ArrayList<Object>();
+		if (!sstreport.contains(sstReportRow)) {sstreport.add(sstReportRow);}
+		if (!sstReportRow.contains(curQueryName)) {sstReportRow.add(curQueryName);}
+		Config config = new Config(cfgName);
+		SailRepository repo = null;
+		TupleQueryResult res = null;
+		try {
+			repo = FedXFactory.initializeSparqlFederation(config, endpoints);
+			TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
+			long startTime = System.currentTimeMillis();
+			res = query.evaluate();
+			// TODO Remove that !
+			// QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery );
+			// This is where FLiQuE is inserted
+			QueryInfo queryInfo = QueryInfo.queryInfo.get();
+			SourceSelection sourceSelection = queryInfo.getSourceSelection();
+			Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
+			log.info(stmtToSources.toString());
+			// 1. Verifier licences des sources
+			LicenseChecker licenseChecker = new LicenseChecker("summaries/largeRDFBench.n3");
+			EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+			Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
+			if (consistentLicenses.isEmpty()) {
+				// a license compatible with licenses of sources does not exists
+				// We need to eliminate sources
+				licenseChecker.getEndpointlicenseConflicts();
+				ArrayList<String> sourcesToRemove = licenseChecker.getSourcesToRemove();
+				//remove endpoints
+				ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
+				newEndpoints.removeAll(sourcesToRemove);
+				// appel recursif a faire ici
+				execute(curQueryName, cfgName, newEndpoints, report, sstreport);
+				return;
+			}
+			// Here, we resolved all license conflicts
+			/*
+			while (!res.hasNext()) {
+				// Here we relax the query until we get at least one result
+				break;
+			}*/
+
+			// Now we can execute the query with FedX
+			long count = 0;
+			// TODO Uncomment next to execute query
+			/*
+			while (res.hasNext()) {
+				BindingSet row = res.next();
+				System.out.println(count+": "+ row);
+				count++;
+			}*/
+			long runTime = System.currentTimeMillis() - startTime;
+			reportRow.add((Long)count); reportRow.add((Long)runTime);
+			sstReportRow.add((Long)count);
+			sstReportRow.add(queryInfo.numSources.longValue());
+			sstReportRow.add(queryInfo.totalSources.longValue());
+			log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source count: " + queryInfo.numSources.longValue());
+			log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
+		} catch (Throwable e) {
+			e.printStackTrace();
+			log.error("", e);
+			File f = new File("results/" + curQueryName + ".error.txt");
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			PrintStream ps = new PrintStream(os);
+			e.printStackTrace(ps);
+			ps.flush();
+			FileUtils.write(f, os.toString("UTF8"));
+			reportRow.add(null); reportRow.add(null);
+		} finally {
+			if (null != res) {
+				res.close();
+			}
+
+			if (null != repo) {
+				repo.shutDown();
+			}
+		}
 	}
 	
 	static Map<String, List<List<Object>>> multyEvaluate(String queries, int num, String cfgName, List<String> endpoints) throws Exception {

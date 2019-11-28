@@ -1,6 +1,9 @@
-java.lang.UnsupportedOperationException: remove
-	at java.base/java.util.Iterator.remove(Iterator.java:102)
-	at java.base/java.util.Collection.removeIf(Collection.java:545)
-	at org.ods.start.QueryEvaluation.evaluate(QueryEvaluation.java:129)
-	at org.ods.start.QueryEvaluation.multyEvaluate(QueryEvaluation.java:191)
+java.lang.NullPointerException
+	at org.ods.core.license.LicenseChecker.lambda$getConsistentLicenses$0(LicenseChecker.java:72)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.ods.core.license.LicenseChecker.lambda$getConsistentLicenses$1(LicenseChecker.java:71)
+	at java.base/java.util.concurrent.ConcurrentHashMap.forEach(ConcurrentHashMap.java:1603)
+	at org.ods.core.license.LicenseChecker.getConsistentLicenses(LicenseChecker.java:70)
+	at org.ods.start.QueryEvaluation.evaluate(QueryEvaluation.java:141)
+	at org.ods.start.QueryEvaluation.multyEvaluate(QueryEvaluation.java:192)
 	at org.ods.start.QueryEvaluation.main(QueryEvaluation.java:69)
