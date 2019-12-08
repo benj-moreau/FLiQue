@@ -36,7 +36,6 @@ def add_all_super_properties(summary, saturated_summary):
     for node, property in summary.subject_objects(URIRef("http://aksw.org/quetsal/predicate")):
         super_properties = get_super_properties_transitive(property)
         for super_property in super_properties:
-            print(str(super_property))
             saturated_summary.add((node, URIRef("http://aksw.org/quetsal/predicate"), super_property))
 
 

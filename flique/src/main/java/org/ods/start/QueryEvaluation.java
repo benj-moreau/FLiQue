@@ -6,6 +6,8 @@ import com.fluidops.fedx.optimizer.SourceSelection;
 import com.fluidops.fedx.structures.QueryInfo;
 import org.aksw.simba.start.QueryProvider;
 import org.apache.commons.io.FileUtils;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.riot.RDFDataMgr;
 import org.eclipse.rdf4j.query.*;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
@@ -21,6 +23,8 @@ import java.util.*;
 
 public class QueryEvaluation {
 	protected static final Logger log = LoggerFactory.getLogger(QueryEvaluation.class);
+	protected static final Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
+	protected static final Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
 	static {
 		try {
 			ClassLoader.getSystemClassLoader().loadClass("org.slf4j.LoggerFactory"). getMethod("getLogger", ClassLoader.getSystemClassLoader().loadClass("java.lang.String")).
@@ -110,14 +114,12 @@ public class QueryEvaluation {
 			TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
 			long startTime = System.currentTimeMillis();
 			res = query.evaluate();
-			// TODO Remove that !
-			// QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery );
 			// This is where FLiQuE is inserted
 			QueryInfo queryInfo = QueryInfo.queryInfo.get();
 			SourceSelection sourceSelection = queryInfo.getSourceSelection();
 			Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
 			log.info(stmtToSources.toString());
-			// 1. Verifier licences des sources
+			// 1. Check licenses
 			LicenseChecker licenseChecker = new LicenseChecker("summaries/largeRDFBench.n3");
 			EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
 			Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
@@ -129,12 +131,14 @@ public class QueryEvaluation {
 				//remove endpoints
 				ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
 				newEndpoints.removeAll(sourcesToRemove);
-				// appel recursif a faire ici
+				// recursive call.. we restart a query execution with the new federation
 				execute(curQueryName, cfgName, newEndpoints, report, sstreport);
 				return;
 			}
 			// Here, we resolved all license conflicts
+			QueryRelaxationLattice relaxationLattice;
 			while (!res.hasNext()) {
+				relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary);
 				log.info("RESULTATS VIDES... IL FAUDRA RELACHER LA REQUETE");
 				break;
 			}
