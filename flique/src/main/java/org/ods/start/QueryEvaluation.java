@@ -46,7 +46,7 @@ public class QueryEvaluation {
 		String repfile = args.length > 1 ? args[1] : null;
 		
 		String host = "localhost";
-		String queries = "CH3";
+		String queries = "CH1";
 	
 		List<String> endpointsMin2 = Arrays.asList(
 			 "http://" + host + ":8890/sparql",
@@ -134,21 +134,19 @@ public class QueryEvaluation {
 				return;
 			}
 			// Here, we resolved all license conflicts
-			/*
 			while (!res.hasNext()) {
-				// Here we relax the query until we get at least one result
+				log.info("RESULTATS VIDES... IL FAUDRA RELACHER LA REQUETE");
 				break;
-			}*/
+			}
 
 			// Now we can execute the query with FedX
 			long count = 0;
 			// TODO Uncomment next to execute query
-			/*
 			while (res.hasNext()) {
 				BindingSet row = res.next();
 				System.out.println(count+": "+ row);
 				count++;
-			}*/
+			}
 			long runTime = System.currentTimeMillis() - startTime;
 			reportRow.add((Long)count); reportRow.add((Long)runTime);
 			sstReportRow.add((Long)count);
