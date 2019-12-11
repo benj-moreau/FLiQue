@@ -16,9 +16,8 @@ import org.ods.core.relaxation.QueryRelaxationLattice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.PrintStream;
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class QueryEvaluation {
@@ -47,7 +46,10 @@ public class QueryEvaluation {
 	public static void main(String[] args) throws Exception 
 	{
 		String cfgName = args[0];
+		// Config file
 		String repfile = args.length > 1 ? args[1] : null;
+		// Not running FLiQuE if the following is true (false by default)
+		Boolean CostFedExec = args.length > 2 ? false : true;
 		
 		String host = "localhost";
 		String queries = "L8";
@@ -68,56 +70,45 @@ public class QueryEvaluation {
 		
 		List<String> endpoints = endpointsMin2;
 		
-		Map<String, List<List<Object>>> reports = multyEvaluate(queries, 1, cfgName, endpoints);
-
-		for (Map.Entry<String, List<List<Object>>> e : reports.entrySet())
-		{
-			List<List<Object>> report = e.getValue();
-			String r = printReport(report);
-			log.info(r);
-			if (null != repfile) {
-				FileUtils.write(new File(repfile + "-" + e.getKey() + ".csv"), r);
-			}
-		}
-
+		multyEvaluate(queries, 1, cfgName, endpoints);
 		System.exit(0);
 	}
 	
-	public Map<String, List<List<Object>>> evaluate(String queries, String cfgName, List<String> endpoints) throws Exception {
-		List<List<Object>> report = new ArrayList<List<Object>>();
-		List<List<Object>> sstreport = new ArrayList<List<Object>>();
-		Map<String, List<List<Object>>> result = new HashMap<String, List<List<Object>>>();
-		result.put("report", report);
-		result.put("sstreport", sstreport);
-		
+	public void evaluate(String queries, String cfgName, List<String> endpoints) throws Exception {
 		List<String> qnames = Arrays.asList(queries.split(" "));
+		String fileName;
+		String fedName;
+		Date date;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		for (String curQueryName : qnames)
 		{
-			execute(curQueryName, cfgName, endpoints, report, sstreport);
+			date = new Date();
+			fedName = "Federation " + curQueryName;
+			fileName = "results/" + formatter.format(date) + "_" + curQueryName + "-results.txt";
+			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+			long startTime = System.currentTimeMillis();
+			execute(curQueryName, cfgName, endpoints, writer, fedName);
+			long runTime = System.currentTimeMillis() - startTime;
+			log.info(curQueryName + ": Query execution time (msec): "+ runTime);
+			writer.close();
 		}
-		return result;
 	}
 
-	public void execute(String curQueryName, String cfgName, List<String> endpoints, List<List<Object>> report, List<List<Object>> sstreport) throws Exception {
-		List<Object> reportRow = new ArrayList<Object>();
-		report.add(reportRow);
+	public void execute(String curQueryName, String cfgName, List<String> endpoints,BufferedWriter writer, String fedName) throws Exception {
 		String curQuery = qp.getQuery(curQueryName);
-		if (!reportRow.contains(curQueryName)) {reportRow.add(curQueryName);}
-		List<Object> sstReportRow = new ArrayList<Object>();
-		if (!sstreport.contains(sstReportRow)) {sstreport.add(sstReportRow);}
-		if (!sstReportRow.contains(curQueryName)) {sstReportRow.add(curQueryName);}
 		Config config = new Config(cfgName);
 		SailRepository repo = null;
 		TupleQueryResult res = null;
 		try {
 			repo = FedXFactory.initializeSparqlFederation(config, endpoints);
 			TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
-			long startTime = System.currentTimeMillis();
 			res = query.evaluate();
 			// This is where FLiQuE is inserted
 			QueryInfo queryInfo = QueryInfo.queryInfo.get();
 			SourceSelection sourceSelection = queryInfo.getSourceSelection();
 			Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
+			writer.write("--" + fedName + ":\n");
+			writer.write(stmtToSources.toString() + "\n\n");
 			log.info(stmtToSources.toString());
 			// 1. Check licenses
 			LicenseChecker licenseChecker = new LicenseChecker("summaries/largeRDFBench.n3");
@@ -132,7 +123,7 @@ public class QueryEvaluation {
 				ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
 				newEndpoints.removeAll(sourcesToRemove);
 				// recursive call.. we restart a query execution with the new federation
-				execute(curQueryName, cfgName, newEndpoints, report, sstreport);
+				execute(curQueryName, cfgName, newEndpoints, writer, fedName + "'");
 				return;
 			}
 			// Here, we resolved all license conflicts
@@ -151,12 +142,7 @@ public class QueryEvaluation {
 				System.out.println(count+": "+ row);
 				count++;
 			}
-			long runTime = System.currentTimeMillis() - startTime;
-			reportRow.add((Long)count); reportRow.add((Long)runTime);
-			sstReportRow.add((Long)count);
-			sstReportRow.add(queryInfo.numSources.longValue());
-			sstReportRow.add(queryInfo.totalSources.longValue());
-			log.info(curQueryName + ": Query exection time (msec): "+ runTime + ", Total Number of Records: " + count + ", Source count: " + queryInfo.numSources.longValue());
+			writer.write(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
 			log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -167,7 +153,6 @@ public class QueryEvaluation {
 			e.printStackTrace(ps);
 			ps.flush();
 			FileUtils.write(f, os.toString("UTF8"));
-			reportRow.add(null); reportRow.add(null);
 		} finally {
 			if (null != res) {
 				res.close();
@@ -179,51 +164,12 @@ public class QueryEvaluation {
 		}
 	}
 	
-	static Map<String, List<List<Object>>> multyEvaluate(String queries, int num, String cfgName, List<String> endpoints) throws Exception {
+	static void multyEvaluate(String queries, int num, String cfgName, List<String> endpoints) throws Exception {
 		QueryEvaluation qeval = new QueryEvaluation();
 
 		Map<String, List<List<Object>>> result = null;
 		for (int i = 0; i < num; ++i) {
-			Map<String, List<List<Object>>> subReports = qeval.evaluate(queries, cfgName, endpoints);
-			if (i == 0) {
-				result = subReports;
-			} else {
-				//assert(report.size() == subReport.size());
-				for (Map.Entry<String, List<List<Object>>> e : subReports.entrySet())
-				{
-					List<List<Object>> subReport = e.getValue();
-					for (int j = 0; j < subReport.size(); ++j) {
-						List<Object> subRow = subReport.get(j);
-						List<Object> row = result.get(e.getKey()).get(j);
-						row.add(subRow.get(2));
-					}
-				}
-			}
+			qeval.evaluate(queries, cfgName, endpoints);
 		}
-		
-		return result;
-	}
-	
-	static String printReport(List<List<Object>> report) {
-		if (report.isEmpty()) return "";
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append("Query,#Results");
-		
-		List<Object> firstRow = report.get(0);
-		for (int i = 2; i < firstRow.size(); ++i) {
-			sb.append(",Sample #").append(i - 2);
-		}
-		sb.append("\n");
-		for (List<Object> row : report) {
-			for (int c = 0; c < row.size(); ++c) {
-				sb.append(row.get(c));
-				if (c != row.size() - 1) {
-					sb.append(",");
-				}
-			}
-			sb.append("\n");
-		}
-		return sb.toString();
 	}
 }
