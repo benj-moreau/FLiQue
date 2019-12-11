@@ -1,0 +1,55 @@
+org.eclipse.rdf4j.query.QueryEvaluationException: com.fluidops.fedx.exception.OptimizationException: com.fluidops.fedx.exception.OptimizationException: Error checking results for endpoint sparql_localhost:8890_sparql: @ sparql_localhost:8890_sparql - HTTP Error: 406 Not Acceptable. Subquery: ASK {<http://dbpedia.org/resource/Barack_Obama> ?predicate ?object .  }
+	at org.eclipse.rdf4j.repository.sail.SailTupleQuery.evaluate(SailTupleQuery.java:64)
+	at org.ods.start.QueryEvaluation.execute(QueryEvaluation.java:116)
+	at org.ods.start.QueryEvaluation.evaluate(QueryEvaluation.java:96)
+	at org.ods.start.QueryEvaluation.multyEvaluate(QueryEvaluation.java:191)
+	at org.ods.start.QueryEvaluation.main(QueryEvaluation.java:71)
+Caused by: org.eclipse.rdf4j.sail.SailException: com.fluidops.fedx.exception.OptimizationException: com.fluidops.fedx.exception.OptimizationException: Error checking results for endpoint sparql_localhost:8890_sparql: @ sparql_localhost:8890_sparql - HTTP Error: 406 Not Acceptable. Subquery: ASK {<http://dbpedia.org/resource/Barack_Obama> ?predicate ?object .  }
+	at com.fluidops.fedx.FedXConnection.evaluateInternal(FedXConnection.java:336)
+	at org.eclipse.rdf4j.sail.helpers.AbstractSailConnection.evaluate(AbstractSailConnection.java:267)
+	at org.eclipse.rdf4j.repository.sail.SailTupleQuery.evaluate(SailTupleQuery.java:54)
+	... 4 more
+Caused by: com.fluidops.fedx.exception.OptimizationException: com.fluidops.fedx.exception.OptimizationException: Error checking results for endpoint sparql_localhost:8890_sparql: @ sparql_localhost:8890_sparql - HTTP Error: 406 Not Acceptable. Subquery: ASK {<http://dbpedia.org/resource/Barack_Obama> ?predicate ?object .  }
+	at org.aksw.simba.quetsal.core.TBSSSourceSelection$SourceSelectionExecutorWithLatch.executeRemoteSourceSelection(TBSSSourceSelection.java:1414)
+	at org.aksw.simba.quetsal.core.TBSSSourceSelection$SourceSelectionExecutorWithLatch.run(TBSSSourceSelection.java:1364)
+	at org.aksw.simba.quetsal.core.TBSSSourceSelection.performSourceSelection(TBSSSourceSelection.java:203)
+	at com.fluidops.fedx.optimizer.Optimizer.optimize(Optimizer.java:87)
+	at com.fluidops.fedx.FedXConnection.evaluateInternal(FedXConnection.java:333)
+	... 6 more
+Caused by: java.util.concurrent.ExecutionException: com.fluidops.fedx.exception.OptimizationException: Error checking results for endpoint sparql_localhost:8890_sparql: @ sparql_localhost:8890_sparql - HTTP Error: 406 Not Acceptable. Subquery: ASK {<http://dbpedia.org/resource/Barack_Obama> ?predicate ?object .  }
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+	at org.aksw.simba.quetsal.core.TBSSSourceSelection$SourceSelectionExecutorWithLatch.executeRemoteSourceSelection(TBSSSourceSelection.java:1394)
+	... 10 more
+Caused by: com.fluidops.fedx.exception.OptimizationException: Error checking results for endpoint sparql_localhost:8890_sparql: @ sparql_localhost:8890_sparql - HTTP Error: 406 Not Acceptable. Subquery: ASK {<http://dbpedia.org/resource/Barack_Obama> ?predicate ?object .  }
+	at org.aksw.simba.quetsal.core.TBSSSourceSelection$ParallelCheckTask.call(TBSSSourceSelection.java:1464)
+	at org.aksw.simba.quetsal.core.TBSSSourceSelection$ParallelCheckTask.call(TBSSSourceSelection.java:1435)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at com.fluidops.fedx.evaluation.concurrent.ControlledWorkerScheduler$WorkerTask.run(ControlledWorkerScheduler.java:237)
+	at com.fluidops.fedx.evaluation.concurrent.ControlledWorkerScheduler.threadProc(ControlledWorkerScheduler.java:105)
+	at com.fluidops.fedx.evaluation.concurrent.ControlledWorkerScheduler.access$000(ControlledWorkerScheduler.java:21)
+	at com.fluidops.fedx.evaluation.concurrent.ControlledWorkerScheduler$1.run(ControlledWorkerScheduler.java:50)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: org.eclipse.rdf4j.query.QueryEvaluationException: @ sparql_localhost:8890_sparql - HTTP Error: 406 Not Acceptable. Subquery: ASK {<http://dbpedia.org/resource/Barack_Obama> ?predicate ?object .  }
+	at org.eclipse.rdf4j.repository.sparql.query.SPARQLBooleanQuery.evaluate(SPARQLBooleanQuery.java:45)
+	at com.fluidops.fedx.evaluation.SparqlTripleSource.hasStatements(SparqlTripleSource.java:160)
+	at org.aksw.simba.quetsal.core.TBSSSourceSelection$ParallelCheckTask.call(TBSSSourceSelection.java:1454)
+	... 7 more
+Caused by: org.eclipse.rdf4j.repository.RepositoryException: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>406 Not Acceptable</title>
+</head><body>
+<h1>406 Not Acceptable</h1>
+<p>An appropriate representation of the requested resource sparql could not be found on this server.</p>
+Available variant(s):
+<ul>
+<li><a href="sparql">sparql</a> , type text/html, charset UTF-8</li>
+</ul>
+</body></html>
+	at org.eclipse.rdf4j.http.client.SPARQLProtocolSession.execute(SPARQLProtocolSession.java:1123)
+	at org.eclipse.rdf4j.http.client.SPARQLProtocolSession.executeOK(SPARQLProtocolSession.java:1046)
+	at org.eclipse.rdf4j.http.client.SPARQLProtocolSession.sendBooleanQueryViaHttp(SPARQLProtocolSession.java:1032)
+	at org.eclipse.rdf4j.http.client.SPARQLProtocolSession.getBoolean(SPARQLProtocolSession.java:978)
+	at org.eclipse.rdf4j.http.client.SPARQLProtocolSession.sendBooleanQuery(SPARQLProtocolSession.java:481)
+	at org.eclipse.rdf4j.repository.sparql.query.SPARQLBooleanQuery.evaluate(SPARQLBooleanQuery.java:38)
+	... 9 more

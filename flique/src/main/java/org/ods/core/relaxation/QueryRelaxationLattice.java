@@ -3,6 +3,7 @@ package org.ods.core.relaxation;
 import org.apache.jena.query.QueryFactory;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.sparql.core.TriplePath;
 import org.ods.core.relaxation.QueryRelaxer;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class QueryRelaxationLattice {
     private ArrayList<TreeSet> levels = new ArrayList<>();
     private Model ontology;
     private Model summary;
+    public QueryRelaxer queryRelaxer;
 
     public QueryRelaxationLattice(String originalQuery, Model ontology, Model summary) {
         TreeSet<RelaxedQuery> firstLevel = new TreeSet<>();
@@ -21,6 +23,7 @@ public class QueryRelaxationLattice {
         this.levels.add(firstLevel);
         this.ontology = ontology;
         this.summary = summary;
+        this.queryRelaxer = new QueryRelaxer(query, ontology, summary);
     }
 
     public TreeSet getLevel(int level) {
@@ -39,6 +42,5 @@ public class QueryRelaxationLattice {
         this.levels.add(nextLevel);
         return nextLevel;
     }
-
 
 }

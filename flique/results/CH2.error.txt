@@ -1,0 +1,8 @@
+java.lang.NullPointerException
+	at org.ods.core.relaxation.QueryRelaxer.<init>(QueryRelaxer.java:23)
+	at org.ods.core.relaxation.QueryRelaxationLattice.<init>(QueryRelaxationLattice.java:26)
+	at org.ods.start.QueryEvaluation.execute(QueryEvaluation.java:141)
+	at org.ods.start.QueryEvaluation.execute(QueryEvaluation.java:135)
+	at org.ods.start.QueryEvaluation.evaluate(QueryEvaluation.java:96)
+	at org.ods.start.QueryEvaluation.multyEvaluate(QueryEvaluation.java:187)
+	at org.ods.start.QueryEvaluation.main(QueryEvaluation.java:71)

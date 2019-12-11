@@ -50,7 +50,7 @@ public class QueryEvaluation {
 		String repfile = args.length > 1 ? args[1] : null;
 		
 		String host = "localhost";
-		String queries = "CH1";
+		String queries = "L8";
 	
 		List<String> endpointsMin2 = Arrays.asList(
 			 "http://" + host + ":8890/sparql",
