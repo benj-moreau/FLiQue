@@ -137,29 +137,32 @@ public class LicenseChecker {
      * Returns the list of sources that are protected with the license that have the most conflicts with other licenses.
      * If conflicts are equals, we remove the least reusable
      * */
-    public ArrayList<String> getSourcesToRemove() {
-        ArrayList<String> sourcesToRemove = new ArrayList<>();
+    public ArrayList<ArrayList> getSourcesToRemove() {
+        ArrayList<ArrayList> listSourcesToRemove = new ArrayList<>();
         int conflicts = 0;
-        String licenseTothrow = "";
+        ArrayList<String> licensesToRemove = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : this.licenseConflicts.entrySet()) {
             String license = entry.getKey();
             if (entry.getValue() > conflicts) {
                 conflicts = entry.getValue();
-                licenseTothrow = license;
+                licensesToRemove.clear();
+                licensesToRemove.add(license);
             } else if (entry.getValue() == conflicts) {
                 // If conflicts are equal, we take the least reusable
-                if (getCompliantLicenses(licenseTothrow).size() > getCompliantLicenses(license).size()){
-                    licenseTothrow = license;
+                licensesToRemove.add(license);
+            }
+        }
+        for (String license : licensesToRemove) {
+            ArrayList<String> SourcesToRemove = new ArrayList<>();
+            for (Map.Entry<String, String> entry : this.sourceLicenses.entrySet()) {
+                String sourceLicense = entry.getValue();
+                if (license.equals(sourceLicense)) {
+                    SourcesToRemove.add(entry.getKey());
                 }
             }
+            listSourcesToRemove.add(SourcesToRemove);
         }
-        for (Map.Entry<String, String> entry : this.sourceLicenses.entrySet()) {
-            String license = entry.getValue();
-            if (license.equals(licenseTothrow)) {
-                sourcesToRemove.add(entry.getKey());
-            }
-        }
-        log.info(sourcesToRemove.toString() + " will be removed from sources because of " + conflicts + " license conflicts");
-        return sourcesToRemove;
+        log.info(listSourcesToRemove.toString() + " will be removed from sources because of " + conflicts + " license conflicts");
+        return listSourcesToRemove;
     }
 }
