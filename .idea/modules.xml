@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FLiQuE.iml" filepath="$PROJECT_DIR$/FLiQuE.iml" />
       <module fileurl="file://$PROJECT_DIR$/costfed/costfed.iml" filepath="$PROJECT_DIR$/costfed/costfed.iml" />
-      <module fileurl="file://$PROJECT_DIR$/costfed-web/costfed-web.iml" filepath="$PROJECT_DIR$/costfed-web/costfed-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/fedx/fedx.iml" filepath="$PROJECT_DIR$/fedx/fedx.iml" />
       <module fileurl="file://$PROJECT_DIR$/flique/flique.iml" filepath="$PROJECT_DIR$/flique/flique.iml" />
     </modules>

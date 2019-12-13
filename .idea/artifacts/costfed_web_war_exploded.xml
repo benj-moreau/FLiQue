@@ -14,12 +14,8 @@
           <element id="module-output" name="costfed-web" />
         </element>
         <element id="directory" name="lib">
-          <element id="archive" name="costfed-core-0.0.1-SNAPSHOT.jar">
-            <element id="module-output" name="costfed" />
-          </element>
-          <element id="archive" name="fedx-0.0.1-SNAPSHOT.jar">
-            <element id="module-output" name="fedx" />
-          </element>
+          <element id="library" level="project" name="Maven: org.aksw:costfed-core:0.0.1-SNAPSHOT" />
+          <element id="library" level="project" name="Maven: org.aksw:fedx:0.0.1-SNAPSHOT" />
           <element id="library" level="project" name="Maven: org.eclipse.rdf4j:rdf4j-repository-http:2.3.2" />
           <element id="library" level="project" name="Maven: org.eclipse.rdf4j:rdf4j-sail-nativerdf:2.3.2" />
           <element id="library" level="project" name="Maven: org.eclipse.rdf4j:rdf4j-queryresultio-sparqljson:2.3.2" />
