@@ -48,8 +48,8 @@ public class QueryEvaluation {
 		this.results.put("nbFederations", null);
 		this.results.put("totalExecTime", null);
 		//endpoints
-		this.portEndpoints.put("8888", "LinkedTCGA-A");
-		this.portEndpoints.put("8890", "ChEBI");
+		this.portEndpoints.put("8889", "LinkedTCGA-A");
+		this.portEndpoints.put("8888", "ChEBI");
 		this.portEndpoints.put("8891", "DBPedia-Subset");
 		this.portEndpoints.put("8892", "DrugBank");
 		this.portEndpoints.put("8893", "Geo Names");
@@ -74,8 +74,10 @@ public class QueryEvaluation {
 		Boolean CostFedExec = args.length > 2 ? false : true;
 		
 		String host = "localhost";
-		String queries = "S1"; // S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
-	
+		String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
+		// String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
+
+
 		List<String> endpointsMin2 = Arrays.asList(
 			 "http://" + host + ":8888/sparql",
 			 "http://" + host + ":8891/sparql",
@@ -164,24 +166,34 @@ public class QueryEvaluation {
 					// recursive call.. we restart a query execution with the new federation
 					execute(curQueryName, cfgName, newEndpoints, writer, fedName);
 				}
+				if (null != res) {
+					// res.close();
+				}
+				if (null != repo) {
+					// repo.shutDown();
+				}
 				return;
 			}
 			// Here, we resolved all license conflicts
+			/*
 			QueryRelaxationLattice relaxationLattice;
 			while (!res.hasNext()) {
 				relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary);
 				log.info("RESULTATS VIDES... IL FAUDRA RELACHER LA REQUETE");
 				break;
 			}
+			*/
 
 			// Now we can execute the query with FedX
 			long count = 0;
 			// TODO Uncomment next to execute query
+			/*
 			while (res.hasNext()) {
 				BindingSet row = res.next();
 				System.out.println(count+": "+ row);
 				count++;
 			}
+			*/
 			writer.write(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
 			log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
 		} catch (Throwable e) {
@@ -195,11 +207,11 @@ public class QueryEvaluation {
 			FileUtils.write(f, os.toString("UTF8"));
 		} finally {
 			if (null != res) {
-				res.close();
+				// res.close();
 			}
 
 			if (null != repo) {
-				repo.shutDown();
+				// repo.shutDown();
 			}
 		}
 	}
@@ -207,7 +219,6 @@ public class QueryEvaluation {
 	static void multyEvaluate(String queries, int num, String cfgName, List<String> endpoints) throws Exception {
 		QueryEvaluation qeval = new QueryEvaluation();
 
-		Map<String, List<List<Object>>> result = null;
 		for (int i = 0; i < num; ++i) {
 			qeval.evaluate(queries, cfgName, endpoints);
 		}

@@ -11,8 +11,8 @@ extensionClass=org.aksw.simba.quetsal.configuration.QuetzalConfig
 summaryProviderClass=org.aksw.simba.quetsal.configuration.CostFedSummaryProvider
 endpointProviderClass=org.aksw.simba.quetsal.configuration.EndpointListFromDirectoryProvider
 
-#quetzal.mode=INDEX_DOMINANT
-quetzal.mode=ASK_DOMINANT
+quetzal.mode=INDEX_DOMINANT
+#quetzal.mode=ASK_DOMINANT
 quetzal.inputCommonPredThreshold=0.33
 quetzal.fedSummaries=summaries/saturated-largeRDFBench-summaries.n3
 
