@@ -48,7 +48,7 @@ public class QueryEvaluation {
 		this.results.put("nbFederations", null);
 		this.results.put("totalExecTime", null);
 		//endpoints
-		this.portEndpoints.put("8889", "LinkedTCGA-A");
+		this.portEndpoints.put("8888", "LinkedTCGA-A");
 		this.portEndpoints.put("8890", "ChEBI");
 		this.portEndpoints.put("8891", "DBPedia-Subset");
 		this.portEndpoints.put("8892", "DrugBank");
@@ -74,10 +74,10 @@ public class QueryEvaluation {
 		Boolean CostFedExec = args.length > 2 ? false : true;
 		
 		String host = "localhost";
-		String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
+		String queries = "S1"; // S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
 	
 		List<String> endpointsMin2 = Arrays.asList(
-			 "http://" + host + ":8890/sparql",
+			 "http://" + host + ":8888/sparql",
 			 "http://" + host + ":8891/sparql",
 			 "http://" + host + ":8892/sparql",
 			 "http://" + host + ":8893/sparql",

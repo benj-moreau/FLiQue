@@ -6,11 +6,15 @@ import org.apache.jena.sparql.algebra.Algebra;
 import org.apache.jena.sparql.algebra.Op;
 import org.apache.jena.sparql.algebra.OpVisitorBase;
 import org.apache.jena.sparql.algebra.op.OpBGP;
+import org.ods.start.QueryEvaluation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RelaxedQuery extends Query implements Comparable<RelaxedQuery> {
+    protected static final Logger log = LoggerFactory.getLogger(QueryEvaluation.class);
 
     private float similarity;
     private ArrayList<String> relaxationsLog;
