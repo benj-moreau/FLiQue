@@ -33,8 +33,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
- * 	THIS CLASS IS AN UPDATE OF THE ORIGINAL TBSSSummariesGenerator CLASS IN COSTFED
- * 	IT GENERATES VALID RDF SUMMARIZE (SEE LINE 347)
  * 	TODO: Create summary with a RDF lib such as Jena
  *  Generate Quetzal-TBSS Summaries for a set of federation members (SPARQL endpoints)
  *  @author saleem

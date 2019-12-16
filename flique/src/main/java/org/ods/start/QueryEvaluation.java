@@ -13,6 +13,7 @@ import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.ods.core.license.LicenseChecker;
 import org.ods.core.relaxation.QueryRelaxationLattice;
+import org.ods.core.relaxation.RelaxedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -171,14 +172,12 @@ public class QueryEvaluation {
 				return;
 			}
 			// Here, we resolved all license conflicts
-			// QueryRelaxationLattice relaxationLattice;
-			/*
+			QueryRelaxationLattice relaxationLattice;
 			while (!res.hasNext()) {
-				relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary);
-				log.info("RESULTATS VIDES... IL FAUDRA RELACHER LA REQUETE");
+				relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources);
+				TreeSet<RelaxedQuery> level = relaxationLattice.nextLevel();
 				break;
 			}
-			*/
 
 			// Now we can execute the query with FedX
 			long count = 0;
