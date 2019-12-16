@@ -251,7 +251,7 @@ public class HashJoinImpl extends RestartableLookAheadIteration<BindingSet> {
 	public void handleClose() {
 		resultQueue.close();
 		for (CloseableIteration<BindingSet, QueryEvaluationException> iter : childIters) {
-			iter.close();
+			if (iter != null) {iter.close();}
 		}
 		super.handleClose();
 	}

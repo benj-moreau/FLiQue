@@ -202,9 +202,11 @@ public class FedX implements Sail {
 	public void shutDown() throws SailException {
 		try {
 		    log.info("Shutting down federation and all underlying repositories ...");
-		    
-		    scheduler.shutdown();
-		    scheduler = null;
+
+		    if (scheduler != null) {
+				scheduler.shutdown();
+				scheduler = null;
+			}
 	        // Abort all running queries
 	        shutDownInternal();
 	        cache.persist();

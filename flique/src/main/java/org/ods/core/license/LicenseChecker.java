@@ -8,15 +8,12 @@ import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.*;
 
 
 public class LicenseChecker {
     protected static final Logger log = LoggerFactory.getLogger(LicenseChecker.class);
-    public Model summary =  ModelFactory.createDefaultModel() ;
+    public Model summary;
     public HashMap<String, String> sourceLicenses;
     public Set<String> licenses;
     public HashMap<String, Integer> endpointLicenseConflicts;
@@ -26,15 +23,10 @@ public class LicenseChecker {
     /**
      * Constructor
      *
-     * @param summaryPath Path to FLiQuE summary
+     * @param licensedSummary FLiQuE summary
      */
-    public LicenseChecker(String summaryPath) {
-        try {
-            InputStream summaryIn = new FileInputStream(summaryPath);
-            summary.read(summaryIn, " ", "N3");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public LicenseChecker(Model licensedSummary) {
+        this.summary = licensedSummary;
         this.sourceLicenses = new HashMap<>();
         this.licenses = new HashSet<>();
         this.endpointLicenseConflicts = new HashMap<>();

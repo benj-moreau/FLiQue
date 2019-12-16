@@ -24,6 +24,7 @@ public class QueryEvaluation {
 	protected static final Logger log = LoggerFactory.getLogger(QueryEvaluation.class);
 	protected static final Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
 	protected static final Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
+	protected static final Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
 	private HashMap<String, String> results = new HashMap<>();
 	private HashMap<String, String> portEndpoints = new HashMap<>();
 	private int nbFed = 0;
@@ -74,8 +75,8 @@ public class QueryEvaluation {
 		Boolean CostFedExec = args.length > 2 ? false : true;
 		
 		String host = "localhost";
-		String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
-		// String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C6 C7 C8 C9 C10 C1 C3 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
+		String queries = "C9";
+		// String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
 
 
 		List<String> endpointsMin2 = Arrays.asList(
@@ -145,12 +146,11 @@ public class QueryEvaluation {
 			writer.write("--" + fedName + ":\n");
 			writer.write(portsToDatasets(stmtToSources.toString()) + "\n\n");
 			// 1. Check licenses
-			LicenseChecker licenseChecker = new LicenseChecker("summaries/largeRDFBench.n3");
+			if (this.nbFed == 0) {this.licenseCheckTime = System.currentTimeMillis();}
+			LicenseChecker licenseChecker = new LicenseChecker(this.licensedSummary);
 			EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
 			Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
-			if (nbFed == 0) {
-				this.licenseCheckTime = System.currentTimeMillis() - this.startQueryExecTime;
-			}
+			if (nbFed == 0) {this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;}
 			this.nbFed += 1;
 			if (consistentLicenses.isEmpty()) {
 				// a license compatible with licenses of sources does not exists
@@ -166,17 +166,13 @@ public class QueryEvaluation {
 					// recursive call.. we restart a query execution with the new federation
 					execute(curQueryName, cfgName, newEndpoints, writer, fedName);
 				}
-				if (null != res) {
-					// res.close();
-				}
-				if (null != repo) {
-					// repo.shutDown();
-				}
+				if (null != res) {res.close();}
+				repo.shutDown();
 				return;
 			}
 			// Here, we resolved all license conflicts
+			// QueryRelaxationLattice relaxationLattice;
 			/*
-			QueryRelaxationLattice relaxationLattice;
 			while (!res.hasNext()) {
 				relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary);
 				log.info("RESULTATS VIDES... IL FAUDRA RELACHER LA REQUETE");
@@ -206,13 +202,9 @@ public class QueryEvaluation {
 			ps.flush();
 			FileUtils.write(f, os.toString("UTF8"));
 		} finally {
-			if (null != res) {
-				// res.close();
-			}
 
-			if (null != repo) {
-				// repo.shutDown();
-			}
+			if (null != res) {res.close();}
+			if (null != repo) {repo.shutDown();}
 		}
 	}
 	
