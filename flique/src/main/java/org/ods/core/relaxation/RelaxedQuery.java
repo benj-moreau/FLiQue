@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
-public class RelaxedQuery extends Query implements Comparable<RelaxedQuery> {
+public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Cloneable {
     protected static final Logger log = LoggerFactory.getLogger(RelaxedQuery.class);
 
     private float similarity;
@@ -14,6 +14,12 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery> {
 
     public RelaxedQuery() {
         super();
+        this.similarity = 0;
+        relaxationsLog = new ArrayList<>();
+    }
+
+    public RelaxedQuery(Query query) {
+        super(query);
         this.similarity = 0;
         relaxationsLog = new ArrayList<>();
     }
