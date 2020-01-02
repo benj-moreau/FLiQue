@@ -73,7 +73,7 @@ public class QueryEvaluation {
 		// Config file
 		String repfile = args.length > 1 ? args[1] : null;
 		// Not running FLiQuE if the following is true (false by default)
-		Boolean CostFedExec = args.length > 2 ? false : true;
+		Boolean CostFedExec = args.length <= 2;
 		
 		String host = "localhost";
 		String queries = "C9";

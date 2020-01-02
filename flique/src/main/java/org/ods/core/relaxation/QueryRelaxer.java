@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 class QueryRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(QueryRelaxer.class);
@@ -25,8 +26,7 @@ class QueryRelaxer {
                     TriplePath triple = tps.next();
                     ArrayList<TriplePath> relaxedTriples = TriplePatternRelaxer.relax(triple, summary, ontology);
                     for (TriplePath relaxedTriple : relaxedTriples) {
-                        RelaxedQuery relaxedQuery = new RelaxedQuery(query);
-                        log.info(relaxedQuery.toString());
+                        RelaxedQuery relaxedQuery = query.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
                         relaxedQueries.add(relaxedQuery);
                     }
@@ -37,14 +37,15 @@ class QueryRelaxer {
         return relaxedQueries;
     }
 
-    private static void switchTriple(RelaxedQuery query,TriplePath oldTriple,TriplePath relaxedTriple) {
+    private static void switchTriple(RelaxedQuery query, TriplePath oldTriple, TriplePath relaxedTriple) {
         ElementWalker.walk(query.getQueryPattern(), new ElementVisitorBase() {
             public void visit(ElementPathBlock el) {
-                Iterator<TriplePath> tps = el.patternElts();
+                ListIterator<TriplePath> tps = el.getPattern().iterator();
                 while (tps.hasNext()) {
                     TriplePath triple = tps.next();
                     if (triple.equals(oldTriple)) {
-                        triple = relaxedTriple;
+                        tps.remove();
+                        tps.add(relaxedTriple);
                         break;
                     }
                 }

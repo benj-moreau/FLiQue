@@ -1,6 +1,7 @@
 package org.ods.core.relaxation;
 
 import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,13 +16,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
     public RelaxedQuery() {
         super();
         this.similarity = 0;
-        relaxationsLog = new ArrayList<>();
-    }
-
-    public RelaxedQuery(Query query) {
-        super(query);
-        this.similarity = 0;
-        relaxationsLog = new ArrayList<>();
+        this.relaxationsLog = new ArrayList<>();
     }
 
     public float getSimilarity() {
@@ -40,5 +35,14 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         } else {
             return (this.similarity < o.similarity ? -1 : +1);
         }
+    }
+
+    @Override
+    public RelaxedQuery clone()  {
+        RelaxedQuery clone = new RelaxedQuery();
+        QueryFactory.parse(clone, this.serialize(), null, null);
+        clone.similarity = this.similarity;
+        clone.relaxationsLog = (ArrayList<String>) this.relaxationsLog.clone();
+        return clone;
     }
 }
