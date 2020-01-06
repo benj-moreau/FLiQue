@@ -40,11 +40,12 @@ public class QueryRelaxationLattice {
         TreeSet<RelaxedQuery> nextLevel = new TreeSet<>();
         TreeSet<RelaxedQuery> previousLevel =  this.levels.get(this.levels.size() - 1);
         for (RelaxedQuery previousQuery : previousLevel) {
-            nextLevel.addAll(QueryRelaxer.relax(previousQuery ,this.ontology, this.summary));
+            nextLevel.addAll(QueryRelaxer.relax((RelaxedQuery) this.levels.get(0).first() ,previousQuery ,this.ontology, this.summary));
             // relacher la requete (3x ?)
             // verifier si pruned
             // sinon ajouter a nextLevel
         }
+        log.info(nextLevel.toString());
         this.levels.add(nextLevel);
         return nextLevel;
     }

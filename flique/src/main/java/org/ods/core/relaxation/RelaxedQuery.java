@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Cloneable {
     protected static final Logger log = LoggerFactory.getLogger(RelaxedQuery.class);
 
-    private float similarity;
+    private double similarity;
     private ArrayList<String> relaxationsLog;
 
     public RelaxedQuery() {
@@ -19,8 +19,12 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         this.relaxationsLog = new ArrayList<>();
     }
 
-    public float getSimilarity() {
+    public double getSimilarity() {
         return similarity;
+    }
+
+    public void setSimilarity(double similarity) {
+        this.similarity = similarity;
     }
 
     public ArrayList<String> getRelaxations() {
@@ -44,5 +48,10 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         clone.similarity = this.similarity;
         clone.relaxationsLog = (ArrayList<String>) this.relaxationsLog.clone();
         return clone;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "_________________________________\nSimilarity:" + this.similarity;
     }
 }
