@@ -27,7 +27,7 @@ public class QueryEvaluation {
 	protected static final Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
 	protected static final Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
 	protected static final Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
-	protected static  final double minSimilarity = 0.1;
+	protected static  final double minSimilarity = 0.0;
 	private HashMap<String, String> results = new HashMap<>();
 	private HashMap<String, String> portEndpoints = new HashMap<>();
 	private int nbFed = 0;
@@ -198,22 +198,17 @@ public class QueryEvaluation {
 					query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, relaxedQuery.serialize());
 					res = query.evaluate();
 					nbEvaluatedRelaxedQueries += 1;
+					nbGeneratedRelaxedQueries += 1;
 					if (res.hasNext()) {
 						writer.write(" This query has at least 1 result !\n\n");
 						ResultSimilarity = relaxedQuery.getSimilarity();
-						while (nextLevel.hasNext()) {
-							nextLevel.next();
-							nbGeneratedRelaxedQueries += 1;
-						}
+						nbGeneratedRelaxedQueries += Iterators.size(nextLevel);
 						break relaxation;
 					}
 					writer.write(" This query has no result\n\n");
 					res.close();
 				}
-				while (nextLevel.hasNext()) {
-					nextLevel.next();
-					nbGeneratedRelaxedQueries += 1;
-				}
+				nbGeneratedRelaxedQueries += Iterators.size(nextLevel);
 			}
 			// we found a query that return at least 1 result.
 			this.results.put("nbGeneratedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbGeneratedRelaxedQueries")) + nbGeneratedRelaxedQueries));
