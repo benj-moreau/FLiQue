@@ -16,7 +16,7 @@ import java.util.ListIterator;
 class QueryRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(QueryRelaxer.class);
 
-    public static ArrayList<RelaxedQuery> relax(RelaxedQuery originalQuery, RelaxedQuery queryToRelax, Model ontology, Model summary) {
+    public static ArrayList<RelaxedQuery> relax(RelaxedQuery originalQuery, RelaxedQuery queryToRelax, Model ontology, Model summary, double minSimilarity) {
         ArrayList<RelaxedQuery> relaxedQueries = new ArrayList<>();
         ElementWalker.walk(queryToRelax.getQueryPattern(), new ElementVisitorBase() {
             public void visit(ElementPathBlock el) {
@@ -28,7 +28,7 @@ class QueryRelaxer {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
                         QuerySimilarity.compute(relaxedQuery, summary);
-                        if (relaxedQuery.getSimilarity() > 0.0) {
+                        if (relaxedQuery.getSimilarity() >= minSimilarity) {
                             relaxedQueries.add(relaxedQuery);
                         }
                     }

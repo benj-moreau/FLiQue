@@ -4,6 +4,7 @@ import com.fluidops.fedx.*;
 import com.fluidops.fedx.algebra.StatementSource;
 import com.fluidops.fedx.optimizer.SourceSelection;
 import com.fluidops.fedx.structures.QueryInfo;
+import com.google.common.collect.Iterators;
 import org.aksw.simba.start.QueryProvider;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.rdf.model.Model;
@@ -26,6 +27,7 @@ public class QueryEvaluation {
 	protected static final Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
 	protected static final Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
 	protected static final Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
+	protected static  final double minSimilarity = 0.1;
 	private HashMap<String, String> results = new HashMap<>();
 	private HashMap<String, String> portEndpoints = new HashMap<>();
 	private int nbFed = 0;
@@ -49,6 +51,9 @@ public class QueryEvaluation {
 		this.results.put("FirstResultTime", null);
 		this.results.put("nbFederations", null);
 		this.results.put("totalExecTime", null);
+		this.results.put("nbGeneratedRelaxedQueries", "0");
+		this.results.put("nbEvaluatedRelaxedQueries", "0");
+		this.results.put("ResultSimilarity", "1.0");
 		//endpoints
 		this.portEndpoints.put("8889", "LinkedTCGA-A");
 		this.portEndpoints.put("8888", "ChEBI");
@@ -172,23 +177,42 @@ public class QueryEvaluation {
 				return;
 			}
 			// Here, we resolved all license conflicts
-			QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources);
+			QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources, minSimilarity);
 			Iterator<RelaxedQuery> nextLevel;
 			RelaxedQuery relaxedQuery;
+			writer.write("--------Evaluated Relaxed Queries:-----------\n");
+			int nbGeneratedRelaxedQueries = 0;
+			int nbEvaluatedRelaxedQueries = 0;
+			double ResultSimilarity = 0.0;
+			relaxation:
 			while (!res.hasNext()) {
 				res.close();
 				nextLevel = relaxationLattice.nextLevel().descendingIterator();
+				if (!(nextLevel.hasNext())) {
+					break;
+				}
 				while (nextLevel.hasNext()) {
 					relaxedQuery = nextLevel.next();
 					log.info(relaxedQuery.toString());
+					writer.write(relaxedQuery.toString());
 					query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, relaxedQuery.serialize());
 					res = query.evaluate();
+					nbEvaluatedRelaxedQueries += 1;
 					if (res.hasNext()) {
-						break;
+						writer.write(" This query has at least 1 result !\n\n");
+						ResultSimilarity = relaxedQuery.getSimilarity();
+						nbGeneratedRelaxedQueries += Iterators.size(nextLevel);
+						break relaxation;
 					}
+					writer.write(" This query has no result\n\n");
+					res.close();
 				}
+				nbGeneratedRelaxedQueries += Iterators.size(nextLevel);
 			}
 			// we found a query that return at least 1 result.
+			this.results.put("nbGeneratedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbGeneratedRelaxedQueries")) + nbGeneratedRelaxedQueries));
+			this.results.put("nbEvaluatedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbEvaluatedRelaxedQueries")) + nbEvaluatedRelaxedQueries));
+			this.results.put("ResultSimilarity", Double.toString(Math.max(Double.parseDouble(this.results.get("ResultSimilarity")), ResultSimilarity)));
 			queryInfo = QueryInfo.queryInfo.get();
 			sourceSelection = queryInfo.getSourceSelection();
 			stmtToSources = sourceSelection.getStmtToSources();

@@ -19,9 +19,10 @@ public class QueryRelaxationLattice {
     private ArrayList<TreeSet> levels = new ArrayList<>();
     private Model ontology;
     private Model summary;
+    private double minSimilarity;
     Map<StatementPattern, List<StatementSource>> stmtToSources;
 
-    public QueryRelaxationLattice(String originalQuery, Model ontology, Model summary, Map<StatementPattern, List<StatementSource>> stmtToSources) {
+    public QueryRelaxationLattice(String originalQuery, Model ontology, Model summary, Map<StatementPattern, List<StatementSource>> stmtToSources, double minSimilarity) {
         TreeSet<RelaxedQuery> firstLevel = new TreeSet<>();
         RelaxedQuery query = new RelaxedQuery();
         QueryFactory.parse(query, originalQuery, null, null);
@@ -31,6 +32,7 @@ public class QueryRelaxationLattice {
         this.ontology = ontology;
         this.summary = summary;
         this.stmtToSources = stmtToSources;
+        this.minSimilarity = minSimilarity;
     }
 
     public TreeSet getLevel(int level) {
@@ -41,12 +43,11 @@ public class QueryRelaxationLattice {
         TreeSet<RelaxedQuery> nextLevel = new TreeSet<>();
         TreeSet<RelaxedQuery> previousLevel =  this.levels.get(this.levels.size() - 1);
         for (RelaxedQuery previousQuery : previousLevel) {
-            nextLevel.addAll(QueryRelaxer.relax((RelaxedQuery) this.levels.get(0).first() ,previousQuery ,this.ontology, this.summary));
+            nextLevel.addAll(QueryRelaxer.relax((RelaxedQuery) this.levels.get(0).first() ,previousQuery ,this.ontology, this.summary, minSimilarity));
             // relacher la requete (3x ?)
             // verifier si pruned
             // sinon ajouter a nextLevel
         }
-        log.info(nextLevel.toString());
         this.levels.add(nextLevel);
         return nextLevel;
     }
