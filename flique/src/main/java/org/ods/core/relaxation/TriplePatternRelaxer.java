@@ -1,5 +1,6 @@
 package org.ods.core.relaxation;
 
+import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
@@ -40,26 +41,22 @@ class TriplePatternRelaxer {
 
     private static ArrayList<TriplePath> simpleRelaxation(TriplePath originalTriple) {
         ArrayList<TriplePath> relaxedTriples = new ArrayList<>();
-        String varName;
         if (!originalTriple.getSubject().isVariable()) {
             // on subject
-            varName = UUID.randomUUID().toString().replace("-", "");
-            relaxedTriples.add(new TriplePath(NodeFactory.createVariable(varName) ,originalTriple.getPath(), originalTriple.getObject()));
+            relaxedTriples.add(new TriplePath(generateUniqueVariable() ,originalTriple.getPath(), originalTriple.getObject()));
         }
         if (!originalTriple.getPredicate().isVariable()) {
             // on predicate
-            varName = UUID.randomUUID().toString().replace("-", "");
             // if property is relaxed to a variable, we also relax object to a variable.
-            relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(NodeFactory.createVariable(varName)), NodeFactory.createVariable(varName)));
+            relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), generateUniqueVariable()));
         }
         if (!originalTriple.getObject().isVariable()) {
             // on object
-            varName = UUID.randomUUID().toString().replace("-", "");
             if (!originalTriple.getPredicate().isVariable() && originalTriple.getPredicate().getURI().equals(type.getURI())) {
                 // if class is relaxed to a variable, then we do the same for rdf:type predicate.
-                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(NodeFactory.createVariable(varName)), NodeFactory.createVariable(varName)));
+                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), generateUniqueVariable()));
             } else {
-                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), originalTriple.getPath(), NodeFactory.createVariable(varName)));
+                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), originalTriple.getPath(), generateUniqueVariable()));
             }
         }
         return relaxedTriples;
@@ -85,5 +82,10 @@ class TriplePatternRelaxer {
         } else {
             return null;
         }
+    }
+
+    private static Node generateUniqueVariable() {
+        String varName = UUID.randomUUID().toString().replace("-", "");
+        return NodeFactory.createVariable(varName);
     }
 }
