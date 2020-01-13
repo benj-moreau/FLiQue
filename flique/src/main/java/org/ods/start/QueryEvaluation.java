@@ -53,7 +53,7 @@ public class QueryEvaluation {
 		this.results.put("totalExecTime", null);
 		this.results.put("nbGeneratedRelaxedQueries", "0");
 		this.results.put("nbEvaluatedRelaxedQueries", "0");
-		this.results.put("ResultSimilarity", "1.0");
+		this.results.put("ResultSimilarity", "0.0");
 		//endpoints
 		this.portEndpoints.put("8889", "LinkedTCGA-A");
 		this.portEndpoints.put("8888", "ChEBI");
@@ -201,13 +201,19 @@ public class QueryEvaluation {
 					if (res.hasNext()) {
 						writer.write(" This query has at least 1 result !\n\n");
 						ResultSimilarity = relaxedQuery.getSimilarity();
-						nbGeneratedRelaxedQueries += Iterators.size(nextLevel);
+						while (nextLevel.hasNext()) {
+							nextLevel.next();
+							nbGeneratedRelaxedQueries += 1;
+						}
 						break relaxation;
 					}
 					writer.write(" This query has no result\n\n");
 					res.close();
 				}
-				nbGeneratedRelaxedQueries += Iterators.size(nextLevel);
+				while (nextLevel.hasNext()) {
+					nextLevel.next();
+					nbGeneratedRelaxedQueries += 1;
+				}
 			}
 			// we found a query that return at least 1 result.
 			this.results.put("nbGeneratedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbGeneratedRelaxedQueries")) + nbGeneratedRelaxedQueries));
