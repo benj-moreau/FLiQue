@@ -172,13 +172,28 @@ public class QueryEvaluation {
 				return;
 			}
 			// Here, we resolved all license conflicts
-			QueryRelaxationLattice relaxationLattice;
+			QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources);
+			Iterator<RelaxedQuery> nextLevel;
+			RelaxedQuery relaxedQuery;
 			while (!res.hasNext()) {
-				relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources);
-				TreeSet<RelaxedQuery> level = relaxationLattice.nextLevel();
-				break;
+				res.close();
+				nextLevel = relaxationLattice.nextLevel().descendingIterator();
+				while (nextLevel.hasNext()) {
+					relaxedQuery = nextLevel.next();
+					log.info(relaxedQuery.toString());
+					query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, relaxedQuery.serialize());
+					res = query.evaluate();
+					if (res.hasNext()) {
+						break;
+					}
+				}
 			}
-
+			// we found a query that return at least 1 result.
+			queryInfo = QueryInfo.queryInfo.get();
+			sourceSelection = queryInfo.getSourceSelection();
+			stmtToSources = sourceSelection.getStmtToSources();
+			endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+			consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
 			// Now we can execute the query with FedX
 			long count = 0;
 			// TODO Uncomment next to execute query

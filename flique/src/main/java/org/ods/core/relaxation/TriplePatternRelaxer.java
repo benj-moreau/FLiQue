@@ -22,14 +22,16 @@ class TriplePatternRelaxer {
 
     public static ArrayList<TriplePath> relax(TriplePath triple, Model summary, Model ontology) {
         ArrayList<TriplePath> relaxedTriples = new ArrayList<>();
-        if (triple.getPredicate().getURI().equals(type.getURI())) {
-            //rdf:type -> type relaxation
-           TriplePath relaxedTriple = typeRelaxation(triple, ontology);
-           if (relaxedTriple != null) {relaxedTriples.add(relaxedTriple);}
-        } else if (!triple.getPredicate().isVariable()) {
-            // predicate is not a variable and not a rdf:type -> property relaxation
-            TriplePath relaxedTriple = propertyRelaxation(triple, ontology);
-            if (relaxedTriple != null) {relaxedTriples.add(relaxedTriple);}
+        if (!triple.getPredicate().isVariable()) {
+            if (triple.getPredicate().getURI().equals(type.getURI())) {
+                //rdf:type -> type relaxation
+                TriplePath relaxedTriple = typeRelaxation(triple, ontology);
+                if (relaxedTriple != null) {relaxedTriples.add(relaxedTriple);}
+            } else {
+                // predicate is not a variable and not a rdf:type -> property relaxation
+                TriplePath relaxedTriple = propertyRelaxation(triple, ontology);
+                if (relaxedTriple != null) {relaxedTriples.add(relaxedTriple);}
+            }
         }
         // simple relaxation
         relaxedTriples.addAll(simpleRelaxation(triple));
@@ -41,18 +43,24 @@ class TriplePatternRelaxer {
         String varName;
         if (!originalTriple.getSubject().isVariable()) {
             // on subject
-            varName = UUID.randomUUID().toString();
+            varName = UUID.randomUUID().toString().replace("-", "");
             relaxedTriples.add(new TriplePath(NodeFactory.createVariable(varName) ,originalTriple.getPath(), originalTriple.getObject()));
         }
         if (!originalTriple.getPredicate().isVariable()) {
             // on predicate
-            varName = UUID.randomUUID().toString();
-            relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(NodeFactory.createVariable(varName)), originalTriple.getObject()));
+            varName = UUID.randomUUID().toString().replace("-", "");
+            // if property is relaxed to a variable, we also relax object to a variable.
+            relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(NodeFactory.createVariable(varName)), NodeFactory.createVariable(varName)));
         }
         if (!originalTriple.getObject().isVariable()) {
             // on object
-            varName = UUID.randomUUID().toString();
-            relaxedTriples.add(new TriplePath(originalTriple.getSubject() ,originalTriple.getPath(), NodeFactory.createVariable(varName)));
+            varName = UUID.randomUUID().toString().replace("-", "");
+            if (!originalTriple.getPredicate().isVariable() && originalTriple.getPredicate().getURI().equals(type.getURI())) {
+                // if class is relaxed to a variable, then we do the same for rdf:type predicate.
+                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(NodeFactory.createVariable(varName)), NodeFactory.createVariable(varName)));
+            } else {
+                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), originalTriple.getPath(), NodeFactory.createVariable(varName)));
+            }
         }
         return relaxedTriples;
     }

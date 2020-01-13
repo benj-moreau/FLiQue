@@ -1,7 +1,6 @@
 package org.ods.core.relaxation.similarity;
 
 import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.core.TriplePath;
 import org.slf4j.Logger;
@@ -38,8 +37,8 @@ class TriplePatternSimilarity {
             String originalPropertyURI = originalPredicate.getURI();
             String superPropertyURI = relaxedPredicate.getURI();
             int totalTriples = getTriplesNumber(summary);
-            return (- Math.log(getTriplesNumber(superPropertyURI, summary)/totalTriples)/
-                    - Math.log(getTriplesNumber(originalPropertyURI, summary)/totalTriples));
+            return - Math.log(getTriplesNumber(superPropertyURI, summary)/ (double) totalTriples)/
+                    - Math.log(getTriplesNumber(originalPropertyURI, summary)/ (double) totalTriples);
         }
     }
 
@@ -50,13 +49,12 @@ class TriplePatternSimilarity {
             // it's a simple relaxation
             return 0.0;
         } else {
-            log.info(originalObject + " not similar to " + relaxedObject);
             // it's a type (class) relaxation
             String originalClassURI = originalObject.getURI();
             String superClassURI = relaxedObject.getURI();
             int totalInstances = getInstancesNumber(summary);
-            return (- Math.log(getInstancesNumber(superClassURI, summary)/totalInstances)/
-                    - Math.log(getInstancesNumber(originalClassURI, summary)/totalInstances));
+            return - Math.log(getInstancesNumber(superClassURI, summary)/ (double) totalInstances)/
+                    - Math.log(getInstancesNumber(originalClassURI, summary)/ (double) totalInstances);
         }
     }
 
@@ -74,17 +72,33 @@ class TriplePatternSimilarity {
     }
 
     private static int getTriplesNumber(Model summary) {
-        int number = 100000;
+        int number = 0;
+        NodeIterator tripleNumbers = summary.listObjectsOfProperty(ResourceFactory.createProperty("http://aksw.org/quetsal/totalTriples"));
+        while (tripleNumbers.hasNext()) {
+            number += tripleNumbers.next().asLiteral().getInt();
+        }
         return number;
     }
 
     private static int getInstancesNumber(String classURI, Model summary) {
-        int number = 100000;
+        int number = 0;
+        ResIterator subjects = summary.listSubjectsWithProperty(ResourceFactory.createProperty("http://aksw.org/quetsal/object"), ResourceFactory.createResource(classURI));
+        while (subjects.hasNext()) {
+            Resource subject = subjects.next();
+            NodeIterator instancesNumbers = summary.listObjectsOfProperty(subject, ResourceFactory.createProperty("http://aksw.org/quetsal/card"));
+            while (instancesNumbers.hasNext()) {
+                number += instancesNumbers.next().asLiteral().getInt();
+            }
+        }
         return number;
     }
 
     private static int getInstancesNumber(Model summary) {
-        int number = 100000;
+        int number = 0;
+        NodeIterator instancesNumbers = summary.listObjectsOfProperty(ResourceFactory.createProperty("http://aksw.org/quetsal/distinctSbjs"));
+        while (instancesNumbers.hasNext()) {
+            number += instancesNumbers.next().asLiteral().getInt();
+        }
         return number;
     }
 }

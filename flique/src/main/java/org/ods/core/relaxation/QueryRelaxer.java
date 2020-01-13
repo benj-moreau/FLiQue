@@ -27,8 +27,10 @@ class QueryRelaxer {
                     for (TriplePath relaxedTriple : relaxedTriples) {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
-                        QuerySimilarity.compute(originalQuery, relaxedQuery, summary);
-                        relaxedQueries.add(relaxedQuery);
+                        QuerySimilarity.compute(relaxedQuery, summary);
+                        if (relaxedQuery.getSimilarity() > 0.0) {
+                            relaxedQueries.add(relaxedQuery);
+                        }
                     }
                 }
             }
@@ -45,6 +47,7 @@ class QueryRelaxer {
                     if (triple.equals(oldTriple)) {
                         tps.remove();
                         tps.add(relaxedTriple);
+                        query.updateOriginalTriples(oldTriple, relaxedTriple);
                         break;
                     }
                 }

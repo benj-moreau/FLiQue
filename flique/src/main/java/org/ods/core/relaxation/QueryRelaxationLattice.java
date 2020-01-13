@@ -25,6 +25,7 @@ public class QueryRelaxationLattice {
         TreeSet<RelaxedQuery> firstLevel = new TreeSet<>();
         RelaxedQuery query = new RelaxedQuery();
         QueryFactory.parse(query, originalQuery, null, null);
+        query.initOriginalTriples();
         firstLevel.add(query);
         this.levels.add(firstLevel);
         this.ontology = ontology;
