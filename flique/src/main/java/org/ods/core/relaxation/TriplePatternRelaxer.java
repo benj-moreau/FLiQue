@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
-import java.util.ArrayList;
 
 import static org.apache.jena.vocabulary.RDFS.subClassOf;
 import static org.apache.jena.vocabulary.RDF.type;
@@ -21,45 +20,43 @@ import static org.apache.jena.vocabulary.RDFS.subPropertyOf;
 class TriplePatternRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(TriplePatternRelaxer.class);
 
-    public static ArrayList<TriplePath> relax(TriplePath triple, Model summary, Model ontology) {
-        ArrayList<TriplePath> relaxedTriples = new ArrayList<>();
+    public static TriplePath relax(TriplePath triple, Model summary, Model ontology) {
+        TriplePath relaxedTriple = null;
         if (!triple.getPredicate().isVariable()) {
             if (triple.getPredicate().getURI().equals(type.getURI())) {
                 //rdf:type -> type relaxation
-                TriplePath relaxedTriple = typeRelaxation(triple, ontology);
-                if (relaxedTriple != null) {relaxedTriples.add(relaxedTriple);}
+                relaxedTriple = typeRelaxation(triple, ontology);
             } else {
                 // predicate is not a variable and not a rdf:type -> property relaxation
-                TriplePath relaxedTriple = propertyRelaxation(triple, ontology);
-                if (relaxedTriple != null) {relaxedTriples.add(relaxedTriple);}
+                relaxedTriple = propertyRelaxation(triple, ontology);
             }
         }
-        // simple relaxation
-        relaxedTriples.addAll(simpleRelaxation(triple));
-        return relaxedTriples;
+        // simple relax
+        if (relaxedTriple == null) {relaxedTriple = simpleRelaxation(triple);}
+        return relaxedTriple;
     }
 
-    private static ArrayList<TriplePath> simpleRelaxation(TriplePath originalTriple) {
-        ArrayList<TriplePath> relaxedTriples = new ArrayList<>();
-        if (!originalTriple.getSubject().isVariable()) {
-            // on subject
-            relaxedTriples.add(new TriplePath(generateUniqueVariable() ,originalTriple.getPath(), originalTriple.getObject()));
-        }
-        if (!originalTriple.getPredicate().isVariable()) {
-            // on predicate
-            // if property is relaxed to a variable, we also relax object to a variable.
-            relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), generateUniqueVariable()));
-        }
+    private static TriplePath simpleRelaxation(TriplePath originalTriple) {
+        TriplePath relaxedTriple = null;
         if (!originalTriple.getObject().isVariable()) {
             // on object
             if (!originalTriple.getPredicate().isVariable() && originalTriple.getPredicate().getURI().equals(type.getURI())) {
                 // if class is relaxed to a variable, then we do the same for rdf:type predicate.
-                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), generateUniqueVariable()));
+                relaxedTriple = new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), generateUniqueVariable());
             } else {
-                relaxedTriples.add(new TriplePath(originalTriple.getSubject(), originalTriple.getPath(), generateUniqueVariable()));
+                relaxedTriple = new TriplePath(originalTriple.getSubject(), originalTriple.getPath(), generateUniqueVariable());
             }
         }
-        return relaxedTriples;
+        else if (!originalTriple.getSubject().isVariable()) {
+            // on subject
+            relaxedTriple = new TriplePath(generateUniqueVariable() ,originalTriple.getPath(), originalTriple.getObject());
+        }
+        else if (!originalTriple.getPredicate().isVariable()) {
+            // on predicate
+            // if property is relaxed to a variable, we also relax object to a variable.
+            relaxedTriple = new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), originalTriple.getObject());
+        }
+        return relaxedTriple;
     }
 
     private static TriplePath propertyRelaxation(TriplePath originalTriple, Model ontology) {

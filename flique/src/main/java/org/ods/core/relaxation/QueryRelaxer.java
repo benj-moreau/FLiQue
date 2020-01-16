@@ -23,8 +23,8 @@ class QueryRelaxer {
                 Iterator<TriplePath> tps = el.patternElts();
                 while (tps.hasNext()) {
                     TriplePath triple = tps.next();
-                    ArrayList<TriplePath> relaxedTriples = TriplePatternRelaxer.relax(triple, summary, ontology);
-                    for (TriplePath relaxedTriple : relaxedTriples) {
+                    TriplePath relaxedTriple = TriplePatternRelaxer.relax(triple, summary, ontology);
+                    if (relaxedTriple != null) {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
                         QuerySimilarity.compute(relaxedQuery, summary);
