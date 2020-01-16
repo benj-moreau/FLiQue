@@ -66,7 +66,7 @@ import org.eclipse.rdf4j.common.iteration.Iterations;
  */
 public class SparqlTripleSource extends TripleSourceBase implements TripleSource {
 	
-	private boolean useASKQueries = true;
+	private boolean useASKQueries = false;
 	final FederationEvalStrategy strategy;
 	
 	SparqlTripleSource(FederationEvalStrategy strategy, Endpoint endpoint) {

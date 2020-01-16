@@ -28,6 +28,7 @@ class QueryRelaxer {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
                         QuerySimilarity.compute(relaxedQuery, summary);
+                        relaxedQuery.incrementLevel();
                         if (relaxedQuery.getSimilarity() >= minSimilarity) {
                             relaxedQueries.add(relaxedQuery);
                         }

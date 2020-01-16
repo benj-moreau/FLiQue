@@ -18,19 +18,39 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
     private double similarity;
     // to link a relaxedTriple to its OriginalTriple
     private HashMap<TriplePath, TriplePath> originalTriples;
+    private int level;
+    private boolean needToEvaluate;
 
     public RelaxedQuery() {
         super();
+        this.level = 0;
         this.similarity = 1.0;
         this.originalTriples = new HashMap<>();
+        this.needToEvaluate = true;
     }
 
     public double getSimilarity() {
-        return similarity;
+        return this.similarity;
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     public void setSimilarity(double similarity) {
         this.similarity = similarity;
+    }
+
+    public void incrementLevel() {
+        this.level += 1;
+    }
+
+    public boolean needToEvaluate() {
+        return this.needToEvaluate;
+    }
+
+    public void setNeedToEvaluate(Boolean needToEvaluate) {
+        this.needToEvaluate = needToEvaluate;
     }
 
     public HashMap<TriplePath, TriplePath> getOriginalTriples() {
@@ -62,7 +82,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
     @Override
     public int compareTo(RelaxedQuery o) {
         if (this.similarity == o.similarity) {
-            return this.toString().compareTo(o.toString());
+            return this.serialize().compareTo(o.serialize());
         } else {
             return (this.similarity < o.similarity ? -1 : +1);
         }
@@ -79,6 +99,8 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
 
     @Override
     public String toString() {
-        return super.toString() + "_________________________________\nSimilarity:" + this.similarity;
+        return super.toString() +
+                "_________________________________\nSimilarity:" + this.similarity +
+                " level:" + this.getLevel();
     }
 }

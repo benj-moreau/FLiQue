@@ -8,40 +8,44 @@ import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class QueryRelaxationLattice {
     protected static final Logger log = LoggerFactory.getLogger(QueryRelaxationLattice.class);
-
-    private ArrayList<TreeSet> levels = new ArrayList<>();
+    private RelaxedQuery originalQuery;
+    private PriorityQueue<RelaxedQuery> priorityQueue;
     private Model ontology;
     private Model summary;
     private double minSimilarity;
     private Map<StatementPattern, List<StatementSource>> stmtToSources;
 
     public QueryRelaxationLattice(String originalQuery, Model ontology, Model summary, Map<StatementPattern, List<StatementSource>> stmtToSources, double minSimilarity) {
-        TreeSet<RelaxedQuery> firstLevel = new TreeSet<>();
-        RelaxedQuery query = new RelaxedQuery();
-        QueryFactory.parse(query, originalQuery, null, null);
-        query.initOriginalTriples();
-        firstLevel.add(query);
-        this.levels.add(firstLevel);
+        this.priorityQueue = new PriorityQueue<>(Collections.reverseOrder());
+        this.originalQuery = new RelaxedQuery();
+        QueryFactory.parse(this.originalQuery, originalQuery, null, null);
+        this.originalQuery.initOriginalTriples();
         this.ontology = ontology;
         this.summary = summary;
         this.stmtToSources = stmtToSources;
         this.minSimilarity = minSimilarity;
+        this.priorityQueue.addAll(QueryRelaxer.relax(this.originalQuery ,this.originalQuery ,this.ontology, this.summary, this.minSimilarity));
     }
 
-    public TreeSet<RelaxedQuery> nextLevel() {
-        TreeSet<RelaxedQuery> nextLevel = new TreeSet<>();
-        TreeSet<RelaxedQuery> previousLevel =  this.levels.get(this.levels.size() - 1);
-        for (RelaxedQuery previousQuery : previousLevel) {
-            nextLevel.addAll(QueryRelaxer.relax((RelaxedQuery) this.levels.get(0).first() ,previousQuery ,this.ontology, this.summary, minSimilarity));
+    public boolean hasNext() {
+        return (this.priorityQueue.size() > 0);
+    }
+
+    public RelaxedQuery next() {
+        RelaxedQuery nextMostSimilarQuery = this.priorityQueue.poll();
+        if (nextMostSimilarQuery != null) {
+            this.priorityQueue.addAll(QueryRelaxer.relax(this.originalQuery, nextMostSimilarQuery, this.ontology, this.summary, this.minSimilarity));
+        } else {
+            throw new NoSuchElementException("RelaxedLattice has no more relaxed queries to generate");
         }
-        this.levels.add(nextLevel);
-        return nextLevel;
+        return nextMostSimilarQuery;
+    }
+
+    public int sizeOfRemaining() {
+        return this.priorityQueue.size();
     }
 }
