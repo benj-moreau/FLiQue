@@ -17,7 +17,7 @@ import static org.apache.jena.vocabulary.RDFS.subClassOf;
 import static org.apache.jena.vocabulary.RDF.type;
 import static org.apache.jena.vocabulary.RDFS.subPropertyOf;
 
-class TriplePatternRelaxer {
+public class TriplePatternRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(TriplePatternRelaxer.class);
 
     public static TriplePath relax(TriplePath triple, Model summary, Model ontology) {

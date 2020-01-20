@@ -93,6 +93,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         RelaxedQuery clone = new RelaxedQuery();
         QueryFactory.parse(clone, this.serialize(), null, null);
         clone.similarity = this.similarity;
+        clone.level = this.getLevel();
         clone.originalTriples = (HashMap<TriplePath, TriplePath>) this.originalTriples.clone();
         return clone;
     }

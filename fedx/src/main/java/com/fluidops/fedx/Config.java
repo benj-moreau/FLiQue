@@ -49,7 +49,6 @@ public class Config {
 	Object extension = null;
 
 	public Config(String ...fedxConfig) {
-
 		String cfg = fedxConfig != null && fedxConfig.length == 1 ? fedxConfig[0] : null;
 		init(cfg);
 		

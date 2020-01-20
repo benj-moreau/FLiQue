@@ -14,6 +14,7 @@ import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.ods.core.license.LicenseChecker;
 import org.ods.core.relaxation.QueryRelaxationLattice;
 import org.ods.core.relaxation.RelaxedQuery;
+import org.ods.core.relaxation.strategy.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,12 +27,14 @@ public class QueryEvaluation {
 	protected static final Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
 	protected static final Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
 	protected static final Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
-	protected static  final double minSimilarity = 0.5;
+	protected static  final double minSimilarity = 0.3;
 	private HashMap<String, String> results = new HashMap<>();
 	private HashMap<String, String> portEndpoints = new HashMap<>();
 	private int nbFed = 0;
 	private long licenseCheckTime;
 	private long startQueryExecTime = 0;
+	private String strategy;
+	private QueryRelaxer queryRelaxer;
 	static {
 		try {
 			ClassLoader.getSystemClassLoader().loadClass("org.slf4j.LoggerFactory"). getMethod("getLogger", ClassLoader.getSystemClassLoader().loadClass("java.lang.String")).
@@ -43,7 +46,7 @@ public class QueryEvaluation {
 	
 	QueryProvider qp;
 
-	public QueryEvaluation() throws Exception {
+	public QueryEvaluation(String strategy,QueryRelaxer queryRelaxer) throws Exception {
 		qp = new QueryProvider("../queries/");
 		this.results.put("Query", null);
 		this.results.put("LicenseCheckTime", null);
@@ -65,6 +68,8 @@ public class QueryEvaluation {
 		this.portEndpoints.put("8897", "New York Times");
 		this.portEndpoints.put("8898", "Semantic Web Dog Food");
 		this.portEndpoints.put("8899", "Affymetrix");
+		this.strategy = strategy;
+		this.queryRelaxer = queryRelaxer;
 	}
 	
 	/**
@@ -73,12 +78,25 @@ public class QueryEvaluation {
 	 */
 	public static void main(String[] args) throws Exception 
 	{
-		String cfgName = args[0];
-		// Config file
-		String repfile = args.length > 1 ? args[1] : null;
-		// Not running FLiQuE if the following is true (false by default)
-		Boolean CostFedExec = args.length <= 2;
-		
+		String cfgName;
+		String strategy = args[0];
+		strategy = strategy.toUpperCase();
+		QueryRelaxer queryRelaxer;
+		if (strategy.equals("BFS")) {
+			cfgName = "fedx.props";
+			queryRelaxer = new BFSQueryRelaxer();
+		} else if (strategy.equals("OBFS")) {
+			cfgName = "fedx.props";
+			queryRelaxer = new OBFSQueryRelaxer();
+		} else if (strategy.equals("OMBS")) {
+			cfgName = "fedx.props";
+			queryRelaxer = new OMBSQueryRelaxer();
+		} else {
+			// default case
+			cfgName = "flique.props";
+			strategy = "FLIQUE";
+			queryRelaxer = new FLIQUEQueryRelaxer();
+		}
 		String host = "localhost";
 		String queries = "C9";
 		// String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
@@ -100,7 +118,7 @@ public class QueryEvaluation {
 		
 		List<String> endpoints = endpointsMin2;
 		
-		multyEvaluate(queries, 1, cfgName, endpoints);
+		multyEvaluate(queries, 1, cfgName, endpoints, strategy, queryRelaxer);
 		System.exit(0);
 	}
 	
@@ -110,7 +128,7 @@ public class QueryEvaluation {
 		String fedName;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		Date date = new Date();
-		String execFileName = "results/" + formatter.format(date) + "_execution-times.csv";
+		String execFileName = "results/" + formatter.format(date) + this.strategy + "_execution-times.csv";
 		BufferedWriter ExecutionWriter = new BufferedWriter(new FileWriter(execFileName));
 		// CSV header
 		ExecutionWriter.write(String.join(";", this.results.keySet()) + "\n");
@@ -120,7 +138,7 @@ public class QueryEvaluation {
 			this.results.put("Query", curQueryName);
 			date = new Date();
 			fedName = "Federation " + curQueryName;
-			queryFileName = "results/" + formatter.format(date) + "_" + curQueryName + "-results.txt";
+			queryFileName = "results/" + formatter.format(date) + "_" + curQueryName + '_' + this.strategy + "-results.txt";
 			BufferedWriter queryWriter = new BufferedWriter(new FileWriter(queryFileName));
 			execute(curQueryName, cfgName, endpoints, queryWriter, fedName);
 			long totalExecTime = System.currentTimeMillis() - this.startQueryExecTime;
@@ -176,7 +194,7 @@ public class QueryEvaluation {
 				return;
 			}
 			// Here, we resolved all license conflicts
-			QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources, minSimilarity);
+			QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer);
 
 			RelaxedQuery relaxedQuery;
 			writer.write("--------Evaluated Relaxed Queries:-----------\n");
@@ -194,6 +212,7 @@ public class QueryEvaluation {
 				while (relaxationLattice.hasNext()) {
 					relaxedQuery = relaxationLattice.next();
 					nbGeneratedRelaxedQueries += 1;
+					log.info(Integer.toString(nbGeneratedRelaxedQueries));
 					if (relaxedQuery.needToEvaluate()) {
 						log.info(relaxedQuery.toString());
 						writer.write(relaxedQuery.toString());
@@ -248,8 +267,8 @@ public class QueryEvaluation {
 		}
 	}
 	
-	static void multyEvaluate(String queries, int num, String cfgName, List<String> endpoints) throws Exception {
-		QueryEvaluation qeval = new QueryEvaluation();
+	static void multyEvaluate(String queries, int num, String cfgName, List<String> endpoints, String strategy, QueryRelaxer queryRelaxer) throws Exception {
+		QueryEvaluation qeval = new QueryEvaluation(strategy, queryRelaxer);
 
 		for (int i = 0; i < num; ++i) {
 			qeval.evaluate(queries, cfgName, endpoints);
@@ -274,5 +293,9 @@ public class QueryEvaluation {
 			endpoints = endpoints.replace(endpoint, endpointName);
 		}
 		return endpoints;
+	}
+
+	public void setStrategy (String strategy) {
+		this.strategy = strategy;
 	}
 }
