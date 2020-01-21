@@ -6,16 +6,18 @@ import org.apache.jena.sparql.core.TriplePath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import static org.apache.jena.vocabulary.RDF.type;
 
 class TriplePatternSimilarity {
     protected static final Logger log = LoggerFactory.getLogger(TriplePatternSimilarity.class);
 
-    public static double compute(TriplePath originalTriple, TriplePath relaxedTriple, Model summary, HashMap<String, Integer> federationClassStatistics, HashMap<String, Integer> federationPropertyStatistics) {
+    public static double compute(TriplePath originalTriple, TriplePath relaxedTriple, Model summary, HashMap<String, Integer> federationClassStatistics, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
         return (subjectSimilarity(originalTriple.getSubject(), relaxedTriple.getSubject()) +
-                predicateSimilarity(originalTriple.getPredicate(), relaxedTriple.getPredicate(), summary, federationPropertyStatistics) +
-                objectSimilarity(originalTriple.getObject(), relaxedTriple.getObject(), summary, federationClassStatistics)
+                predicateSimilarity(originalTriple.getPredicate(), relaxedTriple.getPredicate(), summary, federationPropertyStatistics, endpoints) +
+                objectSimilarity(originalTriple.getObject(), relaxedTriple.getObject(), summary, federationClassStatistics, endpoints)
         )/3;
     }
 
@@ -28,7 +30,7 @@ class TriplePatternSimilarity {
         }
     }
 
-    private static double predicateSimilarity(Node originalPredicate, Node relaxedPredicate, Model summary, HashMap<String, Integer> federationPropertyStatistics) {
+    private static double predicateSimilarity(Node originalPredicate, Node relaxedPredicate, Model summary, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
         if (originalPredicate.equals(relaxedPredicate)) {
             return 1.0;
         } else if (relaxedPredicate.isVariable()) {
@@ -38,13 +40,13 @@ class TriplePatternSimilarity {
             // it's a property relaxation
             String originalPropertyURI = originalPredicate.getURI();
             String superPropertyURI = relaxedPredicate.getURI();
-            int totalTriples = getTriplesNumber(summary, federationPropertyStatistics);
-            return - Math.log(getTriplesNumber(superPropertyURI, summary, federationPropertyStatistics)/ (double) totalTriples)/
-                    - Math.log(getTriplesNumber(originalPropertyURI, summary, federationPropertyStatistics)/ (double) totalTriples);
+            int totalTriples = getTriplesNumber(summary, federationPropertyStatistics, endpoints);
+            return - Math.log(getTriplesNumber(superPropertyURI, summary, federationPropertyStatistics, endpoints)/ (double) totalTriples)/
+                    - Math.log(getTriplesNumber(originalPropertyURI, summary, federationPropertyStatistics, endpoints)/ (double) totalTriples);
         }
     }
 
-    private static double objectSimilarity(Node originalObject, Node relaxedObject, Model summary, HashMap<String, Integer> federationClassStatistics) {
+    private static double objectSimilarity(Node originalObject, Node relaxedObject, Model summary, HashMap<String, Integer> federationClassStatistics, ArrayList<String> endpoints) {
         if (originalObject.equals(relaxedObject)) {
             return 1.0;
         } else if (relaxedObject.isVariable()) {
@@ -54,21 +56,34 @@ class TriplePatternSimilarity {
             // it's a type (class) relaxation
             String originalClassURI = originalObject.getURI();
             String superClassURI = relaxedObject.getURI();
-            int totalInstances = getInstancesNumber(summary, federationClassStatistics);
-            return - Math.log(getInstancesNumber(superClassURI, summary, federationClassStatistics)/ (double) totalInstances)/
-                    - Math.log(getInstancesNumber(originalClassURI, summary, federationClassStatistics)/ (double) totalInstances);
+            int totalInstances = getInstancesNumber(summary, federationClassStatistics, endpoints);
+            return - Math.log(getInstancesNumber(superClassURI, summary, federationClassStatistics, endpoints)/ (double) totalInstances)/
+                    - Math.log(getInstancesNumber(originalClassURI, summary, federationClassStatistics, endpoints)/ (double) totalInstances);
         }
     }
 
-    private static int getTriplesNumber(String propertyURI, Model summary, HashMap<String, Integer> federationPropertyStatistics) {
+    private static int getTriplesNumber(String propertyURI, Model summary, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
         if (!federationPropertyStatistics.containsKey(propertyURI)) {
             int number = 0;
-            ResIterator subjects = summary.listSubjectsWithProperty(ResourceFactory.createProperty("http://aksw.org/quetsal/predicate"), ResourceFactory.createResource(propertyURI));
-            while (subjects.hasNext()) {
-                Resource subject = subjects.next();
-                NodeIterator tripleNumbers = summary.listObjectsOfProperty(subject, ResourceFactory.createProperty("http://aksw.org/quetsal/triples"));
-                while (tripleNumbers.hasNext()) {
-                    number += tripleNumbers.next().asLiteral().getInt();
+            StmtIterator endpointsIter = summary.listStatements(
+                    null,
+                    ResourceFactory.createProperty("http://aksw.org/quetsal/url"),
+                    (RDFNode) null);
+            while (endpointsIter.hasNext()) {
+                Statement endpointStmt = endpointsIter.next();
+                String endpoint = endpointStmt.getObject().toString();
+                if (endpoints.contains(endpoint)) {
+                    Resource endpointNode = endpointStmt.getSubject();
+                    NodeIterator capabilitiesIter = summary.listObjectsOfProperty(endpointNode, ResourceFactory.createProperty("http://aksw.org/quetsal/capability"));
+                    while (capabilitiesIter.hasNext()) {
+                        Resource capabilityNode = capabilitiesIter.nextNode().asResource();
+                        if (summary.contains(capabilityNode, ResourceFactory.createProperty("http://aksw.org/quetsal/predicate"), ResourceFactory.createResource(propertyURI))) {
+                            NodeIterator tripleNumbers = summary.listObjectsOfProperty(capabilityNode, ResourceFactory.createProperty("http://aksw.org/quetsal/triples"));
+                            while (tripleNumbers.hasNext()) {
+                                number += tripleNumbers.next().asLiteral().getInt();
+                            }
+                        }
+                    }
                 }
             }
             federationPropertyStatistics.put(propertyURI, number);
@@ -76,27 +91,57 @@ class TriplePatternSimilarity {
         return federationPropertyStatistics.get(propertyURI);
     }
 
-    private static int getTriplesNumber(Model summary, HashMap<String, Integer> federationPropertyStatistics) {
+    private static int getTriplesNumber(Model summary, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
         if (!federationPropertyStatistics.containsKey("totalTriples")) {
             int number = 0;
-            NodeIterator tripleNumbers = summary.listObjectsOfProperty(ResourceFactory.createProperty("http://aksw.org/quetsal/totalTriples"));
-            while (tripleNumbers.hasNext()) {
-                number += tripleNumbers.next().asLiteral().getInt();
+            StmtIterator endpointsIter = summary.listStatements(
+                    null,
+                    ResourceFactory.createProperty("http://aksw.org/quetsal/url"),
+                    (RDFNode) null);
+            while (endpointsIter.hasNext()) {
+                Statement endpointStmt = endpointsIter.next();
+                String endpoint = endpointStmt.getObject().toString();
+                if (endpoints.contains(endpoint)) {
+                    Resource endpointNode = endpointStmt.getSubject();
+                    NodeIterator tripleNumbers = summary.listObjectsOfProperty(endpointNode, ResourceFactory.createProperty("http://aksw.org/quetsal/totalTriples"));
+                    while (tripleNumbers.hasNext()) {
+                        number += tripleNumbers.next().asLiteral().getInt();
+                    }
+                }
             }
             federationPropertyStatistics.put("totalTriples", number);
         }
         return federationPropertyStatistics.get("totalTriples");
     }
 
-    private static int getInstancesNumber(String classURI, Model summary, HashMap<String, Integer> federationClassStatistics) {
+    private static int getInstancesNumber(String classURI, Model summary, HashMap<String, Integer> federationClassStatistics, ArrayList<String> endpoints) {
         if (!federationClassStatistics.containsKey(classURI)) {
             int number = 0;
-            ResIterator subjects = summary.listSubjectsWithProperty(ResourceFactory.createProperty("http://aksw.org/quetsal/object"), ResourceFactory.createResource(classURI));
-            while (subjects.hasNext()) {
-                Resource subject = subjects.next();
-                NodeIterator instancesNumbers = summary.listObjectsOfProperty(subject, ResourceFactory.createProperty("http://aksw.org/quetsal/card"));
-                while (instancesNumbers.hasNext()) {
-                    number += instancesNumbers.next().asLiteral().getInt();
+            StmtIterator endpointsIter = summary.listStatements(
+                    null,
+                    ResourceFactory.createProperty("http://aksw.org/quetsal/url"),
+                    (RDFNode) null);
+            while (endpointsIter.hasNext()) {
+                Statement endpointStmt = endpointsIter.next();
+                String endpoint = endpointStmt.getObject().toString();
+                if (endpoints.contains(endpoint)) {
+                    Resource endpointNode = endpointStmt.getSubject();
+                    NodeIterator capabilitiesIter = summary.listObjectsOfProperty(endpointNode, ResourceFactory.createProperty("http://aksw.org/quetsal/capability"));
+                    while (capabilitiesIter.hasNext()) {
+                        Resource capabilityNode = capabilitiesIter.nextNode().asResource();
+                        if (summary.contains(capabilityNode, ResourceFactory.createProperty("http://aksw.org/quetsal/predicate"), type)) {
+                            NodeIterator ClassIter = summary.listObjectsOfProperty(capabilityNode, ResourceFactory.createProperty("http://aksw.org/quetsal/topObjs"));
+                            while (ClassIter.hasNext()) {
+                                Resource objNode = ClassIter.next().asResource();
+                                if (summary.contains(objNode, ResourceFactory.createProperty("http://aksw.org/quetsal/object"), ResourceFactory.createResource(classURI))) {
+                                    NodeIterator instancesNumbers = summary.listObjectsOfProperty(objNode, ResourceFactory.createProperty("http://aksw.org/quetsal/card"));
+                                    while (instancesNumbers.hasNext()) {
+                                        number += instancesNumbers.next().asLiteral().getInt();
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             federationClassStatistics.put(classURI, number);
@@ -104,12 +149,23 @@ class TriplePatternSimilarity {
         return federationClassStatistics.get(classURI);
     }
 
-    private static int getInstancesNumber(Model summary, HashMap<String, Integer> federationClassStatistics) {
+    private static int getInstancesNumber(Model summary, HashMap<String, Integer> federationClassStatistics, ArrayList<String> endpoints) {
         if (!federationClassStatistics.containsKey("distinctSbjs")) {
             int number = 0;
-            NodeIterator instancesNumbers = summary.listObjectsOfProperty(ResourceFactory.createProperty("http://aksw.org/quetsal/distinctSbjs"));
-            while (instancesNumbers.hasNext()) {
-                number += instancesNumbers.next().asLiteral().getInt();
+            StmtIterator endpointsIter = summary.listStatements(
+                    null,
+                    ResourceFactory.createProperty("http://aksw.org/quetsal/url"),
+                    (RDFNode) null);
+            while (endpointsIter.hasNext()) {
+                Statement endpointStmt = endpointsIter.next();
+                String endpoint = endpointStmt.getObject().toString();
+                if (endpoints.contains(endpoint)) {
+                    Resource endpointNode = endpointStmt.getSubject();
+                    NodeIterator instancesNumbers = summary.listObjectsOfProperty(endpointNode, ResourceFactory.createProperty("http://aksw.org/quetsal/totalSbj"));
+                    while (instancesNumbers.hasNext()) {
+                        number += instancesNumbers.next().asLiteral().getInt();
+                    }
+                }
             }
             federationClassStatistics.put("distinctSbjs", number);
         }

@@ -41,7 +41,9 @@ public class QuerySimilarity {
                     relaxedTriple,
                     summary,
                     federationClassStatistics,
-                    federationPropertyStatistics)));
+                    federationPropertyStatistics,
+                    endpoints)
+                    ));
         }
     }
 }
