@@ -8,6 +8,7 @@ import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResourceFactory;
 import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.path.PathFactory;
+import org.ods.core.relaxation.similarity.QuerySimilarity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ import static org.apache.jena.vocabulary.RDFS.subPropertyOf;
 public class TriplePatternRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(TriplePatternRelaxer.class);
 
-    public static TriplePath relax(TriplePath triple, Model summary, Model ontology) {
+    public static TriplePath relax(TriplePath triple, Model ontology, QuerySimilarity querySimilarity) {
         TriplePath relaxedTriple = null;
         if (!triple.getPredicate().isVariable()) {
             if (triple.getPredicate().getURI().equals(type.getURI())) {

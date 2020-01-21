@@ -17,22 +17,19 @@ import java.util.Iterator;
 public class FLIQUEQueryRelaxer extends QueryRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(FLIQUEQueryRelaxer.class);
 
-    public ArrayList<RelaxedQuery> relax(RelaxedQuery originalQuery, RelaxedQuery queryToRelax, Model ontology, Model summary, double minSimilarity) {
+    public ArrayList<RelaxedQuery> relax(RelaxedQuery originalQuery, RelaxedQuery queryToRelax, Model ontology, QuerySimilarity querySimilarity) {
         ArrayList<RelaxedQuery> relaxedQueries = new ArrayList<>();
         ElementWalker.walk(queryToRelax.getQueryPattern(), new ElementVisitorBase() {
             public void visit(ElementPathBlock el) {
                 Iterator<TriplePath> tps = el.patternElts();
                 while (tps.hasNext()) {
                     TriplePath triple = tps.next();
-                    TriplePath relaxedTriple = TriplePatternRelaxer.relax(triple, summary, ontology);
+                    TriplePath relaxedTriple = TriplePatternRelaxer.relax(triple, ontology, querySimilarity);
                     if (relaxedTriple != null) {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
-                        QuerySimilarity.compute(relaxedQuery, summary);
                         relaxedQuery.incrementLevel();
-                        if (relaxedQuery.getSimilarity() >= minSimilarity) {
-                            relaxedQueries.add(relaxedQuery);
-                        }
+                        relaxedQueries.add(relaxedQuery);
                     }
                 }
             }

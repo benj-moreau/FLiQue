@@ -6,6 +6,7 @@ import org.apache.jena.sparql.syntax.ElementPathBlock;
 import org.apache.jena.sparql.syntax.ElementVisitorBase;
 import org.apache.jena.sparql.syntax.ElementWalker;
 import org.ods.core.relaxation.RelaxedQuery;
+import org.ods.core.relaxation.similarity.QuerySimilarity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import java.util.ListIterator;
 public abstract class QueryRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(QueryRelaxer.class);
 
-    public abstract ArrayList<RelaxedQuery> relax(RelaxedQuery originalQuery, RelaxedQuery queryToRelax, Model ontology, Model summary, double minSimilarity);
+    public abstract ArrayList<RelaxedQuery> relax(RelaxedQuery originalQuery, RelaxedQuery queryToRelax, Model ontology, QuerySimilarity querySimilarity);
 
     protected static void switchTriple(RelaxedQuery query, TriplePath oldTriple, TriplePath relaxedTriple) {
         ElementWalker.walk(query.getQueryPattern(), new ElementVisitorBase() {

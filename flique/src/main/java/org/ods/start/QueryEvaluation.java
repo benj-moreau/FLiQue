@@ -102,7 +102,7 @@ public class QueryEvaluation {
 		// String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
 
 
-		List<String> endpointsMin2 = Arrays.asList(
+            ArrayList<String> endpointsMin2 = new ArrayList<>(Arrays.asList(
 			 "http://" + host + ":8888/sparql",
 			 "http://" + host + ":8891/sparql",
 			 "http://" + host + ":8892/sparql",
@@ -114,15 +114,15 @@ public class QueryEvaluation {
 			 "http://" + host + ":8898/sparql",
 			 "http://" + host + ":8899/sparql",
 			 "http://" + host + ":8889/sparql"
-		);
-		
-		List<String> endpoints = endpointsMin2;
+		));
+
+        ArrayList<String> endpoints = endpointsMin2;
 		
 		multyEvaluate(queries, 1, cfgName, endpoints, strategy, queryRelaxer);
 		System.exit(0);
 	}
 	
-	public void evaluate(String queries, String cfgName, List<String> endpoints) throws Exception {
+	public void evaluate(String queries, String cfgName, ArrayList<String> endpoints) throws Exception {
 		List<String> qnames = Arrays.asList(queries.split(" "));
 		String queryFileName;
 		String fedName;
@@ -152,7 +152,7 @@ public class QueryEvaluation {
 		ExecutionWriter.close();
 	}
 
-	public void execute(String curQueryName, String cfgName, List<String> endpoints,BufferedWriter writer, String fedName) throws Exception {
+	public void execute(String curQueryName, String cfgName, ArrayList<String> endpoints,BufferedWriter writer, String fedName) throws Exception {
 		if (this.nbFed == 0) { this.startQueryExecTime = System.currentTimeMillis(); }
 		String curQuery = qp.getQuery(curQueryName);
 		Config config = new Config(cfgName);
@@ -194,8 +194,7 @@ public class QueryEvaluation {
 				return;
 			}
 			// Here, we resolved all license conflicts
-			QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer);
-
+			QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
 			RelaxedQuery relaxedQuery;
 			writer.write("--------Evaluated Relaxed Queries:-----------\n");
 			int nbGeneratedRelaxedQueries = 0;
@@ -212,7 +211,6 @@ public class QueryEvaluation {
 				while (relaxationLattice.hasNext()) {
 					relaxedQuery = relaxationLattice.next();
 					nbGeneratedRelaxedQueries += 1;
-					log.info(Integer.toString(nbGeneratedRelaxedQueries));
 					if (relaxedQuery.needToEvaluate()) {
 						log.info(relaxedQuery.toString());
 						writer.write(relaxedQuery.toString());
@@ -267,7 +265,7 @@ public class QueryEvaluation {
 		}
 	}
 	
-	static void multyEvaluate(String queries, int num, String cfgName, List<String> endpoints, String strategy, QueryRelaxer queryRelaxer) throws Exception {
+	static void multyEvaluate(String queries, int num, String cfgName, ArrayList<String> endpoints, String strategy, QueryRelaxer queryRelaxer) throws Exception {
 		QueryEvaluation qeval = new QueryEvaluation(strategy, queryRelaxer);
 
 		for (int i = 0; i < num; ++i) {
