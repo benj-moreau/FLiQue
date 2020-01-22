@@ -62,7 +62,7 @@ class TriplePatternSimilarity {
         }
     }
 
-    private static int getTriplesNumber(String propertyURI, Model summary, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
+    public static int getTriplesNumber(String propertyURI, Model summary, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
         if (!federationPropertyStatistics.containsKey(propertyURI)) {
             int number = 0;
             StmtIterator endpointsIter = summary.listStatements(
@@ -91,7 +91,7 @@ class TriplePatternSimilarity {
         return federationPropertyStatistics.get(propertyURI);
     }
 
-    private static int getTriplesNumber(Model summary, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
+    public static int getTriplesNumber(Model summary, HashMap<String, Integer> federationPropertyStatistics, ArrayList<String> endpoints) {
         if (!federationPropertyStatistics.containsKey("totalTriples")) {
             int number = 0;
             StmtIterator endpointsIter = summary.listStatements(
@@ -114,7 +114,7 @@ class TriplePatternSimilarity {
         return federationPropertyStatistics.get("totalTriples");
     }
 
-    private static int getInstancesNumber(String classURI, Model summary, HashMap<String, Integer> federationClassStatistics, ArrayList<String> endpoints) {
+    public static int getInstancesNumber(String classURI, Model summary, HashMap<String, Integer> federationClassStatistics, ArrayList<String> endpoints) {
         if (!federationClassStatistics.containsKey(classURI)) {
             int number = 0;
             StmtIterator endpointsIter = summary.listStatements(
@@ -149,7 +149,7 @@ class TriplePatternSimilarity {
         return federationClassStatistics.get(classURI);
     }
 
-    private static int getInstancesNumber(Model summary, HashMap<String, Integer> federationClassStatistics, ArrayList<String> endpoints) {
+    public static int getInstancesNumber(Model summary, HashMap<String, Integer> federationClassStatistics, ArrayList<String> endpoints) {
         if (!federationClassStatistics.containsKey("distinctSbjs")) {
             int number = 0;
             StmtIterator endpointsIter = summary.listStatements(

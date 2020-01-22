@@ -46,4 +46,12 @@ public class QuerySimilarity {
                     ));
         }
     }
+
+    public int getTriplesNumber(String propertyURI) {
+        return TriplePatternSimilarity.getTriplesNumber(propertyURI, this.summary, this.federationPropertyStatistics, this.endpoints);
+    }
+
+    public int getInstancesNumber(String classURI) {
+        return TriplePatternSimilarity.getInstancesNumber(classURI, this.summary, this.federationClassStatistics, this.endpoints);
+    }
 }

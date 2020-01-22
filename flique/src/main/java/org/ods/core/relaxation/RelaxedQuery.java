@@ -102,6 +102,6 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
     public String toString() {
         return super.toString() +
                 "_________________________________\nSimilarity:" + this.similarity +
-                " level:" + this.getLevel();
+                " Level:" + this.getLevel() + " Evaluation: " + this.needToEvaluate;
     }
 }

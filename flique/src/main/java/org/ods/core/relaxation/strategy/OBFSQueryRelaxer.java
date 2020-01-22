@@ -28,6 +28,7 @@ public class OBFSQueryRelaxer extends QueryRelaxer {
                     if (relaxedTriple != null) {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
+                        relaxedQuery.setNeedToEvaluate(OBFSCheckNecessity(triple, relaxedTriple, querySimilarity));
                         relaxedQuery.incrementLevel();
                         relaxedQueries.add(relaxedQuery);
                     }
@@ -35,5 +36,29 @@ public class OBFSQueryRelaxer extends QueryRelaxer {
             }
         });
         return relaxedQueries;
+    }
+
+    private Boolean OBFSCheckNecessity(TriplePath originalTriple,TriplePath relaxedTriple,QuerySimilarity querySimilarity) {
+        if (!originalTriple.getSubject().equals(relaxedTriple.getSubject())) {
+            // subject has been relaxed
+            return true;
+        } else if (!originalTriple.getPredicate().equals(relaxedTriple.getPredicate())) {
+            // predicate has been relaxed
+            if (!relaxedTriple.getPredicate().isVariable()) {
+                // it's a property relaxation
+                String propertyURI = originalTriple.getPredicate().getURI();
+                String superPropertyURI = relaxedTriple.getPredicate().getURI();
+                return querySimilarity.getTriplesNumber(superPropertyURI) > querySimilarity.getTriplesNumber(propertyURI);
+            }
+        } else {
+            // object has been relaxed
+            if (!relaxedTriple.getObject().isVariable()) {
+                // it's a class relaxation
+                String classURI = originalTriple.getObject().getURI();
+                String superClassURI = relaxedTriple.getObject().getURI();
+                return querySimilarity.getInstancesNumber(superClassURI) > querySimilarity.getInstancesNumber(classURI);
+            }
+        }
+        return true;
     }
 }
