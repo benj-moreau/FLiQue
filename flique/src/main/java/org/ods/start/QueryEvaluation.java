@@ -35,6 +35,7 @@ public class QueryEvaluation {
 	private long startQueryExecTime = 0;
 	private String strategy;
 	private QueryRelaxer queryRelaxer;
+	private Boolean relax;
 	static {
 		try {
 			ClassLoader.getSystemClassLoader().loadClass("org.slf4j.LoggerFactory"). getMethod("getLogger", ClassLoader.getSystemClassLoader().loadClass("java.lang.String")).
@@ -46,7 +47,7 @@ public class QueryEvaluation {
 	
 	QueryProvider qp;
 
-	public QueryEvaluation(String strategy,QueryRelaxer queryRelaxer) throws Exception {
+	public QueryEvaluation(String strategy,QueryRelaxer queryRelaxer, Boolean relax) throws Exception {
 		qp = new QueryProvider("../queries/");
 		this.results.put("Query", null);
 		this.results.put("LicenseCheckTime", null);
@@ -70,6 +71,7 @@ public class QueryEvaluation {
 		this.portEndpoints.put("8899", "Affymetrix");
 		this.strategy = strategy;
 		this.queryRelaxer = queryRelaxer;
+		this.relax = relax;
 	}
 	
 	/**
@@ -80,6 +82,7 @@ public class QueryEvaluation {
 	{
 		String cfgName;
 		String strategy = args[0];
+		Boolean relax = true;
 		strategy = strategy.toUpperCase();
 		QueryRelaxer queryRelaxer;
 		if (strategy.equals("BFS")) {
@@ -96,6 +99,9 @@ public class QueryEvaluation {
 			cfgName = "flique.props";
 			strategy = "FLIQUE";
 			queryRelaxer = new FLIQUEQueryRelaxer();
+		}
+		if (args.length > 1) {
+			relax = false;
 		}
 		String host = "localhost";
 		String queries = "C9";
@@ -118,7 +124,7 @@ public class QueryEvaluation {
 
         ArrayList<String> endpoints = endpointsMin2;
 		
-		multyEvaluate(queries, 1, cfgName, endpoints, strategy, queryRelaxer);
+		multyEvaluate(queries, 1, cfgName, endpoints, strategy, queryRelaxer, relax);
 		System.exit(0);
 	}
 	
@@ -175,7 +181,7 @@ public class QueryEvaluation {
 			Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
 			if (nbFed == 0) {this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;}
 			this.nbFed += 1;
-			if (consistentLicenses.isEmpty()) {
+			if (consistentLicenses.isEmpty() && relax) {
 				// a license compatible with licenses of sources does not exists
 				// We need to eliminate sources
 				licenseChecker.getEndpointlicenseConflicts();
@@ -200,54 +206,56 @@ public class QueryEvaluation {
 			int nbGeneratedRelaxedQueries = 0;
 			int nbEvaluatedRelaxedQueries = 0;
 			double ResultSimilarity = 0.0;
-			relaxation:
-			while (!res.hasNext()) {
-				res.close();
-				if (!relaxationLattice.hasNext()) {
-					// could be triggered if ResultSimilarity >= 0.0
-					// In this case, Possibility to find no relaxed query
-					break;
-				}
-				while (relaxationLattice.hasNext()) {
-					relaxedQuery = relaxationLattice.next();
-					nbGeneratedRelaxedQueries += 1;
-					if (relaxedQuery.needToEvaluate()) {
-						log.info(relaxedQuery.toString());
-						writer.write(relaxedQuery.toString());
-						query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, relaxedQuery.serialize());
-						res = query.evaluate();
-						nbEvaluatedRelaxedQueries += 1;
-						if (res.hasNext()) {
-							writer.write(" This query has at least 1 result !\n\n");
-							ResultSimilarity = relaxedQuery.getSimilarity();
-							nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
-							break relaxation;
-						}
-						writer.write(" This query has no result\n\n");
-						res.close();
+			if (relax) {
+				relaxation:
+				while (!res.hasNext()) {
+					res.close();
+					if (!relaxationLattice.hasNext()) {
+						// could be triggered if ResultSimilarity >= 0.0
+						// In this case, Possibility to find no relaxed query
+						break;
 					}
+					while (relaxationLattice.hasNext()) {
+						relaxedQuery = relaxationLattice.next();
+						nbGeneratedRelaxedQueries += 1;
+						if (relaxedQuery.needToEvaluate()) {
+							log.info(relaxedQuery.toString());
+							writer.write(relaxedQuery.toString());
+							query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, relaxedQuery.serialize());
+							res = query.evaluate();
+							nbEvaluatedRelaxedQueries += 1;
+							if (res.hasNext()) {
+								writer.write(" This query has at least 1 result !\n\n");
+								ResultSimilarity = relaxedQuery.getSimilarity();
+								nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
+								break relaxation;
+							}
+							writer.write(" This query has no result\n\n");
+							res.close();
+						}
+					}
+					nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
 				}
-				nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
+				queryInfo = QueryInfo.queryInfo.get();
+				sourceSelection = queryInfo.getSourceSelection();
+				stmtToSources = sourceSelection.getStmtToSources();
+				endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+				consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
 			}
 			// we found a query that return at least 1 result.
 			this.results.put("nbGeneratedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbGeneratedRelaxedQueries")) + nbGeneratedRelaxedQueries));
 			this.results.put("nbEvaluatedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbEvaluatedRelaxedQueries")) + nbEvaluatedRelaxedQueries));
 			this.results.put("ResultSimilarity", Double.toString(Math.max(Double.parseDouble(this.results.get("ResultSimilarity")), ResultSimilarity)));
-			queryInfo = QueryInfo.queryInfo.get();
-			sourceSelection = queryInfo.getSourceSelection();
-			stmtToSources = sourceSelection.getStmtToSources();
-			endpointManager = queryInfo.getFedXConnection().getEndpointManager();
-			consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
 			// Now we can execute the query with FedX
 			long count = 0;
 			// TODO Uncomment next to execute query
-			/*
 			while (res.hasNext()) {
 				BindingSet row = res.next();
 				System.out.println(count+": "+ row);
 				count++;
+				// only one result
+				break;
 			}
-			*/
 			writer.write(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
 			log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
 		} catch (Throwable e) {
@@ -265,9 +273,8 @@ public class QueryEvaluation {
 		}
 	}
 	
-	static void multyEvaluate(String queries, int num, String cfgName, ArrayList<String> endpoints, String strategy, QueryRelaxer queryRelaxer) throws Exception {
-		QueryEvaluation qeval = new QueryEvaluation(strategy, queryRelaxer);
-
+	static void multyEvaluate(String queries, int num, String cfgName, ArrayList<String> endpoints, String strategy, QueryRelaxer queryRelaxer, Boolean relax) throws Exception {
+		QueryEvaluation qeval = new QueryEvaluation(strategy, queryRelaxer, relax);
 		for (int i = 0; i < num; ++i) {
 			qeval.evaluate(queries, cfgName, endpoints);
 		}
