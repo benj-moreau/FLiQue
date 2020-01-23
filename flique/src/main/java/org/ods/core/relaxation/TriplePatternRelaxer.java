@@ -54,7 +54,6 @@ public class TriplePatternRelaxer {
         }
         else if (!originalTriple.getPredicate().isVariable()) {
             // on predicate
-            // if property is relaxed to a variable, we also relax object to a variable.
             relaxedTriple = new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), originalTriple.getObject());
         }
         return relaxedTriple;

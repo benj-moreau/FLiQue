@@ -26,12 +26,26 @@ public abstract class QueryRelaxer {
                     TriplePath triple = tps.next();
                     if (triple.equals(oldTriple)) {
                         tps.remove();
-                        tps.add(relaxedTriple);
+                        if (!isSPO(relaxedTriple)) {
+                            // SPO's are deleted from query
+                            tps.add(relaxedTriple);
+                        }
                         query.updateOriginalTriples(oldTriple, relaxedTriple);
                         break;
                     }
                 }
             }
         });
+    }
+
+    protected static Boolean isSPO(TriplePath triple){
+        if (!triple.getSubject().isVariable()) {
+            return false;
+        } else if (!triple.getPredicate().isVariable()) {
+            return false;
+        } else if (!triple.getObject().isVariable()) {
+            return false;
+        }
+        return true;
     }
 }
