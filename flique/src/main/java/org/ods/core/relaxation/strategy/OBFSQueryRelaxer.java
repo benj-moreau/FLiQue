@@ -38,7 +38,7 @@ public class OBFSQueryRelaxer extends QueryRelaxer {
         return relaxedQueries;
     }
 
-    private Boolean OBFSCheckNecessity(TriplePath originalTriple,TriplePath relaxedTriple,QuerySimilarity querySimilarity) {
+    protected static Boolean OBFSCheckNecessity(TriplePath originalTriple,TriplePath relaxedTriple,QuerySimilarity querySimilarity) {
         if (!originalTriple.getSubject().equals(relaxedTriple.getSubject())) {
             // subject has been relaxed
             return true;
