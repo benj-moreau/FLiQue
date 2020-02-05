@@ -117,7 +117,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                 " Level:" + this.getLevel() + " Evaluation: " + this.needToEvaluate;
     }
 
-    public ArrayList<TriplePath> findAnMFS(SailRepository repo) {
+    private ArrayList<TriplePath> findAnMFS(SailRepository repo) {
         RelaxedQuery query = this.clone();
         ArrayList<TriplePath> MFS = new ArrayList<>();
         ElementWalker.walk(this.getQueryPattern(), new ElementVisitorBase() {
@@ -128,20 +128,32 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                     query.removeTriple(triple);
                     RelaxedQuery evalQuery = query.clone();
                     evalQuery.addTriple(MFS);
-                    log.info(evalQuery.serialize());
-                    TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, evalQuery.serialize());
-                    TupleQueryResult res = query.evaluate();
-                    try {
-                        if (res.hasNext()) {
-                            MFS.add(triple);
-                        }
-                    }catch(QueryEvaluationException | FedXRuntimeException ex){
-                        log.error(ex.getMessage());
+                    if (evalQuery.hasAtLeastOneResult(repo)){
+                        MFS.add(triple);
                     }
                 }
             }
         });
         return MFS;
+    }
+
+    public ArrayList<ArrayList<TriplePath>> FindAllMFS(SailRepository repo) {
+        ArrayList<ArrayList<TriplePath>> MFSs = new ArrayList<>();
+
+        return MFSs;
+    }
+
+    public boolean hasAtLeastOneResult(SailRepository repo) {
+        TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, this.serialize());
+        try {
+            TupleQueryResult res = query.evaluate();
+            if (res.hasNext()) {
+                return true;
+            }
+        } catch(QueryEvaluationException | FedXRuntimeException ex){
+            log.error(ex.getMessage());
+        }
+        return false;
     }
 
     public void removeTriple(TriplePath triple) {
@@ -175,5 +187,19 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                 }
             }
         });
+    }
+
+    public ArrayList<TriplePath> getTriples() {
+        ArrayList<TriplePath> triples = new ArrayList<>();
+        ElementWalker.walk(this.getQueryPattern(), new ElementVisitorBase() {
+            public void visit(ElementPathBlock el) {
+                Iterator<TriplePath> tps = el.patternElts();
+                while (tps.hasNext()) {
+                    TriplePath triple = tps.next();
+                    triples.add(triple);
+                }
+            }
+        });
+        return triples;
     }
 }
