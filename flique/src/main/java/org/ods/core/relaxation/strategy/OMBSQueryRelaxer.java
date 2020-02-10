@@ -19,9 +19,14 @@ import static org.ods.core.relaxation.strategy.OBFSQueryRelaxer.OBFSCheckNecessi
 
 public class OMBSQueryRelaxer extends QueryRelaxer {
     protected static final Logger log = LoggerFactory.getLogger(OMBSQueryRelaxer.class);
+    private ArrayList<ArrayList<TriplePath>> MFSs = null;
 
     public ArrayList<RelaxedQuery> relax(RelaxedQuery originalQuery, RelaxedQuery queryToRelax, Model ontology, QuerySimilarity querySimilarity) {
         ArrayList<RelaxedQuery> relaxedQueries = new ArrayList<>();
+        if (MFSs == null) {
+            // first exec, MFSs should contains MFS of original query
+            this.MFSs = originalQuery.FindAllMFS(repo);
+        }
         ElementWalker.walk(queryToRelax.getQueryPattern(), new ElementVisitorBase() {
             public void visit(ElementPathBlock el) {
                 Iterator<TriplePath> tps = el.patternElts();
@@ -31,10 +36,7 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
                     if (relaxedTriple != null) {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
-                        relaxedQuery.setNeedToEvaluate(OBFSCheckNecessity(triple, relaxedTriple, querySimilarity));
-                        if (relaxedQuery.needToEvaluate()) {
-                            relaxedQuery.setNeedToEvaluate(OMBSCheckNecessity(triple, queryToRelax, repo));
-                        }
+                        relaxedQuery.setNeedToEvaluate(OBFSCheckNecessity(triple, relaxedTriple, querySimilarity) && OMBSCheckNecessity(relaxedQuery, MFSs));
                         relaxedQuery.incrementLevel();
                         relaxedQueries.add(relaxedQuery);
                     }
@@ -44,8 +46,13 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
         return relaxedQueries;
     }
 
-    protected static Boolean OMBSCheckNecessity(TriplePath triple, RelaxedQuery queryToRelax, SailRepository repo) {
-        queryToRelax.findAnMFS(repo);
+    protected static Boolean OMBSCheckNecessity(RelaxedQuery relaxedQuery, ArrayList<ArrayList<TriplePath>> MFSs) {
+        ArrayList<TriplePath> triples = relaxedQuery.getTriples();
+        for ( ArrayList<TriplePath> mfs : MFSs ) {
+            if (triples.containsAll(mfs)) {
+                return false;
+            }
+        }
         return true;
     }
 }
