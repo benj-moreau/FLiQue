@@ -48,17 +48,4 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
         queryToRelax.findAnMFS(repo);
         return true;
     }
-
-    private ArrayList<ArrayList<TriplePath>> pxss(RelaxedQuery query, ArrayList<TriplePath> MFS) {
-        ArrayList<ArrayList<TriplePath>> pxss = new ArrayList<>();
-        ArrayList<TriplePath> queryTriples = query.getTriples();
-        if (queryTriples.size() > 1) {
-            for (TriplePath MFSTriple : MFS) {
-                ArrayList<TriplePath> pxs = queryTriples;
-                pxs.remove(MFSTriple);
-                pxss.add(pxs);
-            }
-        }
-        return pxss;
-    }
 }

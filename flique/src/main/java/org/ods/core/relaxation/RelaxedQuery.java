@@ -110,6 +110,23 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         return clone;
     }
 
+    public RelaxedQuery clone(ArrayList<TriplePath> triples)  {
+        RelaxedQuery clone = this.clone();
+        ElementWalker.walk(clone.getQueryPattern(), new ElementVisitorBase() {
+            public void visit(ElementPathBlock el) {
+                Iterator<TriplePath> tps = el.patternElts();
+                while (tps.hasNext()) {
+                    TriplePath triple = tps.next();
+                    if (!triples.contains(triple)) {
+                        tps.remove();
+                        break;
+                    }
+                }
+            }
+        });
+        return clone;
+    }
+
     @Override
     public String toString() {
         return super.toString() +
@@ -138,9 +155,53 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
     }
 
     public ArrayList<ArrayList<TriplePath>> FindAllMFS(SailRepository repo) {
-        ArrayList<ArrayList<TriplePath>> MFSs = new ArrayList<>();
-
+        ArrayList<TriplePath> MFS = this.findAnMFS(repo);
+        ArrayList<ArrayList<TriplePath>> pxss = this.pxss(MFS);
+        ArrayList<ArrayList<TriplePath>> MFSs = new ArrayList<>();MFSs.add(MFS);
+        ArrayList<ArrayList<TriplePath>> XSSs = new ArrayList<>();
+        while (!pxss.isEmpty()) {
+            ArrayList<TriplePath> pxs = pxss.get(0);
+            RelaxedQuery query = this.clone(pxs);
+            if (query.hasAtLeastOneResult(repo)) {
+                XSSs.add(pxs);
+                pxss.remove(pxs);
+            } else {
+                MFS = query.findAnMFS(repo);
+                MFSs.add(MFS);
+                for ( ArrayList<TriplePath> px : pxss ) {
+                    if (px.containsAll(MFS)) {
+                        // MFS included in px
+                        pxss.remove(px);
+                        RelaxedQuery query2 = this.clone(px);
+                        ArrayList<ArrayList<TriplePath>> pxssToAdd = new ArrayList<>();
+                        updatePxss:
+                        for (ArrayList<TriplePath> px2 : query2.pxss(MFS)) {
+                            for (ArrayList<TriplePath> px1 : pxss) {
+                                if (px1.containsAll(px2)) {
+                                    continue updatePxss;
+                                }
+                            }
+                            pxssToAdd.add(px2);
+                        }
+                        pxss.addAll(pxssToAdd);
+                    }
+                }
+            }
+        }
         return MFSs;
+    }
+
+    protected ArrayList<ArrayList<TriplePath>> pxss(ArrayList<TriplePath> MFS) {
+        ArrayList<ArrayList<TriplePath>> pxss = new ArrayList<>();
+        ArrayList<TriplePath> queryTriples = this.getTriples();
+        if (queryTriples.size() > 1) {
+            for (TriplePath MFSTriple : MFS) {
+                ArrayList<TriplePath> pxs = queryTriples;
+                pxs.remove(MFSTriple);
+                pxss.add(pxs);
+            }
+        }
+        return pxss;
     }
 
     public boolean hasAtLeastOneResult(SailRepository repo) {
