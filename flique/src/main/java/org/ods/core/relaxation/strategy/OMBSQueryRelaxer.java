@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import static org.ods.core.relaxation.strategy.OBFSQueryRelaxer.OBFSCheckNecessity;
 
@@ -36,7 +37,7 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
                     if (relaxedTriple != null) {
                         RelaxedQuery relaxedQuery = queryToRelax.clone();
                         switchTriple(relaxedQuery, triple, relaxedTriple);
-                        relaxedQuery.setNeedToEvaluate(OBFSCheckNecessity(triple, relaxedTriple, querySimilarity) && OMBSCheckNecessity(relaxedQuery, MFSs));
+                        relaxedQuery.setNeedToEvaluate(OBFSCheckNecessity(triple, relaxedTriple, querySimilarity) && OMBSCheckNecessity(triple, relaxedTriple, relaxedQuery, MFSs, repo));
                         relaxedQuery.incrementLevel();
                         relaxedQueries.add(relaxedQuery);
                     }
@@ -46,13 +47,23 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
         return relaxedQueries;
     }
 
-    protected static Boolean OMBSCheckNecessity(RelaxedQuery relaxedQuery, ArrayList<ArrayList<TriplePath>> MFSs) {
-        ArrayList<TriplePath> triples = relaxedQuery.getTriples();
-        for ( ArrayList<TriplePath> mfs : MFSs ) {
-            if (triples.containsAll(mfs)) {
-                return false;
+    private static Boolean OMBSCheckNecessity(TriplePath triple, TriplePath relaxedTriple, RelaxedQuery relaxedQuery, ArrayList<ArrayList<TriplePath>> MFSs, SailRepository repo) {
+        Boolean mfsRelaxed = false;
+        Boolean queryRepaired = true;
+        for (ListIterator<ArrayList<TriplePath>> itr = MFSs.listIterator(); itr.hasNext();) {
+            ArrayList<TriplePath> mfs = itr.next();
+            if (mfs.contains(triple)) {
+                mfsRelaxed = true;
+                ArrayList<TriplePath> relaxedMfs = new ArrayList<>(mfs);
+                mfs.remove(triple);
+                mfs.add(relaxedTriple);
+                RelaxedQuery relaxedMfsQuery = relaxedQuery.clone(relaxedMfs);
+                if (!relaxedMfsQuery.mayHaveAResult(repo)) {
+                    itr.add(relaxedMfs);
+                    queryRepaired = false;
+                }
             }
         }
-        return true;
+        return queryRepaired && mfsRelaxed;
     }
 }

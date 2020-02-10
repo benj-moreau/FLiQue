@@ -222,11 +222,9 @@ public class QueryEvaluation {
                         if (relaxedQuery.needToEvaluate()) {
                             log.info(relaxedQuery.toString());
                             writer.write(relaxedQuery.toString());
-                            query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, relaxedQuery.serialize());
-                            res = query.evaluate();
                             nbEvaluatedRelaxedQueries += 1;
-                            if (res.hasNext()) {
-                                writer.write(" This query has at least 1 result !\n\n");
+                            if (relaxedQuery.mayHaveAResult(repo)) {
+                                writer.write(" This query may have 1 result (SourceSelection) !\n\n");
                                 ResultSimilarity = relaxedQuery.getSimilarity();
                                 nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
                                 break relaxation;
@@ -239,7 +237,6 @@ public class QueryEvaluation {
                 }
                 queryInfo = QueryInfo.queryInfo.get();
                 sourceSelection = queryInfo.getSourceSelection();
-                stmtToSources = sourceSelection.getStmtToSources();
                 endpointManager = queryInfo.getFedXConnection().getEndpointManager();
                 consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
             }
@@ -250,6 +247,7 @@ public class QueryEvaluation {
             // Now we can execute the query with FedX
             long count = 0;
             // TODO Uncomment next to execute query
+            /*
             while (res.hasNext()) {
                 BindingSet row = res.next();
                 System.out.println(count+": "+ row);
@@ -257,6 +255,7 @@ public class QueryEvaluation {
                 // only one result
                 break;
             }
+            */
             writer.write(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
             log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
         } catch (Throwable e) {

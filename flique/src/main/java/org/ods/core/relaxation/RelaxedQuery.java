@@ -1,23 +1,23 @@
 package org.ods.core.relaxation;
 
+import com.fluidops.fedx.algebra.StatementSource;
 import com.fluidops.fedx.exception.FedXRuntimeException;
+import com.fluidops.fedx.structures.QueryInfo;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.syntax.ElementPathBlock;
 import org.apache.jena.sparql.syntax.ElementVisitorBase;
 import org.apache.jena.sparql.syntax.ElementWalker;
-import org.eclipse.rdf4j.query.QueryEvaluationException;
 import org.eclipse.rdf4j.query.QueryLanguage;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Cloneable {
     protected static final Logger log = LoggerFactory.getLogger(RelaxedQuery.class);
@@ -145,7 +145,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                     query.removeTriple(triple);
                     RelaxedQuery evalQuery = query.clone();
                     evalQuery.addTriple(MFS);
-                    if (evalQuery.hasAtLeastOneResult(repo)){
+                    if (evalQuery.mayHaveAResult(repo)){
                         MFS.add(triple);
                     }
                 }
@@ -162,16 +162,17 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         while (!pxss.isEmpty()) {
             ArrayList<TriplePath> pxs = pxss.get(0);
             RelaxedQuery query = this.clone(pxs);
-            if (query.hasAtLeastOneResult(repo)) {
+            if (query.mayHaveAResult(repo)) {
                 XSSs.add(pxs);
                 pxss.remove(pxs);
             } else {
                 MFS = query.findAnMFS(repo);
                 MFSs.add(MFS);
-                for ( ArrayList<TriplePath> px : pxss ) {
+                for (ListIterator<ArrayList<TriplePath>> itr = pxss.listIterator(); itr.hasNext();) {
+                    ArrayList<TriplePath> px = itr.next();
                     if (px.containsAll(MFS)) {
                         // MFS included in px
-                        pxss.remove(px);
+                        itr.remove();
                         RelaxedQuery query2 = this.clone(px);
                         ArrayList<ArrayList<TriplePath>> pxssToAdd = new ArrayList<>();
                         updatePxss:
@@ -183,7 +184,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                             }
                             pxssToAdd.add(px2);
                         }
-                        pxss.addAll(pxssToAdd);
+                        pxssToAdd.forEach(itr::add);
                     }
                 }
             }
@@ -196,7 +197,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         ArrayList<TriplePath> queryTriples = this.getTriples();
         if (queryTriples.size() > 1) {
             for (TriplePath MFSTriple : MFS) {
-                ArrayList<TriplePath> pxs = queryTriples;
+                ArrayList<TriplePath> pxs = new ArrayList<>(queryTriples);
                 pxs.remove(MFSTriple);
                 pxss.add(pxs);
             }
@@ -204,17 +205,18 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         return pxss;
     }
 
-    public boolean hasAtLeastOneResult(SailRepository repo) {
+    public boolean mayHaveAResult(SailRepository repo) {
         TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, this.serialize());
         try {
-            TupleQueryResult res = query.evaluate();
-            if (res.hasNext()) {
-                return true;
+            query.evaluate();
+            Map<StatementPattern, List<StatementSource>> stmtToSources = QueryInfo.queryInfo.get().getSourceSelection().getStmtToSources();
+            for (Map.Entry<StatementPattern, List<StatementSource>> stmtToSource : stmtToSources.entrySet()) {
+                if (stmtToSource.getValue().isEmpty()) {
+                    return false;
+                }
             }
-        } catch(QueryEvaluationException | FedXRuntimeException ex){
-            log.error(ex.getMessage());
-        }
-        return false;
+            return true;
+        } catch (FedXRuntimeException ex) { return false; }
     }
 
     public void removeTriple(TriplePath triple) {
