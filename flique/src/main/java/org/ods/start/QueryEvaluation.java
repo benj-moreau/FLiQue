@@ -6,6 +6,7 @@ import com.fluidops.fedx.optimizer.SourceSelection;
 import com.fluidops.fedx.structures.QueryInfo;
 import org.aksw.simba.start.QueryProvider;
 import org.apache.commons.io.FileUtils;
+import org.apache.jena.query.QueryFactory;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.riot.RDFDataMgr;
 import org.eclipse.rdf4j.query.*;
@@ -104,7 +105,7 @@ public class QueryEvaluation {
             relax = false;
         }
         String host = "localhost";
-        String queries = "S9";
+        String queries = "S1";
         // String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
 
 
@@ -199,17 +200,22 @@ public class QueryEvaluation {
                 repo.shutDown();
                 return;
             }
+            log.info("ici c bon 3 on est sorti !!!");
             // Here, we resolved all license conflicts
             this.queryRelaxer.setRepo(repo);
-            QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(curQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
-            RelaxedQuery relaxedQuery;
+            RelaxedQuery relaxedQuery = new RelaxedQuery();
+            QueryFactory.parse(relaxedQuery, curQuery, null, null);
+            relaxedQuery.initOriginalTriples();
+            QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
             writer.write("--------Evaluated Relaxed Queries:-----------\n");
             int nbGeneratedRelaxedQueries = 0;
             int nbEvaluatedRelaxedQueries = 0;
             double ResultSimilarity = 0.0;
             if (relax) {
+                log.info("on va relax !");
                 relaxation:
-                while (!res.hasNext()) {
+                while (!relaxedQuery.mayHaveAResult(repo)) {
+                    log.info("pas de result :'( !");
                     res.close();
                     if (!relaxationLattice.hasNext()) {
                         // could be triggered if ResultSimilarity >= 0.0
@@ -220,7 +226,6 @@ public class QueryEvaluation {
                         relaxedQuery = relaxationLattice.next();
                         nbGeneratedRelaxedQueries += 1;
                         if (relaxedQuery.needToEvaluate()) {
-                            log.info(relaxedQuery.toString());
                             writer.write(relaxedQuery.toString());
                             nbEvaluatedRelaxedQueries += 1;
                             if (relaxedQuery.mayHaveAResult(repo)) {

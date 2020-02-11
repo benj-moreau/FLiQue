@@ -1,7 +1,6 @@
 package org.ods.core.relaxation;
 
 import com.fluidops.fedx.algebra.StatementSource;
-import org.apache.jena.query.QueryFactory;
 
 import org.apache.jena.rdf.model.Model;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
@@ -24,11 +23,9 @@ public class QueryRelaxationLattice {
     private ArrayList<String> endpoints;
     private QuerySimilarity querySimilarity;
 
-    public QueryRelaxationLattice(String originalQuery, Model ontology, Model summary, Map<StatementPattern, List<StatementSource>> stmtToSources, double minSimilarity, QueryRelaxer queryRelaxer, ArrayList<String> endpoints) {
+    public QueryRelaxationLattice(RelaxedQuery originalQuery, Model ontology, Model summary, Map<StatementPattern, List<StatementSource>> stmtToSources, double minSimilarity, QueryRelaxer queryRelaxer, ArrayList<String> endpoints) {
         this.priorityQueue = new PriorityQueue<>(Collections.reverseOrder());
-        this.originalQuery = new RelaxedQuery();
-        QueryFactory.parse(this.originalQuery, originalQuery, null, null);
-        this.originalQuery.initOriginalTriples();
+        this.originalQuery = originalQuery;
         this.ontology = ontology;
         this.summary = summary;
         this.stmtToSources = stmtToSources;
