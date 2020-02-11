@@ -45,12 +45,12 @@ public class TriplePatternRelaxer {
                 // if class is relaxed to a variable, then we do the same for rdf:type predicate.
                 relaxedTriple = new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(generateUniqueVariable()), generateUniqueVariable());
             } else {
-                relaxedTriple = new TriplePath(originalTriple.getSubject(), originalTriple.getPath(), generateUniqueVariable());
+                relaxedTriple = new TriplePath(originalTriple.getSubject(), PathFactory.pathLink(originalTriple.getPredicate()), generateUniqueVariable());
             }
         }
         else if (!originalTriple.getSubject().isVariable()) {
             // on subject
-            relaxedTriple = new TriplePath(generateUniqueVariable() ,originalTriple.getPath(), originalTriple.getObject());
+            relaxedTriple = new TriplePath(generateUniqueVariable() ,PathFactory.pathLink(originalTriple.getPredicate()), originalTriple.getObject());
         }
         else if (!originalTriple.getPredicate().isVariable()) {
             // on predicate

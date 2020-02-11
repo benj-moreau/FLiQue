@@ -104,7 +104,7 @@ public class QueryEvaluation {
             relax = false;
         }
         String host = "localhost";
-        String queries = "C9";
+        String queries = "S9";
         // String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
 
 
@@ -247,7 +247,6 @@ public class QueryEvaluation {
             // Now we can execute the query with FedX
             long count = 0;
             // TODO Uncomment next to execute query
-            /*
             while (res.hasNext()) {
                 BindingSet row = res.next();
                 System.out.println(count+": "+ row);
@@ -255,7 +254,8 @@ public class QueryEvaluation {
                 // only one result
                 break;
             }
-            */
+            long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
+            this.results.put("FirstResultTime", Long.toString(FirstResultTime));
             writer.write(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
             log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
         } catch (Throwable e) {
