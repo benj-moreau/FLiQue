@@ -215,7 +215,10 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                 }
             }
             return true;
-        } catch (FedXRuntimeException ex) { return false; }
+        } catch (FedXRuntimeException ex) {
+            log.warn(ex.getMessage());
+            return false;
+        }
     }
 
     public void removeTriple(TriplePath triple) {

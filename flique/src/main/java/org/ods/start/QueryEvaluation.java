@@ -105,8 +105,8 @@ public class QueryEvaluation {
             relax = false;
         }
         String host = "localhost";
-        String queries = "S1";
-        // String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
+        // String queries = "S1";
+        String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
 
 
         ArrayList<String> endpointsMin2 = new ArrayList<>(Arrays.asList(
@@ -145,12 +145,9 @@ public class QueryEvaluation {
             this.results.put("Query", curQueryName);
             date = new Date();
             fedName = "Federation " + curQueryName;
-            queryFileName = "results/" + formatter.format(date) + "_" + curQueryName + '_' + this.strategy + "-results.txt";
-            BufferedWriter queryWriter = new BufferedWriter(new FileWriter(queryFileName));
-            execute(curQueryName, cfgName, endpoints, queryWriter, fedName);
+            execute(curQueryName, cfgName, endpoints, fedName);
             long totalExecTime = System.currentTimeMillis() - this.startQueryExecTime;
             log.info(curQueryName + ": Query execution time (msec): "+ totalExecTime);
-            queryWriter.close();
             this.results.put("nbFederations", Integer.toString(this.nbFed));
             this.results.put("totalExecTime", Long.toString(totalExecTime));
             this.results.put("LicenseCheckTime", Long.toString(this.licenseCheckTime));
@@ -159,7 +156,7 @@ public class QueryEvaluation {
         ExecutionWriter.close();
     }
 
-    public void execute(String curQueryName, String cfgName, ArrayList<String> endpoints,BufferedWriter writer, String fedName) throws Exception {
+    public void execute(String curQueryName, String cfgName, ArrayList<String> endpoints, String fedName) throws Exception {
         if (this.nbFed == 0) { this.startQueryExecTime = System.currentTimeMillis(); }
         String curQuery = qp.getQuery(curQueryName);
         Config config = new Config(cfgName);
@@ -173,8 +170,8 @@ public class QueryEvaluation {
             QueryInfo queryInfo = QueryInfo.queryInfo.get();
             SourceSelection sourceSelection = queryInfo.getSourceSelection();
             Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
-            writer.write("--" + fedName + ":\n");
-            writer.write(portsToDatasets(stmtToSources.toString()) + "\n\n");
+            log.info("--" + fedName + ":\n");
+            log.info(portsToDatasets(stmtToSources.toString()) + "\n\n");
             // 1. Check licenses
             if (this.nbFed == 0) {this.licenseCheckTime = System.currentTimeMillis();}
             LicenseChecker licenseChecker = new LicenseChecker(this.licensedSummary);
@@ -192,30 +189,27 @@ public class QueryEvaluation {
                     ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
                     newEndpoints.removeAll(sourcesToRemove);
                     fedName += "'";
-                    writer.write("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
+                    log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
                     // recursive call.. we restart a query execution with the new federation
-                    execute(curQueryName, cfgName, newEndpoints, writer, fedName);
+                    execute(curQueryName, cfgName, newEndpoints, fedName);
                 }
                 if (null != res) {res.close();}
                 repo.shutDown();
                 return;
             }
-            log.info("ici c bon 3 on est sorti !!!");
             // Here, we resolved all license conflicts
             this.queryRelaxer.setRepo(repo);
             RelaxedQuery relaxedQuery = new RelaxedQuery();
             QueryFactory.parse(relaxedQuery, curQuery, null, null);
             relaxedQuery.initOriginalTriples();
             QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
-            writer.write("--------Evaluated Relaxed Queries:-----------\n");
+            log.info("--------Evaluated Relaxed Queries:-----------\n");
             int nbGeneratedRelaxedQueries = 0;
             int nbEvaluatedRelaxedQueries = 0;
             double ResultSimilarity = 0.0;
             if (relax) {
-                log.info("on va relax !");
                 relaxation:
                 while (!relaxedQuery.mayHaveAResult(repo)) {
-                    log.info("pas de result :'( !");
                     res.close();
                     if (!relaxationLattice.hasNext()) {
                         // could be triggered if ResultSimilarity >= 0.0
@@ -225,17 +219,16 @@ public class QueryEvaluation {
                     while (relaxationLattice.hasNext()) {
                         relaxedQuery = relaxationLattice.next();
                         nbGeneratedRelaxedQueries += 1;
+                        log.info(relaxedQuery.toString());
                         if (relaxedQuery.needToEvaluate()) {
-                            writer.write(relaxedQuery.toString());
                             nbEvaluatedRelaxedQueries += 1;
                             if (relaxedQuery.mayHaveAResult(repo)) {
-                                writer.write(" This query may have 1 result (SourceSelection) !\n\n");
+                                log.info(" This query may have 1 result (SourceSelection) !\n\n");
                                 ResultSimilarity = relaxedQuery.getSimilarity();
                                 nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
                                 break relaxation;
                             }
-                            writer.write(" This query has no result\n\n");
-                            res.close();
+                            log.info(" This query has no result\n\n");
                         }
                     }
                     nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
@@ -261,8 +254,7 @@ public class QueryEvaluation {
             }
             long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
             this.results.put("FirstResultTime", Long.toString(FirstResultTime));
-            writer.write(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
-            log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses));
+            log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
         } catch (Throwable e) {
             e.printStackTrace();
             log.error("", e);
