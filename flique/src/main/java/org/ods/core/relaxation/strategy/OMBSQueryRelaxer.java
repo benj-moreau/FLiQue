@@ -58,7 +58,7 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
                 mfs.remove(triple);
                 mfs.add(relaxedTriple);
                 RelaxedQuery relaxedMfsQuery = relaxedQuery.clone(relaxedMfs);
-                if (!relaxedMfsQuery.mayHaveAResult(repo)) {
+                if (relaxedMfsQuery.mayHaveAResult(repo) == null) {
                     itr.add(relaxedMfs);
                     queryRepaired = false;
                 }

@@ -11,6 +11,7 @@ import org.apache.jena.sparql.syntax.ElementVisitorBase;
 import org.apache.jena.sparql.syntax.ElementWalker;
 import org.eclipse.rdf4j.query.QueryLanguage;
 import org.eclipse.rdf4j.query.TupleQuery;
+import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.query.algebra.StatementPattern;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.slf4j.Logger;
@@ -28,6 +29,8 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
     private boolean needToEvaluate;
     // Minimal Failling Subqueries
     private ArrayList<ArrayList<TriplePath>> MFSs;
+    private boolean sourceSelected;
+    private TupleQueryResult res;
 
     public RelaxedQuery() {
         super();
@@ -36,6 +39,8 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         this.originalTriples = new HashMap<>();
         this.needToEvaluate = true;
         this.MFSs = new ArrayList<>();
+        this.sourceSelected = false;
+        this.res = null;
     }
 
     public double getSimilarity() {
@@ -106,6 +111,8 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         clone.similarity = this.similarity;
         clone.level = this.getLevel();
         clone.originalTriples = (HashMap<TriplePath, TriplePath>) this.originalTriples.clone();
+        clone.sourceSelected = false;
+        clone.res = null;
         return clone;
     }
 
@@ -144,7 +151,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                     query.removeTriple(triple);
                     RelaxedQuery evalQuery = query.clone();
                     evalQuery.addTriple(MFS);
-                    if (evalQuery.mayHaveAResult(repo)){
+                    if (evalQuery.mayHaveAResult(repo) != null){
                         MFS.add(triple);
                     }
                 }
@@ -161,33 +168,37 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         while (!pxss.isEmpty()) {
             ArrayList<TriplePath> pxs = pxss.get(0);
             RelaxedQuery query = this.clone(pxs);
-            if (query.mayHaveAResult(repo)) {
-                XSSs.add(pxs);
+            if (query.mayHaveAResult(repo) != null) {
+                if (!XSSs.contains(pxs)) { XSSs.add(pxs); }
                 pxss.remove(pxs);
             } else {
-                MFS = query.findAnMFS(repo);
-                MFSs.add(MFS);
+                ArrayList<TriplePath> MFS2 = query.findAnMFS(repo);
+                if (!MFSs.contains(MFS2)) { MFSs.add(MFS2); }
                 for (ListIterator<ArrayList<TriplePath>> itr = pxss.listIterator(); itr.hasNext();) {
                     ArrayList<TriplePath> px = itr.next();
-                    if (px.containsAll(MFS)) {
+                    itr.remove();
+                    if (px.containsAll(MFS2)) {
                         // MFS included in px
-                        itr.remove();
                         RelaxedQuery query2 = this.clone(px);
                         ArrayList<ArrayList<TriplePath>> pxssToAdd = new ArrayList<>();
-                        updatePxss:
-                        for (ArrayList<TriplePath> px2 : query2.pxss(MFS)) {
+                        for (ArrayList<TriplePath> px2 : query2.pxss(MFS2)) {
+                            Boolean px2Included = false;
                             for (ArrayList<TriplePath> px1 : pxss) {
                                 if (px1.containsAll(px2)) {
-                                    continue updatePxss;
+                                    px2Included = true;
+                                    break;
                                 }
                             }
-                            pxssToAdd.add(px2);
+                            if (!px2Included) {
+                                pxssToAdd.add(px2);
+                            }
                         }
                         pxssToAdd.forEach(itr::add);
                     }
                 }
             }
         }
+        log.info("MFS" + MFSs.toString());
         return MFSs;
     }
 
@@ -204,20 +215,22 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
         return pxss;
     }
 
-    public boolean mayHaveAResult(SailRepository repo) {
+    public TupleQueryResult mayHaveAResult(SailRepository repo) {
+        if (this.sourceSelected) { return this.res; }
         TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, this.serialize());
+        this.sourceSelected = true;
         try {
-            query.evaluate();
+            res = query.evaluate();
             Map<StatementPattern, List<StatementSource>> stmtToSources = QueryInfo.queryInfo.get().getSourceSelection().getStmtToSources();
             for (Map.Entry<StatementPattern, List<StatementSource>> stmtToSource : stmtToSources.entrySet()) {
                 if (stmtToSource.getValue().isEmpty()) {
-                    return false;
+                    return null;
                 }
             }
-            return true;
+            return res;
         } catch (FedXRuntimeException ex) {
             log.warn(ex.getMessage());
-            return false;
+            return null;
         }
     }
 

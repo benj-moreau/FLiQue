@@ -198,35 +198,33 @@ public class QueryEvaluation {
                 return;
             }
             // Here, we resolved all license conflicts
+            int nbGeneratedRelaxedQueries = 0;
+            int nbEvaluatedRelaxedQueries = 0;
+            double ResultSimilarity = 0.0;
             this.queryRelaxer.setRepo(repo);
             RelaxedQuery relaxedQuery = new RelaxedQuery();
             QueryFactory.parse(relaxedQuery, curQuery, null, null);
             relaxedQuery.initOriginalTriples();
-            QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
-            log.info("--------Evaluated Relaxed Queries:-----------\n");
-            int nbGeneratedRelaxedQueries = 0;
-            int nbEvaluatedRelaxedQueries = 0;
-            double ResultSimilarity = 0.0;
             if (relax) {
-                relaxation:
-                while (!relaxedQuery.mayHaveAResult(repo)) {
-                    res.close();
-                    if (!relaxationLattice.hasNext()) {
-                        // could be triggered if ResultSimilarity >= 0.0
-                        // In this case, Possibility to find no relaxed query
-                        break;
-                    }
+                QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
+                log.info("--------Evaluated Relaxed Queries:-----------\n");
+                res = relaxedQuery.mayHaveAResult(repo);
+                if (res == null) {
                     while (relaxationLattice.hasNext()) {
                         relaxedQuery = relaxationLattice.next();
                         nbGeneratedRelaxedQueries += 1;
                         log.info(relaxedQuery.toString());
                         if (relaxedQuery.needToEvaluate()) {
                             nbEvaluatedRelaxedQueries += 1;
-                            if (relaxedQuery.mayHaveAResult(repo)) {
-                                log.info(" This query may have 1 result (SourceSelection) !\n\n");
-                                ResultSimilarity = relaxedQuery.getSimilarity();
-                                nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
-                                break relaxation;
+                            res = relaxedQuery.mayHaveAResult(repo);
+                            if (res != null) {
+                                log.info(" This query may have 1 result (SourceSelection) !\n");
+                                if (res.hasNext()){
+                                    log.info(" This query has a result !\n\n");
+                                    ResultSimilarity = relaxedQuery.getSimilarity();
+                                    nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
+                                    break;
+                                }
                             }
                             log.info(" This query has no result\n\n");
                         }
@@ -245,12 +243,13 @@ public class QueryEvaluation {
             // Now we can execute the query with FedX
             long count = 0;
             // TODO Uncomment next to execute query
-            while (res.hasNext()) {
+            if (res != null) {
                 BindingSet row = res.next();
-                System.out.println(count+": "+ row);
-                count++;
+                log.info("First result of the query is:");
+                log.info(row.toString());
                 // only one result
-                break;
+            } else {
+                log.info("Final query has no result !");
             }
             long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
             this.results.put("FirstResultTime", Long.toString(FirstResultTime));
