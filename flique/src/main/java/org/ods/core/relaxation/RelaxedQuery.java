@@ -151,7 +151,8 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                     query.removeTriple(triple);
                     RelaxedQuery evalQuery = query.clone();
                     evalQuery.addTriple(MFS);
-                    if (evalQuery.mayHaveAResult(repo) != null){
+                    TupleQueryResult res = evalQuery.mayHaveAResult(repo);
+                    if (res != null){
                         MFS.add(triple);
                     }
                 }
@@ -224,12 +225,14 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
             Map<StatementPattern, List<StatementSource>> stmtToSources = QueryInfo.queryInfo.get().getSourceSelection().getStmtToSources();
             for (Map.Entry<StatementPattern, List<StatementSource>> stmtToSource : stmtToSources.entrySet()) {
                 if (stmtToSource.getValue().isEmpty()) {
+                    res.close();
                     return null;
                 }
             }
             return res;
         } catch (FedXRuntimeException ex) {
             log.warn(ex.getMessage());
+            res.close();
             return null;
         }
     }
