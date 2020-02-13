@@ -139,6 +139,7 @@ public class QueryEvaluation {
         BufferedWriter ExecutionWriter = new BufferedWriter(new FileWriter(execFileName));
         // CSV header
         ExecutionWriter.write(String.join(";", this.results.keySet()) + "\n");
+        ExecutionWriter.flush();
         for (String curQueryName : qnames)
         {
             this.nbFed = 0;
@@ -152,6 +153,7 @@ public class QueryEvaluation {
             this.results.put("totalExecTime", Long.toString(totalExecTime));
             this.results.put("LicenseCheckTime", Long.toString(this.licenseCheckTime));
             ExecutionWriter.write(String.join(";", this.results.values()) + "\n");
+            ExecutionWriter.flush();
         }
         ExecutionWriter.close();
     }
