@@ -84,6 +84,7 @@ public class QueryEvaluation {
         String cfgName;
         String strategy = args[0];
         Boolean relax = true;
+        if (args[1] == "noRelax") { relax = false;}
         strategy = strategy.toUpperCase();
         QueryRelaxer queryRelaxer;
         if (strategy.equals("BFS")) {
@@ -101,12 +102,10 @@ public class QueryEvaluation {
             strategy = "FLIQUE";
             queryRelaxer = new FLIQUEQueryRelaxer();
         }
-        if (args.length > 1) {
-            relax = false;
-        }
         String host = "localhost";
+        String queries = args[2];
         // String queries = "S1";
-        String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
+        // String queries = "S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 S11 S12 S13 S14 C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 L1 L2 L3 L4 L5 L6 L7 L8 CH1 CH2 CH3 CH4 CH5 CH6 CH7 CH8";
 
 
         ArrayList<String> endpointsMin2 = new ArrayList<>(Arrays.asList(
