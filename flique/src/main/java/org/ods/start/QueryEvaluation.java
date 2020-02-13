@@ -253,6 +253,7 @@ public class QueryEvaluation {
             }
             long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
             this.results.put("FirstResultTime", Long.toString(FirstResultTime));
+            log.info(this.results.toString());
             log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
         } catch (Throwable e) {
             e.printStackTrace();
