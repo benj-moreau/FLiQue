@@ -14,7 +14,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="costfed" target="11" />
-      <module name="costfed-web" target="1.8" />
       <module name="fedx" target="11" />
       <module name="FLiQuE" target="11" />
       <module name="flique" target="11" />

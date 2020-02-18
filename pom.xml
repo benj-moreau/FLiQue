@@ -20,6 +20,7 @@
                 <source>11</source>
             </configuration>
         </plugin>
+        <!--
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
@@ -43,13 +44,13 @@
                 </execution>
             </executions>
         </plugin>
-
+        -->
     </plugins>
   </build>
 
   <modules>
-        <module>fedx</module>
-        <module>costfed</module>
+      <module>fedx</module>
+      <module>costfed</module>
       <module>flique</module>
   </modules>
 </project>
