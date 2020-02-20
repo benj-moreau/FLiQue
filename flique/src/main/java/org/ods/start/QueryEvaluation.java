@@ -272,7 +272,7 @@ public class QueryEvaluation {
                 this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                 e.printStackTrace();
                 log.error("", e);
-                File f = new File("results/" + curQueryName + ".error.txt");
+                File f = new File("results/" + curQueryName + " " + strategy + ".error.txt");
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 PrintStream ps = new PrintStream(os);
                 e.printStackTrace(ps);
