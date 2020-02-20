@@ -158,116 +158,133 @@ public class QueryEvaluation {
     }
 
     public void execute(String curQueryName, String cfgName, ArrayList<String> endpoints, String fedName) throws Exception {
-        if (this.nbFed == 0) { this.startQueryExecTime = System.currentTimeMillis(); }
-        String curQuery = qp.getQuery(curQueryName);
-        Config config = new Config(cfgName);
-        SailRepository repo = null;
-        TupleQueryResult res = null;
-        try {
-            repo = FedXFactory.initializeSparqlFederation(config, endpoints);
-            TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
-            res = query.evaluate();
-            // This is where FLiQuE is inserted
-            QueryInfo queryInfo = QueryInfo.queryInfo.get();
-            SourceSelection sourceSelection = queryInfo.getSourceSelection();
-            Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
-            log.info("--" + fedName + ":\n");
-            log.info(portsToDatasets(stmtToSources.toString()) + "\n\n");
-            // 1. Check licenses
-            if (this.nbFed == 0) {this.licenseCheckTime = System.currentTimeMillis();}
-            LicenseChecker licenseChecker = new LicenseChecker(this.licensedSummary);
-            EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
-            Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
-            if (nbFed == 0) {this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;}
-            this.nbFed += 1;
-            if (consistentLicenses.isEmpty() && relax) {
-                // a license compatible with licenses of sources does not exists
-                // We need to eliminate sources
-                licenseChecker.getEndpointlicenseConflicts();
-                ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
-                //remove endpoints
-                for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
-                    ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
-                    newEndpoints.removeAll(sourcesToRemove);
-                    fedName += "'";
-                    log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
-                    // recursive call.. we restart a query execution with the new federation
-                    execute(curQueryName, cfgName, newEndpoints, fedName);
-                }
-                if (null != res) {res.close();}
-                repo.shutDown();
-                return;
+        if (this.results.get("FirstResultTime") == null) {
+            // We only search for the first result
+            if (this.nbFed == 0) {
+                this.startQueryExecTime = System.currentTimeMillis();
             }
-            // Here, we resolved all license conflicts
-            int nbGeneratedRelaxedQueries = 0;
-            int nbEvaluatedRelaxedQueries = 0;
-            double ResultSimilarity = 0.0;
-            this.queryRelaxer.setRepo(repo);
-            RelaxedQuery relaxedQuery = new RelaxedQuery();
-            QueryFactory.parse(relaxedQuery, curQuery, null, null);
-            relaxedQuery.initOriginalTriples();
-            if (relax) {
-                QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
-                log.info("--------Evaluated Relaxed Queries:-----------\n");
-                res = relaxedQuery.mayHaveAResult(repo);
-                if (res == null) {
-                    while (relaxationLattice.hasNext()) {
-                        relaxedQuery = relaxationLattice.next();
-                        nbGeneratedRelaxedQueries += 1;
-                        log.info(relaxedQuery.toString());
-                        if (relaxedQuery.needToEvaluate()) {
-                            nbEvaluatedRelaxedQueries += 1;
-                            res = relaxedQuery.mayHaveAResult(repo);
-                            if (res != null) {
-                                log.info(" This query may have 1 result (SourceSelection) !\n");
-                                if (res.hasNext()){
-                                    log.info(" This query has a result !\n\n");
-                                    ResultSimilarity = relaxedQuery.getSimilarity();
-                                    nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
-                                    break;
-                                }
-                            }
-                            log.info(" This query has no result\n\n");
-                        }
+            String curQuery = qp.getQuery(curQueryName);
+            Config config = new Config(cfgName);
+            SailRepository repo = null;
+            TupleQueryResult res = null;
+            try {
+                repo = FedXFactory.initializeSparqlFederation(config, endpoints);
+                TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
+                res = query.evaluate();
+                // This is where FLiQuE is inserted
+                QueryInfo queryInfo = QueryInfo.queryInfo.get();
+                SourceSelection sourceSelection = queryInfo.getSourceSelection();
+                Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
+                log.info("--" + fedName + ":\n");
+                log.info(portsToDatasets(stmtToSources.toString()) + "\n\n");
+                // 1. Check licenses
+                if (this.nbFed == 0) {
+                    this.licenseCheckTime = System.currentTimeMillis();
+                }
+                LicenseChecker licenseChecker = new LicenseChecker(this.licensedSummary);
+                EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+                Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
+                if (nbFed == 0) {
+                    this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;
+                }
+                this.nbFed += 1;
+                if (consistentLicenses.isEmpty() && relax) {
+                    // a license compatible with licenses of sources does not exists
+                    // We need to eliminate sources
+                    licenseChecker.getEndpointlicenseConflicts();
+                    ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
+                    //remove endpoints
+                    for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
+                        ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
+                        newEndpoints.removeAll(sourcesToRemove);
+                        fedName += "'";
+                        log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
+                        // recursive call.. we restart a query execution with the new federation
+                        execute(curQueryName, cfgName, newEndpoints, fedName);
                     }
-                    nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
+                    if (null != res) {
+                        res.close();
+                    }
+                    repo.shutDown();
+                    return;
                 }
-                queryInfo = QueryInfo.queryInfo.get();
-                sourceSelection = queryInfo.getSourceSelection();
-                endpointManager = queryInfo.getFedXConnection().getEndpointManager();
-                consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
+                // Here, we resolved all license conflicts
+                int nbGeneratedRelaxedQueries = 0;
+                int nbEvaluatedRelaxedQueries = 0;
+                double ResultSimilarity = 0.0;
+                this.queryRelaxer.setRepo(repo);
+                RelaxedQuery relaxedQuery = new RelaxedQuery();
+                QueryFactory.parse(relaxedQuery, curQuery, null, null);
+                relaxedQuery.initOriginalTriples();
+                if (relax) {
+                    QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
+                    log.info("--------Evaluated Relaxed Queries:-----------\n");
+                    res = relaxedQuery.mayHaveAResult(repo);
+                    if (res == null) {
+                        while (relaxationLattice.hasNext()) {
+                            relaxedQuery = relaxationLattice.next();
+                            nbGeneratedRelaxedQueries += 1;
+                            log.info(relaxedQuery.toString());
+                            if (relaxedQuery.needToEvaluate()) {
+                                nbEvaluatedRelaxedQueries += 1;
+                                res = relaxedQuery.mayHaveAResult(repo);
+                                if (res != null) {
+                                    log.info(" This query may have 1 result (SourceSelection) !\n");
+                                    if (res.hasNext()) {
+                                        log.info(" This query has a result !\n\n");
+                                        ResultSimilarity = relaxedQuery.getSimilarity();
+                                        nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
+                                        break;
+                                    }
+                                }
+                                log.info(" This query has no result\n\n");
+                            }
+                        }
+                        nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
+                    }
+                    queryInfo = QueryInfo.queryInfo.get();
+                    sourceSelection = queryInfo.getSourceSelection();
+                    endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+                    consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
+                }
+                // we found a query that return at least 1 result.
+                this.results.put("nbGeneratedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbGeneratedRelaxedQueries")) + nbGeneratedRelaxedQueries));
+                this.results.put("nbEvaluatedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbEvaluatedRelaxedQueries")) + nbEvaluatedRelaxedQueries));
+                this.results.put("ResultSimilarity", Double.toString(Math.max(Double.parseDouble(this.results.get("ResultSimilarity")), ResultSimilarity)));
+                // Now we can execute the query with FedX
+                long count = 0;
+                // TODO Uncomment next to execute query
+                if (res != null) {
+                    BindingSet row = res.next();
+                    log.info("First result of the query is:");
+                    log.info(row.toString());
+                    // only one result
+                } else {
+                    log.info("Final query has no result !");
+                }
+                long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
+                this.results.put("FirstResultTime", Long.toString(FirstResultTime));
+                log.info(this.results.toString());
+                log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
+            } catch (Throwable e) {
+                long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
+                this.results.put("FirstResultTime", Long.toString(FirstResultTime));
+                e.printStackTrace();
+                log.error("", e);
+                File f = new File("results/" + curQueryName + ".error.txt");
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                PrintStream ps = new PrintStream(os);
+                e.printStackTrace(ps);
+                ps.flush();
+                FileUtils.write(f, os.toString("UTF8"));
+            } finally {
+                if (null != res) {
+                    res.close();
+                }
+                if (null != repo) {
+                    repo.shutDown();
+                }
             }
-            // we found a query that return at least 1 result.
-            this.results.put("nbGeneratedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbGeneratedRelaxedQueries")) + nbGeneratedRelaxedQueries));
-            this.results.put("nbEvaluatedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbEvaluatedRelaxedQueries")) + nbEvaluatedRelaxedQueries));
-            this.results.put("ResultSimilarity", Double.toString(Math.max(Double.parseDouble(this.results.get("ResultSimilarity")), ResultSimilarity)));
-            // Now we can execute the query with FedX
-            long count = 0;
-            // TODO Uncomment next to execute query
-            if (res != null) {
-                BindingSet row = res.next();
-                log.info("First result of the query is:");
-                log.info(row.toString());
-                // only one result
-            } else {
-                log.info("Final query has no result !");
-            }
-            long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
-            this.results.put("FirstResultTime", Long.toString(FirstResultTime));
-            log.info(this.results.toString());
-            log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
-        } catch (Throwable e) {
-            e.printStackTrace();
-            log.error("", e);
-            File f = new File("results/" + curQueryName + ".error.txt");
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            PrintStream ps = new PrintStream(os);
-            e.printStackTrace(ps);
-            ps.flush();
-            FileUtils.write(f, os.toString("UTF8"));
-        } finally {
-            if (null != res) {res.close();}
-            if (null != repo) {repo.shutDown();}
         }
     }
 
