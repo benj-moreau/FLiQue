@@ -1,0 +1,45 @@
+@prefix : <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+:Person a rdfs:Class,
+        owl:Class .
+
+:Student a rdfs:Class,
+        owl:Class ;
+    rdfs:subClassOf :Person .
+
+
+:Teacher a rdfs:Class,
+        owl:Class ;
+    rdfs:subClassOf :Person .
+
+:Course a rdfs:Class,
+        owl:Class .
+
+:University a rdfs:Class,
+        owl:Class .
+
+:attends a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain :Person ;
+    rdfs:range :Course .
+
+:teaches a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain :Teacher ;
+    rdfs:range :Course ;
+    rdfs:subPropertyOf :attends .
+
+:enrolledIn a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain :Student ;
+    rdfs:range :Course ;
+    rdfs:subPropertyOf :attends .
+
+:heldAt a rdf:Property,
+        owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :University .
+

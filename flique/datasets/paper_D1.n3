@@ -1,0 +1,7 @@
+@prefix : <http://example.org/> .
+
+:UniversityOfNantes a :University .
+:SemanticWeb a :Course ;
+    :heldAt :UniversityOfNantes .
+:Databases a :Course ;
+    :heldAt :UniversityOfNantes .

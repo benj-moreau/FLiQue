@@ -1,0 +1,6 @@
+SELECT * WHERE {
+    ?student rdf:type ex:Student .
+    ?student ex:enrolledIn ?course .
+    ?course ex:heldAt ex:UniversityOfNantes .
+    ex:Jamy ex:teaches ?course .
+}

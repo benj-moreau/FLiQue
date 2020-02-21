@@ -1,0 +1,8 @@
+@prefix : <http://example.org/> .
+
+:Jamy a :Teacher ;
+    :teaches :SemanticWeb .
+:LaVoix a :Teacher ;
+    :teaches :Databases .
+:Tarzan a :Student ;
+    :enrolledIn :Databases .
