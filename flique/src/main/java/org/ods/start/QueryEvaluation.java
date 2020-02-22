@@ -4,6 +4,7 @@ import com.fluidops.fedx.*;
 import com.fluidops.fedx.algebra.StatementSource;
 import com.fluidops.fedx.optimizer.SourceSelection;
 import com.fluidops.fedx.structures.QueryInfo;
+import org.aksw.simba.quetsal.synopsis.Collection;
 import org.aksw.simba.start.QueryProvider;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.QueryFactory;
@@ -161,7 +162,6 @@ public class QueryEvaluation {
         {
             this.nbFed = 0;
             this.results.put("Query", curQueryName);
-            date = new Date();
             fedName = "Federation " + curQueryName;
             execute(curQueryName, cfgName, endpoints, fedName);
             long totalExecTime = System.currentTimeMillis() - this.startQueryExecTime;
@@ -179,7 +179,14 @@ public class QueryEvaluation {
             // We only search for the first result
             if (this.nbFed == 0) {
                 this.startQueryExecTime = System.currentTimeMillis();
+            }/*
+            try {
+                File cache = new File("cache.db");
+                if(cache.delete()) { log.info("cache deleted"); }
+            } catch (Throwable e) {
+                log.info(e.getMessage());
             }
+            */
             String curQuery = qp.getQuery(curQueryName);
             Config config = new Config(cfgName);
             SailRepository repo = null;
@@ -211,6 +218,7 @@ public class QueryEvaluation {
                     licenseChecker.getEndpointlicenseConflicts();
                     ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
                     //remove endpoints
+                    // Collections.reverse(listSourcesToRemove);
                     for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
                         ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
                         newEndpoints.removeAll(sourcesToRemove);
@@ -225,7 +233,7 @@ public class QueryEvaluation {
                     repo.shutDown();
                     return;
                 }
-                if (this.results.get("FirstResultTime") == null) {
+                // if (this.results.get("FirstResultTime") == null) {
                     // Here, we resolved all license conflicts
                     int nbGeneratedRelaxedQueries = 0;
                     int nbEvaluatedRelaxedQueries = 0;
@@ -284,7 +292,7 @@ public class QueryEvaluation {
                     }
                     log.info(this.results.toString());
                     log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
-                }
+                //}
             } catch (Throwable e) {
                 long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
                 this.results.put("FirstResultTime", Long.toString(FirstResultTime));
