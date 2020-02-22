@@ -1,0 +1,749 @@
+@prefix cc:    <http://creativecommons.org/ns#> .
+@prefix l4lod: <http://ns.inria.fr/l4lod/v2/> .
+@prefix odrs:  <http://schema.theodi.org/odrs#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml:   <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix odrl:  <http://www.w3.org/ns/odrl/2/> .
+@prefix ds:    <http://aksw.org/quetsal/> .
+
+<http://localhost:8881/sparql>
+        a                ds:Service , odrl:Asset ;
+        ds:capability    [ ds:distinctObjs  2 ;
+                           ds:distinctSbjs  4 ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/University" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    3 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:range ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    3 ;
+                                              ds:object  <http://example.org/Course>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       24
+                         ] ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:subClassOf ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/Person>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       17
+                         ] ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/UniversityOfNantes" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     <http://example.org/heldAt> ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Databases" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/SemanticWeb" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/UniversityOfNantes>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       2
+                         ] ;
+        ds:capability    [ ds:distinctObjs  4 ;
+                           ds:distinctSbjs  4 ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:domain ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       []  ;
+                           ds:topSbjs       []  ;
+                           ds:triples       25
+                         ] ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:subPropertyOf ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/attends>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       4
+                         ] ;
+        ds:capability    [ ds:distinctObjs  6 ;
+                           ds:distinctSbjs  12 ;
+                           ds:objPrefixes   []  ;
+                           ds:predicate     rdf:type ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Databases" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    3 ;
+                                              ds:prefix  "http://example.org/S" ;
+                                              ds:unique  2
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    3 ;
+                                              ds:prefix  "http://example.org/University" ;
+                                              ds:unique  2
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    5 ;
+                                              ds:object  rdfs:Class
+                                            ] ;
+                           ds:topObjs       [ ds:card    1 ;
+                                              ds:object  <http://example.org/University>
+                                            ] ;
+                           ds:topObjs       [ ds:card    4 ;
+                                              ds:object  <http://www.w3.org/2002/07/owl#ObjectProperty>
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/Course>
+                                            ] ;
+                           ds:topObjs       [ ds:card    4 ;
+                                              ds:object  rdf:Property
+                                            ] ;
+                           ds:topObjs       [ ds:card    5 ;
+                                              ds:object  <http://www.w3.org/2002/07/owl#Class>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/University>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Teacher>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/teaches>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/enrolledIn>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Person>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Student>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/heldAt>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Course>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/attends>
+                                            ] ;
+                           ds:triples       343
+                         ] ;
+        ds:totalObj      344 ;
+        ds:totalSbj      1094 ;
+        ds:totalTriples  415 ;
+        ds:url           <http://localhost:8881/sparql> ;
+        odrl:hasPolicy   <http://cali.priloo.univ-nantes.fr/api/ld/licenses/65927752496731336046706942505975647712133156838395276> .
+
+<http://cali.priloo.univ-nantes.fr/api/ld/licenses/6592775249673133604-9092176396027616413133156838395276>
+        a                     odrl:Policy ;
+        rdfs:label            "CC BY-SA" ;
+        l4lod:licensingTerms  <https://creativecommons.org/licenses/by-sa/3.0/legalcode> ;
+        odrl:Duty             cc:Notice , cc:ShareAlike , cc:Attribution ;
+        odrl:Permission       cc:Reproduction , cc:DerivativeWorks , cc:Distribution , odrl:modify , cc:CommericalUse ;
+        odrl:target           <http://localhost:8882/sparql> .
+
+<http://localhost:8883/sparql>
+        a                ds:Service , odrl:Asset ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  1 ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/SemanticWeb" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     <http://example.org/enrolledIn> ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Jeanne" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       []  ;
+                           ds:topSbjs       []  ;
+                           ds:triples       1
+                         ] ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:subPropertyOf ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/attends>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       4
+                         ] ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:subClassOf ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/Person>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       17
+                         ] ;
+        ds:capability    [ ds:distinctObjs  5 ;
+                           ds:distinctSbjs  10 ;
+                           ds:objPrefixes   []  ;
+                           ds:predicate     rdf:type ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Jeanne" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/University" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    1 ;
+                                              ds:object  <http://example.org/Student>
+                                            ] ;
+                           ds:topObjs       [ ds:card    5 ;
+                                              ds:object  rdfs:Class
+                                            ] ;
+                           ds:topObjs       [ ds:card    4 ;
+                                              ds:object  <http://www.w3.org/2002/07/owl#ObjectProperty>
+                                            ] ;
+                           ds:topObjs       [ ds:card    4 ;
+                                              ds:object  rdf:Property
+                                            ] ;
+                           ds:topObjs       [ ds:card    5 ;
+                                              ds:object  <http://www.w3.org/2002/07/owl#Class>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/teaches>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Course>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/attends>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Person>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/University>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Student>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/enrolledIn>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/heldAt>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Teacher>
+                                            ] ;
+                           ds:triples       341
+                         ] ;
+        ds:capability    [ ds:distinctObjs  2 ;
+                           ds:distinctSbjs  4 ;
+                           ds:objPrefixes   [ ds:card    3 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/University" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:range ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    3 ;
+                                              ds:object  <http://example.org/Course>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       24
+                         ] ;
+        ds:capability    [ ds:distinctObjs  4 ;
+                           ds:distinctSbjs  4 ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:domain ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       []  ;
+                           ds:topSbjs       []  ;
+                           ds:triples       25
+                         ] ;
+        ds:totalObj      344 ;
+        ds:totalSbj      1092 ;
+        ds:totalTriples  412 ;
+        ds:url           <http://localhost:8883/sparql> ;
+        odrl:hasPolicy   <http://cali.priloo.univ-nantes.fr/api/ld/licenses/5096279539387512726706942505975647712-4061970458552090152> .
+
+<http://localhost:8882/sparql>
+        a                odrl:Asset , ds:Service ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:subClassOf ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/Person>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       17
+                         ] ;
+        ds:capability    [ ds:distinctObjs  2 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Databases" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/SemanticWeb" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     <http://example.org/teaches> ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Jamy" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/LaVoix" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       []  ;
+                           ds:topSbjs       []  ;
+                           ds:triples       2
+                         ] ;
+        ds:capability    [ ds:distinctObjs  6 ;
+                           ds:distinctSbjs  12 ;
+                           ds:objPrefixes   []  ;
+                           ds:predicate     rdf:type ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Jamy" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    3 ;
+                                              ds:prefix  "http://example.org/T" ;
+                                              ds:unique  2
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/LaVoix" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/University" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    4 ;
+                                              ds:object  <http://www.w3.org/2002/07/owl#ObjectProperty>
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/Teacher>
+                                            ] ;
+                           ds:topObjs       [ ds:card    5 ;
+                                              ds:object  rdfs:Class
+                                            ] ;
+                           ds:topObjs       [ ds:card    4 ;
+                                              ds:object  rdf:Property
+                                            ] ;
+                           ds:topObjs       [ ds:card    5 ;
+                                              ds:object  <http://www.w3.org/2002/07/owl#Class>
+                                            ] ;
+                           ds:topObjs       [ ds:card    1 ;
+                                              ds:object  <http://example.org/Student>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Teacher>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/enrolledIn>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Student>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/teaches>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/University>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Person>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/Course>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/heldAt>
+                                            ] ;
+                           ds:topSbjs       [ ds:card     2 ;
+                                              ds:subject  <http://example.org/attends>
+                                            ] ;
+                           ds:triples       343
+                         ] ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  2 ;
+                           ds:objPrefixes   [ ds:card    2 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:subPropertyOf ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    2 ;
+                                              ds:object  <http://example.org/attends>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       4
+                         ] ;
+        ds:capability    [ ds:distinctObjs  1 ;
+                           ds:distinctSbjs  1 ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Databases" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     <http://example.org/enrolledIn> ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Tarzan" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       []  ;
+                           ds:topSbjs       []  ;
+                           ds:triples       1
+                         ] ;
+        ds:capability    [ ds:distinctObjs  2 ;
+                           ds:distinctSbjs  4 ;
+                           ds:objPrefixes   [ ds:card    3 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/University" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:range ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       [ ds:card    3 ;
+                                              ds:object  <http://example.org/Course>
+                                            ] ;
+                           ds:topSbjs       []  ;
+                           ds:triples       24
+                         ] ;
+        ds:capability    [ ds:distinctObjs  4 ;
+                           ds:distinctSbjs  4 ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Student" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Teacher" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Person" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:objPrefixes   [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/Course" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:predicate     rdfs:domain ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/teaches" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/attends" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/heldAt" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:subjPrefixes  [ ds:card    1 ;
+                                              ds:prefix  "http://example.org/enrolledIn" ;
+                                              ds:unique  1
+                                            ] ;
+                           ds:topObjs       []  ;
+                           ds:topSbjs       []  ;
+                           ds:triples       25
+                         ] ;
+        ds:totalObj      345 ;
+        ds:totalSbj      1094 ;
+        ds:totalTriples  416 ;
+        ds:url           <http://localhost:8882/sparql> ;
+        odrl:hasPolicy   <http://cali.priloo.univ-nantes.fr/api/ld/licenses/6592775249673133604-9092176396027616413133156838395276> .
+
+<http://cali.priloo.univ-nantes.fr/api/ld/licenses/65927752496731336046706942505975647712133156838395276>
+        a                     odrl:Policy ;
+        rdfs:label            "CC BY" ;
+        l4lod:licensingTerms  <https://creativecommons.org/licenses/by/3.0/legalcode> ;
+        odrs:compatibleWith   <http://cali.priloo.univ-nantes.fr/api/ld/licenses/6592775249673133604-9092176396027616413133156838395276> , <http://cali.priloo.univ-nantes.fr/api/ld/licenses/5096279539387512726706942505975647712-4061970458552090152> ;
+        odrl:Duty             cc:Notice , cc:Attribution ;
+        odrl:Permission       odrl:modify , cc:DerivativeWorks , cc:CommericalUse , cc:Reproduction , cc:Distribution ;
+        odrl:target           <http://localhost:8881/sparql> .
+
+<http://cali.priloo.univ-nantes.fr/api/ld/licenses/5096279539387512726706942505975647712-4061970458552090152>
+        a                     odrl:Policy ;
+        rdfs:label            "CC BY-NC" ;
+        l4lod:licensingTerms  <https://creativecommons.org/licenses/by-nc/3.0/legalcode> ;
+        odrl:Duty             cc:Notice , cc:Attribution ;
+        odrl:Permission       odrl:modify , cc:Distribution , cc:Reproduction , cc:DerivativeWorks ;
+        odrl:Prohibition      cc:CommericalUse ;
+        odrl:target           <http://localhost:8883/sparql> .

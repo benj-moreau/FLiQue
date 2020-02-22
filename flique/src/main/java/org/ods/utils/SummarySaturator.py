@@ -39,8 +39,8 @@ def add_all_super_properties(summary, saturated_summary):
             saturated_summary.add((node, URIRef("http://aksw.org/quetsal/predicate"), super_property))
 
 
-summaryFile = "../../../../../../summaries/complete-largeRDFBench-summaries.n3"
-outputFile = "../../../../../../summaries/saturated-largeRDFBench-summaries.n3"
+summaryFile = "../../../../../../summaries/paper_licensed_summary.n3"
+outputFile = "../../../../../../summaries/saturated-paper-summary.n3"
 ontologiesDir = "../../../../../../ontologies/"
 
 summary = Graph().parse(summaryFile, format='n3')
@@ -50,6 +50,7 @@ ontology = Graph()
 for r, d, f in os.walk(ontologiesDir):
     for file in f:
         if file.lower().endswith('.rdf') or file.lower().endswith('.xml') or file.lower().endswith('.owl'):
+            print(file)
             ontology.parse(os.path.join(r, file))
 
 add_all_super_classes(summary, saturated_summary)

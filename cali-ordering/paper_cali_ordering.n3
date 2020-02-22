@@ -1,0 +1,57 @@
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix l4lod: <http://ns.inria.fr/l4lod/v2/> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix odrs: <http://schema.theodi.org/odrs#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://localhost:8881/sparql> a odrl:Asset ;
+    odrl:hasPolicy <http://cali.priloo.univ-nantes.fr/api/ld/licenses/65927752496731336046706942505975647712133156838395276> .
+
+<http://localhost:8882/sparql> a odrl:Asset ;
+    odrl:hasPolicy <http://cali.priloo.univ-nantes.fr/api/ld/licenses/6592775249673133604-9092176396027616413133156838395276>.
+
+<http://localhost:8883/sparql> a odrl:Asset ;
+    odrl:hasPolicy <http://cali.priloo.univ-nantes.fr/api/ld/licenses/5096279539387512726706942505975647712-4061970458552090152> .
+
+
+<http://cali.priloo.univ-nantes.fr/api/ld/licenses/5096279539387512726706942505975647712-4061970458552090152> a odrl:Policy ;
+    rdfs:label "CC BY-NC" ;
+    l4lod:licensingTerms <https://creativecommons.org/licenses/by-nc/3.0/legalcode> ;
+    odrl:Duty cc:Attribution,
+        cc:Notice ;
+    odrl:Permission cc:DerivativeWorks,
+        cc:Distribution,
+        cc:Reproduction,
+        odrl:modify ;
+    odrl:Prohibition cc:CommericalUse ;
+    odrl:target <http://localhost:8883/sparql> .
+
+<http://cali.priloo.univ-nantes.fr/api/ld/licenses/6592775249673133604-9092176396027616413133156838395276> a odrl:Policy ;
+    rdfs:label "CC BY-SA" ;
+    l4lod:licensingTerms <https://creativecommons.org/licenses/by-sa/3.0/legalcode> ;
+    odrl:Duty cc:Attribution,
+        cc:Notice,
+        cc:ShareAlike ;
+    odrl:Permission cc:CommericalUse,
+        cc:DerivativeWorks,
+        cc:Distribution,
+        cc:Reproduction,
+        odrl:modify ;
+    odrl:target <http://localhost:8882/sparql> .
+
+<http://cali.priloo.univ-nantes.fr/api/ld/licenses/65927752496731336046706942505975647712133156838395276> a odrl:Policy ;
+    rdfs:label "CC BY";
+    l4lod:licensingTerms <https://creativecommons.org/licenses/by/3.0/legalcode>;
+    odrs:compatibleWith <http://cali.priloo.univ-nantes.fr/api/ld/licenses/5096279539387512726706942505975647712-4061970458552090152>,
+        <http://cali.priloo.univ-nantes.fr/api/ld/licenses/6592775249673133604-9092176396027616413133156838395276> ;
+    odrl:Duty cc:Attribution,
+        cc:Notice ;
+    odrl:Permission cc:CommericalUse,
+        cc:DerivativeWorks,
+        cc:Distribution,
+        cc:Reproduction,
+        odrl:modify ;
+    odrl:target <http://localhost:8881/sparql> .

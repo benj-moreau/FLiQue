@@ -25,10 +25,10 @@ import java.util.*;
 
 public class QueryEvaluation {
     protected static final Logger log = LoggerFactory.getLogger(QueryEvaluation.class);
-    protected static final Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
-    protected static final Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
-    protected static final Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
-    protected static  final double minSimilarity = 0.3;
+    protected static Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
+    protected static Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
+    protected static Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
+    protected static  final double minSimilarity = 0.0;
     private HashMap<String, String> results = new HashMap<>();
     private HashMap<String, String> portEndpoints = new HashMap<>();
     private int nbFed = 0;
@@ -59,6 +59,9 @@ public class QueryEvaluation {
         this.results.put("nbEvaluatedRelaxedQueries", "0");
         this.results.put("ResultSimilarity", "0.0");
         //endpoints
+        this.portEndpoints.put("8881", "D1");
+        this.portEndpoints.put("8882", "D2");
+        this.portEndpoints.put("8883", "D3");
         this.portEndpoints.put("8889", "LinkedTCGA-A");
         this.portEndpoints.put("8888", "ChEBI");
         this.portEndpoints.put("8891", "DBPedia-Subset");
@@ -73,6 +76,11 @@ public class QueryEvaluation {
         this.strategy = strategy;
         this.queryRelaxer = queryRelaxer;
         this.relax = relax;
+        if (strategy.equals("PAPER")) {
+            this.ontology = RDFDataMgr.loadModel("ontologies/paper_ontology.n3");
+            this.summary = RDFDataMgr.loadModel("summaries/saturated-paper-summary.n3");
+            this.licensedSummary = RDFDataMgr.loadModel("summaries/paper_licensed_summary.n3");
+        }
     }
 
     /**
@@ -98,8 +106,11 @@ public class QueryEvaluation {
             queryRelaxer = new OMBSQueryRelaxer();
         } else {
             // default case
-            cfgName = "flique.props";
-            strategy = "FLIQUE";
+            cfgName = "paper_example.props";
+            if (!strategy.equals("PAPER")) {
+                strategy = "FLIQUE";
+                cfgName = "flique.props";
+            }
             queryRelaxer = new FLIQUEQueryRelaxer();
         }
         String host = "localhost";
@@ -122,8 +133,15 @@ public class QueryEvaluation {
                 "http://" + host + ":8889/sparql"
         ));
 
+        ArrayList<String> endpointsPaper = new ArrayList<>(Arrays.asList(
+                "http://" + host + ":8881/sparql",
+                "http://" + host + ":8882/sparql",
+                "http://" + host + ":8883/sparql"
+        ));
         ArrayList<String> endpoints = endpointsMin2;
-
+        if (strategy.equals("PAPER")) {
+            endpoints = endpointsPaper;
+        }
         multyEvaluate(queries, 1, cfgName, endpoints, strategy, queryRelaxer, relax);
         System.exit(0);
     }
@@ -258,12 +276,12 @@ public class QueryEvaluation {
                         BindingSet row = res.next();
                         log.info("First result of the query is:");
                         log.info(row.toString());
+                        long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
+                        this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                         // only one result
                     } else {
                         log.info("Final query has no result !");
                     }
-                    long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
-                    this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                     log.info(this.results.toString());
                     log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
                 }

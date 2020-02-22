@@ -144,13 +144,5 @@
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.26" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.9" level="project" />
     <orderEntry type="library" name="Python 3.7 interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.6 (chatbot) interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.7 (chatbot3) interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.7 (EvaMap) interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.7 (EvaMap-Web) interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.7 (LibraryEvaMap) interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.7 (LybEvaMap) interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.7 (pycali3) interpreter library" level="application" />
-    <orderEntry type="library" name="Python 3.7 (rdf-property-table) interpreter library" level="application" />
   </component>
 </module>

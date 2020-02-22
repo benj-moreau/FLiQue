@@ -23,20 +23,12 @@ public class SummaryGenerator {
     static Logger log = LoggerFactory.getLogger(SummaryGenerator.class);
     public static void main(String[] args) throws IOException, RepositoryException, MalformedQueryException, QueryEvaluationException {
         List<String> endpoints = Arrays.asList(
-                "http://localhost:8890/sparql",
-                "http://localhost:8891/sparql",
-                "http://localhost:8892/sparql",
-                "http://localhost:8893/sparql",
-                "http://localhost:8894/sparql",
-                "http://localhost:8895/sparql",
-                "http://localhost:8896/sparql",
-                "http://localhost:8897/sparql",
-                "http://localhost:8898/sparql",
-                "http://localhost:8899/sparql",
-                "http://localhost:8889/sparql"
+                "http://localhost:8881/sparql",
+                "http://localhost:8882/sparql",
+                "http://localhost:8883/sparql"
         );
-        String outputFile = "summaries/fedbench.n3"; // The summary will be generated in this file
-        String caliFile = "../cali-ordering/fedbench_cali_ordering.n3"; // CaLi ordering is in this file
+        String outputFile = "summaries/paper_licensed_summary.n3"; // The summary will be generated in this file
+        String caliFile = "../cali-ordering/paper_cali_ordering.n3"; // CaLi ordering is in this file
         String namedGraph = "http://aksw.org/benchmark";  //can be null. in that case all graph will be considered
         TBSSSummariesGenerator generator = new TBSSSummariesGenerator(outputFile);
         long startTime = System.currentTimeMillis();

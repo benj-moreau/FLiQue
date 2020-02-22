@@ -232,7 +232,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
             return res;
         } catch (FedXRuntimeException ex) {
             log.warn(ex.getMessage());
-            res.close();
+            if (res != null) { res.close(); }
             return null;
         }
     }
