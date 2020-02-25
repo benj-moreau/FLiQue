@@ -103,21 +103,24 @@ def generate_time_for_fist_result_plot(results, queries=QUERIES, autolabels=Fals
 
 
 def get_statistics(results, metric_name, strategy=None):
-    license_check_times = []
+    metric_times = []
     for strat in STRATEGIES:
         if strategy:
-            license_check_times.extend(get_list_values(results, strategy, metric_name, QUERIES))
+            metric_times.extend(get_list_values(results, strategy, metric_name, QUERIES))
             break
-        license_check_times.extend(get_list_values(results, strat, metric_name, QUERIES))
-    license_check_times = list(filter((0).__ne__, license_check_times))
+        metric_times.extend(get_list_values(results, strat, metric_name, QUERIES))
+    license_check_times = list(filter((0).__ne__, metric_times))
     license_check_times = np.asarray(license_check_times)
     if not strategy: strategy = 'all'
     print(f'--------------------------------\n {metric_name} (ms):\n --------------------------------')
-    print(f'strategy {strategy}')
-    print(f'generated from {np.alen(license_check_times)} executions')
-    print(f'min: {np.amin(license_check_times)}')
-    print(f'max: {np.amax(license_check_times)}')
-    print(f'average: {np.mean(license_check_times)}')
+    if license_check_times.size > 0:
+        print(f'strategy {strategy}')
+        print(f'generated from {np.alen(license_check_times)} executions')
+        print(f'min: {np.amin(license_check_times)}')
+        print(f'max: {np.amax(license_check_times)}')
+        print(f'average: {np.mean(license_check_times)}')
+    else :
+        print(f'Zero-size array')
 
 
 results = get_result_dict()
