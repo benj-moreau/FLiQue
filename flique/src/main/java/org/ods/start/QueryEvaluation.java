@@ -95,7 +95,7 @@ public class QueryEvaluation {
         String cfgName;
         String strategy = args[0];
         Boolean relax = true;
-        if (args[1] == "noRelax") { relax = false;}
+        if (args[1].equals("noRelax")) { relax = false;}
         strategy = strategy.toUpperCase();
         QueryRelaxer queryRelaxer;
         if (strategy.equals("BFS")) {
