@@ -1,3 +1,5 @@
+
+#!/bin/bash
 rm cache.db
 timeout --signal=SIGKILL $1 java -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 S1 &
 wait
@@ -117,3 +119,4 @@ timeout --signal=SIGKILL $1 java -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH7
 wait
 rm cache.db
 timeout --signal=SIGKILL $1 java -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH8 &
+

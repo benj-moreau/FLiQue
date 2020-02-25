@@ -1,7 +1,6 @@
 cacheLocation=cache.db
-workerThreads=30
-joinWorkerThreads=30
-boundJoinBlockSize=200
+workerThreads=20
+boundJoinBlockSize=20
 enforceMaxQueryTime=0
 enableMonitoring=false
 monitoring.enableJMX=false

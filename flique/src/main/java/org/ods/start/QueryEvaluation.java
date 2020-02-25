@@ -4,7 +4,6 @@ import com.fluidops.fedx.*;
 import com.fluidops.fedx.algebra.StatementSource;
 import com.fluidops.fedx.optimizer.SourceSelection;
 import com.fluidops.fedx.structures.QueryInfo;
-import org.aksw.simba.quetsal.synopsis.Collection;
 import org.aksw.simba.start.QueryProvider;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.QueryFactory;
@@ -38,6 +37,7 @@ public class QueryEvaluation {
     private String strategy;
     private QueryRelaxer queryRelaxer;
     private Boolean relax;
+    private Boolean error;
     static {
         try {
             ClassLoader.getSystemClassLoader().loadClass("org.slf4j.LoggerFactory"). getMethod("getLogger", ClassLoader.getSystemClassLoader().loadClass("java.lang.String")).
@@ -59,6 +59,7 @@ public class QueryEvaluation {
         this.results.put("nbGeneratedRelaxedQueries", "0");
         this.results.put("nbEvaluatedRelaxedQueries", "0");
         this.results.put("ResultSimilarity", "0.0");
+        this.results.put("validResult", "false");
         //endpoints
         this.portEndpoints.put("8881", "D1");
         this.portEndpoints.put("8882", "D2");
@@ -77,6 +78,7 @@ public class QueryEvaluation {
         this.strategy = strategy;
         this.queryRelaxer = queryRelaxer;
         this.relax = relax;
+        this.error = false;
         if (strategy.equals("PAPER")) {
             this.ontology = RDFDataMgr.loadModel("ontologies/paper_ontology.n3");
             this.summary = RDFDataMgr.loadModel("summaries/saturated-paper-summary.n3");
@@ -153,7 +155,7 @@ public class QueryEvaluation {
         String fedName;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         Date date = new Date();
-        String execFileName = "results/" + formatter.format(date) + this.strategy + "_execution-times.csv";
+        String execFileName = "results/" + formatter.format(date) + this.strategy + "relax_" + this.relax +".csv";
         BufferedWriter ExecutionWriter = new BufferedWriter(new FileWriter(execFileName));
         // CSV header
         ExecutionWriter.write(String.join(";", this.results.keySet()) + "\n");
@@ -179,14 +181,7 @@ public class QueryEvaluation {
             // We only search for the first result
             if (this.nbFed == 0) {
                 this.startQueryExecTime = System.currentTimeMillis();
-            }/*
-            try {
-                File cache = new File("cache.db");
-                if(cache.delete()) { log.info("cache deleted"); }
-            } catch (Throwable e) {
-                log.info(e.getMessage());
             }
-            */
             String curQuery = qp.getQuery(curQueryName);
             Config config = new Config(cfgName);
             SailRepository repo = null;
@@ -212,28 +207,30 @@ public class QueryEvaluation {
                     this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;
                 }
                 this.nbFed += 1;
-                if (consistentLicenses.isEmpty() && relax) {
-                    // a license compatible with licenses of sources does not exists
-                    // We need to eliminate sources
-                    licenseChecker.getEndpointlicenseConflicts();
-                    ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
-                    //remove endpoints
-                    // Collections.reverse(listSourcesToRemove);
-                    for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
-                        ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
-                        newEndpoints.removeAll(sourcesToRemove);
-                        fedName += "'";
-                        log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
-                        // recursive call.. we restart a query execution with the new federation
-                        execute(curQueryName, cfgName, newEndpoints, fedName);
+                if (relax) {
+                    if (consistentLicenses.isEmpty() && relax) {
+                        // a license compatible with licenses of sources does not exists
+                        // We need to eliminate sources
+                        licenseChecker.getEndpointlicenseConflicts();
+                        ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
+                        //remove endpoints
+                        // Collections.reverse(listSourcesToRemove);
+                        for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
+                            ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
+                            newEndpoints.removeAll(sourcesToRemove);
+                            fedName += "'";
+                            log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
+                            // recursive call.. we restart a query execution with the new federation
+                            execute(curQueryName, cfgName, newEndpoints, fedName);
+                        }
+                        if (null != res) {
+                            res.close();
+                        }
+                        repo.shutDown();
+                        return;
                     }
-                    if (null != res) {
-                        res.close();
-                    }
-                    repo.shutDown();
-                    return;
                 }
-                // if (this.results.get("FirstResultTime") == null) {
+                if (this.results.get("FirstResultTime") == null || this.error) {
                     // Here, we resolved all license conflicts
                     int nbGeneratedRelaxedQueries = 0;
                     int nbEvaluatedRelaxedQueries = 0;
@@ -278,9 +275,9 @@ public class QueryEvaluation {
                     this.results.put("nbEvaluatedRelaxedQueries", Integer.toString(Integer.parseInt(this.results.get("nbEvaluatedRelaxedQueries")) + nbEvaluatedRelaxedQueries));
                     this.results.put("ResultSimilarity", Double.toString(Math.max(Double.parseDouble(this.results.get("ResultSimilarity")), ResultSimilarity)));
                     // Now we can execute the query with FedX
-                    long count = 0;
                     // TODO Uncomment next to execute query
                     if (res != null) {
+                        this.results.put("validResult", "true");
                         BindingSet row = res.next();
                         log.info("First result of the query is:");
                         log.info(row.toString());
@@ -292,18 +289,19 @@ public class QueryEvaluation {
                     }
                     log.info(this.results.toString());
                     log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
-                //}
+                }
             } catch (Throwable e) {
                 long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
                 this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                 e.printStackTrace();
                 log.error("", e);
-                File f = new File("results/" + curQueryName + " " + strategy + ".error.txt");
+                File f = new File("results/" + curQueryName + " " + strategy + "relax_" + this.relax + ".error.txt");
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 PrintStream ps = new PrintStream(os);
                 e.printStackTrace(ps);
                 ps.flush();
                 FileUtils.write(f, os.toString("UTF8"));
+                this.error = true;
             } finally {
                 if (null != res) {
                     res.close();
