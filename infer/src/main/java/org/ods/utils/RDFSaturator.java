@@ -46,7 +46,7 @@ public class RDFSaturator {
                         FileOutputStream infFile = new FileOutputStream(toLoadFilePath + "/inf_" + filename, false);
                         RDFDataMgr.write(infFile, infmodel, RDFFormat.TURTLE_BLOCKS);
                     } catch (Throwable e) {
-                        log.info(rdfGraph.getName() + " " + e.getMessage());
+                        log.info(rdfGraph.getName() + " " + e.toString());
                     }
                 }
             }
