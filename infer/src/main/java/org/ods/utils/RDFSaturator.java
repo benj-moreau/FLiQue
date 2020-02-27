@@ -37,13 +37,17 @@ public class RDFSaturator {
                 File toLoadFolder = new File(toLoadFilePath);
                 File[] rdfGraphs = toLoadFolder.listFiles((dir, name) -> !name.equals(".DS_Store"));
                 for (File rdfGraph : rdfGraphs) {
-                    String filepath = rdfGraph.getPath();
-                    String filename = Paths.get(filepath).getFileName().toString();
-                    log.info(filename + " is being inferred");
-                    Model data = FileManager.get().loadModel(filepath);
-                    InfModel infmodel = ModelFactory.createInfModel(boundReasoner, data);
-                    FileOutputStream infFile = new FileOutputStream(toLoadFilePath + "/inf_" + filename, false);
-                    RDFDataMgr.write(infFile, infmodel, RDFFormat.TURTLE_BLOCKS);
+                    try {
+                        String filepath = rdfGraph.getPath();
+                        String filename = Paths.get(filepath).getFileName().toString();
+                        log.info(filename + " is being inferred");
+                        Model data = FileManager.get().loadModel(filepath);
+                        InfModel infmodel = ModelFactory.createInfModel(boundReasoner, data);
+                        FileOutputStream infFile = new FileOutputStream(toLoadFilePath + "/inf_" + filename, false);
+                        RDFDataMgr.write(infFile, infmodel, RDFFormat.TURTLE_BLOCKS);
+                    } catch (Throwable e) {
+                        log.info(rdfGraph.getName() + " " + e.getMessage());
+                    }
                 }
             }
         }
