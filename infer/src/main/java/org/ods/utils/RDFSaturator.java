@@ -5,6 +5,7 @@ import org.apache.jena.reasoner.Reasoner;
 import org.apache.jena.reasoner.rulesys.RDFSRuleReasonerFactory;
 import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFFormat;
+import org.apache.jena.riot.RiotException;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.vocabulary.ReasonerVocabulary;
 import org.slf4j.Logger;
@@ -29,13 +30,15 @@ public class RDFSaturator {
                 ReasonerVocabulary.RDFS_SIMPLE);
         Reasoner boundReasoner = reasoner.bindSchema(schema);
         File benchmark_folder = new File("datasets/");
-        File[] listOfBench = benchmark_folder.listFiles();
+        File[] listOfBench = benchmark_folder.listFiles((dir, name) -> !name.equals(".DS_Store"));
         for (File bench : listOfBench) {
+            log.info(bench.getPath());
             File[] listOfDatasets = bench.listFiles((dir, name) -> (name.toLowerCase().startsWith("data-")));
             for (File datasetDir : listOfDatasets) {
+                log.info(datasetDir.getPath());
                 String toLoadFilePath = datasetDir.getPath() + "/virtuoso/" + "toLoad/";
                 File toLoadFolder = new File(toLoadFilePath);
-                File[] rdfGraphs = toLoadFolder.listFiles((dir, name) -> !name.equals(".DS_Store"));
+                File[] rdfGraphs = toLoadFolder.listFiles((dir, name) -> !name.equals(".DS_Store") && !name.contains("inf_"));
                 for (File rdfGraph : rdfGraphs) {
                     try {
                         String filepath = rdfGraph.getPath();
@@ -45,6 +48,13 @@ public class RDFSaturator {
                         InfModel infmodel = ModelFactory.createInfModel(boundReasoner, data);
                         FileOutputStream infFile = new FileOutputStream(toLoadFilePath + "/inf_" + filename, false);
                         RDFDataMgr.write(infFile, infmodel, RDFFormat.TURTLE_BLOCKS);
+                        File file = new File(filepath);
+                        if (file.delete()) {
+                            log.info("Deleted the file " + filepath);
+                        } else {
+                            log.info("Failed to delete " + filepath);
+                        }
+
                     } catch (Throwable e) {
                         log.info(rdfGraph.getName() + " " + e.toString());
                     }
