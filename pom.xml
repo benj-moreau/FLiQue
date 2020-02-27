@@ -27,5 +27,6 @@
         <module>fedx</module>
         <module>costfed</module>
         <module>flique</module>
+        <module>infer</module>
     </modules>
 </project>

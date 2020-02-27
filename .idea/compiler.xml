@@ -10,6 +10,7 @@
         <module name="costfed" />
         <module name="fedx" />
         <module name="flique" />
+        <module name="infer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,6 +18,7 @@
       <module name="fedx" target="11" />
       <module name="FLiQuE" target="11" />
       <module name="flique" target="11" />
+      <module name="infer" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

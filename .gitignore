@@ -2,6 +2,9 @@
 # From: https://gist.github.com/edesdan/6bb43343740bcd54ef0f56a384a2f66f
 
 flique/results/
+flique/not_saturated_datasets/
+flique/saturated_datasets/
+infer/datasets/
 cache.db
 
 ######################
