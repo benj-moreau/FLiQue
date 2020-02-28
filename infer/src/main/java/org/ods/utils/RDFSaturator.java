@@ -48,13 +48,14 @@ public class RDFSaturator {
                         InfModel infmodel = ModelFactory.createInfModel(boundReasoner, data);
                         FileOutputStream infFile = new FileOutputStream(toLoadFilePath + "/inf_" + filename, false);
                         RDFDataMgr.write(infFile, infmodel, RDFFormat.TURTLE_BLOCKS);
+                        /*
                         File file = new File(filepath);
                         if (file.delete()) {
                             log.info("Deleted the file " + filepath);
                         } else {
                             log.info("Failed to delete " + filepath);
                         }
-
+                        */
                     } catch (Throwable e) {
                         log.info(rdfGraph.getName() + " " + e.toString());
                     }
