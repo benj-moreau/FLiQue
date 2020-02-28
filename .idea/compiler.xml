@@ -14,9 +14,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="costfed" target="11" />
-      <module name="fedx" target="11" />
-      <module name="FLiQuE" target="11" />
+      <module name="costfed" target="1.8" />
+      <module name="fedx" target="1.8" />
+      <module name="FLiQuE" target="1.8" />
       <module name="flique" target="11" />
       <module name="infer" target="11" />
     </bytecodeTargetLevel>
