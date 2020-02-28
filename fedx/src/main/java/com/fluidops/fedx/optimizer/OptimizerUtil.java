@@ -99,6 +99,7 @@ public class OptimizerUtil
 				freeVars.add(st.getPredicateVar().getName());
 			if (st.getObjectVar().getValue()==null)
 				freeVars.add(st.getObjectVar().getName());
+			return freeVars;
 		}
 		
 		

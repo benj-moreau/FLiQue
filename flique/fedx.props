@@ -1,4 +1,4 @@
-cacheLocation=cache.db
+#cacheLocation=cache.db
 workerThreads=20
 boundJoinBlockSize=20
 enforceMaxQueryTime=0
@@ -11,7 +11,7 @@ extensionClass=org.aksw.simba.quetsal.configuration.QuetzalConfig
 #quetzal.mode=INDEX_DOMINANT
 quetzal.mode=ASK_DOMINANT
 quetzal.inputCommonPredThreshold=0.33
-quetzal.fedSummaries=summaries/saturated-largeRDFBench-summaries.n3
+quetzal.fedSummaries=summaries/sum-localhost.n3
 #prefixDeclarations
 #sailEvaluationStrategy=com.fluidops.fedx.evaluation.SailFederationEvalStrategy
 sparqlEvaluationStrategy=com.fluidops.fedx.evaluation.SparqlFederationEvalStrategy
@@ -21,5 +21,5 @@ debugWorkerScheduler=false
 debugQueryPlan=false
 
 # http client related config
-maxHttpConnectionCount=30
-maxHttpConnectionCountPerRoute=30
+maxHttpConnectionCount=50
+maxHttpConnectionCountPerRoute=50
