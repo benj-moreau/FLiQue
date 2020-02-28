@@ -55,6 +55,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -63,6 +64,7 @@
                     <mainClass>org.ods.start.QueryEvaluation</mainClass>
                 </configuration>
             </plugin>
+            -->
         </plugins>
     </build>
 
