@@ -41,7 +41,7 @@ public class SummaryGenerator {
         String namedGraph = "http://aksw.org/benchmark";  //can be null. in that case all graph will be considered
         TBSSSummariesGenerator generator = new TBSSSummariesGenerator(outputFile);
         long startTime = System.currentTimeMillis();
-        int branchLimit = 1;
+        int branchLimit = 4;
         generator.generateSummaries(endpoints, namedGraph, branchLimit);
         Model costfedSummary = ModelFactory.createDefaultModel();
         InputStream costfedSummaryIn = new FileInputStream(outputFile);
