@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.nio.file.Paths;
 
@@ -22,7 +21,7 @@ import java.nio.file.Paths;
  */
 public class RDFSaturator {
     static Logger log = LoggerFactory.getLogger(RDFSaturator.class);
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         Model schema = FileManager.get().loadModel("ontology/ontology.n3");
         Reasoner reasoner = RDFSRuleReasonerFactory.theInstance().create(null);
         reasoner.setParameter(ReasonerVocabulary.PROPsetRDFSLevel,
@@ -45,16 +44,14 @@ public class RDFSaturator {
                         log.info(filename + " is being inferred");
                         Model data = FileManager.get().loadModel(filepath);
                         InfModel infmodel = ModelFactory.createInfModel(boundReasoner, data);
-                        FileOutputStream infFile = new FileOutputStream(toLoadFilePath + "/inf_" + filename, false);
+                        FileOutputStream infFile = new FileOutputStream(toLoadFilePath + "/inf_" + filename + ".ttl", false);
                         RDFDataMgr.write(infFile, infmodel, RDFFormat.TURTLE_BLOCKS);
-                        /*
                         File file = new File(filepath);
                         if (file.delete()) {
                             log.info("Deleted the file " + filepath);
                         } else {
                             log.info("Failed to delete " + filepath);
                         }
-                        */
                     } catch (Throwable e) {
                         log.info(rdfGraph.getName() + " " + e.toString());
                     }
