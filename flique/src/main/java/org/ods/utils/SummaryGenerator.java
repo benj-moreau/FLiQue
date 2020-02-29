@@ -22,13 +22,22 @@ import java.util.List;
 public class SummaryGenerator {
     static Logger log = LoggerFactory.getLogger(SummaryGenerator.class);
     public static void main(String[] args) throws IOException, RepositoryException, MalformedQueryException, QueryEvaluationException {
+        String host = "localhost";
         List<String> endpoints = Arrays.asList(
-                "http://localhost:8881/sparql",
-                "http://localhost:8882/sparql",
-                "http://localhost:8883/sparql"
+                "http://" + host + ":8888/sparql",
+                "http://" + host + ":8891/sparql",
+                "http://" + host + ":8892/sparql",
+                "http://" + host + ":8893/sparql",
+                "http://" + host + ":8894/sparql",
+                "http://" + host + ":8895/sparql",
+                "http://" + host + ":8896/sparql",
+                "http://" + host + ":8897/sparql",
+                "http://" + host + ":8898/sparql",
+                "http://" + host + ":8899/sparql",
+                "http://" + host + ":8889/sparql"
         );
-        String outputFile = "summaries/paper_licensed_summary.n3"; // The summary will be generated in this file
-        String caliFile = "../cali-ordering/paper_cali_ordering.n3"; // CaLi ordering is in this file
+        String outputFile = "summaries/saturated-largeRDFBench-summaries.n3"; // The summary will be generated in this file
+        String caliFile = "../cali-ordering/fedbench_cali_ordering.n3"; // CaLi ordering is in this file
         String namedGraph = "http://aksw.org/benchmark";  //can be null. in that case all graph will be considered
         TBSSSummariesGenerator generator = new TBSSSummariesGenerator(outputFile);
         long startTime = System.currentTimeMillis();
