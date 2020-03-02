@@ -101,6 +101,7 @@ def get_list_values(results, strategy, metric_name, queries, relax=True):
 
 def generate_time_for_fist_result_plot_strategies(results, queries=QUERIES, autolabels=False):
     labels = queries
+    labels = [f"{label}'" for label in labels]
     bfs_results = get_list_values(results, 'BFS', 'FirstResultTime', queries).astype(int)
     obfs_results = get_list_values(results, 'OBFS', 'FirstResultTime', queries).astype(int)
     ombs_results = get_list_values(results, 'OMBS', 'FirstResultTime', queries).astype(int)
@@ -142,15 +143,17 @@ def generate_time_for_fist_result_plot_strategies(results, queries=QUERIES, auto
 
 def generate_time_for_fist_result_plot_flique(results, queries=QUERIES, autolabels=False):
     labels = queries
+    print(results)
+    labels = [f"{label}  {label}'" if is_relaxed(label, results) else label for label in labels]
     relax_results = get_list_values(results, 'FLIQUE', 'FirstResultTime', queries, True).astype(int)
     no_relax_results = get_list_values(results, 'FLIQUE', 'FirstResultTime', queries, False).astype(int)
 
     x = np.arange(len(labels))
-    bar_width = 0.25
+    bar_width = 0.40
 
-    fig, ax = plt.subplots(figsize=(20, 10))
-    relax_rects = ax.bar(x - (0.5*bar_width), relax_results, bar_width, label='FLiQuE')
-    no_relax_rects = ax.bar(x + (0.5*bar_width), no_relax_results, bar_width, label='CostFed')
+    fig, ax = plt.subplots(figsize=(30, 10))
+    relax_rects = ax.bar(x + (0.5*bar_width), relax_results, bar_width, label='FLiQuE')
+    no_relax_rects = ax.bar(x - (0.5*bar_width), no_relax_results, bar_width, label='CostFed')
 
     ax.set_ylabel('Time for first result (ms)')
     ax.set_xlabel('Queries')
@@ -194,6 +197,13 @@ def get_statistics(results, metric_name, strategy=None):
         print(f'average: {np.mean(license_check_times)}')
     else :
         print(f'Zero-size array')
+
+
+def is_relaxed(query, results):
+    for value in results[query][True]['FLIQUE'].get('nbEvaluatedRelaxedQueries', []):
+        if value > 0:
+            return True
+    return False
 
 
 results = get_result_dict()
