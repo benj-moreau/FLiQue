@@ -239,10 +239,10 @@ public class QueryEvaluation {
                     RelaxedQuery relaxedQuery = new RelaxedQuery();
                     QueryFactory.parse(relaxedQuery, curQuery, null, null);
                     relaxedQuery.initOriginalTriples();
-                    if (relax) {
+                    res = relaxedQuery.mayHaveAResult(repo);
+                    if ((res == null || !res.hasNext()) && relax) {
                         QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
                         log.info("--------Evaluated Relaxed Queries:-----------\n");
-                        res = relaxedQuery.mayHaveAResult(repo);
                         if (res == null) {
                             while (relaxationLattice.hasNext()) {
                                 relaxedQuery = relaxationLattice.next();
