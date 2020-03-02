@@ -295,13 +295,15 @@ public class QueryEvaluation {
                 this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                 e.printStackTrace();
                 log.error("", e);
-                File f = new File("results/" + curQueryName + " " + strategy + "relax_" + this.relax + ".error.txt");
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                PrintStream ps = new PrintStream(os);
-                e.printStackTrace(ps);
-                ps.flush();
-                FileUtils.write(f, os.toString("UTF8"));
-                this.error = true;
+                if (this.results.get("validResult").equals("false")) {
+                    File f = new File("results/" + curQueryName + " " + strategy + "relax_" + this.relax + ".error.txt");
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    PrintStream ps = new PrintStream(os);
+                    e.printStackTrace(ps);
+                    ps.flush();
+                    FileUtils.write(f, os.toString("UTF8"));
+                    this.error = true;
+                }
             } finally {
                 if (null != res) {
                     res.close();
