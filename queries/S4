@@ -5,5 +5,4 @@ SELECT ?actor ?news WHERE {
    ?y <http://www.w3.org/2002/07/owl#sameAs> ?x .
    ?y <http://data.nytimes.com/elements/topicPage> ?news
 }
-
-
+Limit 1

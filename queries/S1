@@ -4,3 +4,4 @@ SELECT ?predicate ?object WHERE {
    { ?subject <http://www.w3.org/2002/07/owl#sameAs> <http://dbpedia.org/resource/Barack_Obama> .
      ?subject ?predicate ?object } 
 }
+Limit 1

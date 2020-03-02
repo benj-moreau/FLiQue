@@ -7,3 +7,4 @@ SELECT * WHERE {
     ?course ex:heldAt ex:UniversityOfNantes .
     ex:Jamy ex:teaches ?course .
 }
+Limit 1

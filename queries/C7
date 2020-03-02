@@ -19,3 +19,4 @@ OPTIONAL
 	geo:long ?longitude.
 }
 }
+Limit 1

@@ -20,3 +20,4 @@ OPTIONAL {
 			FILTER (?drugbankInchi = ?chebiInchi) 
 		}
 }
+Limit 1

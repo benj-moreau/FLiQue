@@ -3,3 +3,4 @@ SELECT $drug $melt WHERE {
     UNION
     { $drug <http://dbpedia.org/ontology/Drug/meltingPoint> $melt . }
 }
+Limit 1

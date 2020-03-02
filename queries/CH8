@@ -36,4 +36,4 @@ OPTIONAL
 FILTER ( ?drugbankInchi = ?chebiInchi )
 }
 }
-LIMIT   1
+Limit 1

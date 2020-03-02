@@ -5,5 +5,4 @@ SELECT ?president ?party ?page WHERE {
    ?x <http://data.nytimes.com/elements/topicPage> ?page .
    ?x <http://www.w3.org/2002/07/owl#sameAs> ?president .
 }
-
-
+Limit 1

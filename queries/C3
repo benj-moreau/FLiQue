@@ -17,3 +17,4 @@ OPTIONAL
          ?locationName geonames:name 'Islamic Republic of Afghanistan' .
 }
 }
+Limit 1

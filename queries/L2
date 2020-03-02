@@ -10,3 +10,4 @@ WHERE
 ?results tcga:RPKM  ?exonValue.
 FILTER(?weight <= 55)
 }
+Limit 1

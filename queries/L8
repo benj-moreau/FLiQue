@@ -10,3 +10,4 @@ SELECT * WHERE {
 	?s foaf:name ?o .
 	?s skos:subject ?sub .
 }
+Limit 1

@@ -26,3 +26,4 @@ WHERE
 ?keggDrug          <http://bio2rdf.org/ns/bio2rdf#xRef>  ?id .
 ?keggDrug          <http://purl.org/dc/elements/1.1/title>  "Follitropin alfa/beta" .
 }
+Limit 1

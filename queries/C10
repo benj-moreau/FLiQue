@@ -17,3 +17,4 @@ WHERE
 ?drgBnkDrg  drugbank:chemicalFormula 	?formula.
 ?drgBnkDrg 	drugbank:keggCompoundId 	?compound .
 }
+Limit 1

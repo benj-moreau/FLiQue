@@ -19,4 +19,4 @@ OPTIONAL
 FILTER (?molecularWeightAverage > 114) 
 }
 }
-Limit 1000
+Limit 1

@@ -20,4 +20,4 @@ WHERE
 <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB00441>           <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/chemicalFormula>  ?formula .
 <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB00441>           <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/keggCompoundId>  ?compound .
 }
-LIMIT   5
+Limit 1

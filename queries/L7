@@ -10,3 +10,4 @@ WHERE
 ?aliquot ?p ?o.
 FILTER(?popDensity >= 32)
 }
+Limit 1

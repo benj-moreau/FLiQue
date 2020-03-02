@@ -11,3 +11,4 @@ SELECT * WHERE {
 	?n owl:sameAs ?p2 .
 	?p2 <http://data.nytimes.com/elements/latest_use> ?u .
 }
+Limit 1

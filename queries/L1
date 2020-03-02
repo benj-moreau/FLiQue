@@ -4,3 +4,4 @@ SELECT * WHERE {
 	?paper <http://swrc.ontoware.org/ontology#author> ?p .
 	?p rdfs:label ?n .
 }
+Limit 1

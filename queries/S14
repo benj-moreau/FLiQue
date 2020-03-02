@@ -6,3 +6,4 @@ SELECT $drug $transform $mass WHERE {
  	     	} .
  	  OPTIONAL { $drug <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/biotransformation> $transform . } 
 }
+Limit 1

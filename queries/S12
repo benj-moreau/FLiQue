@@ -6,5 +6,4 @@ SELECT $drug $keggUrl $chebiImage WHERE {
    $chebiDrug <http://purl.org/dc/elements/1.1/title> $drugBankName .
    $chebiDrug <http://bio2rdf.org/ns/bio2rdf#image> $chebiImage .
 } 
-
-
+Limit 1

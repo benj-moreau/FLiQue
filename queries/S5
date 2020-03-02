@@ -4,4 +4,4 @@ SELECT ?film ?director ?genre WHERE {
    ?x <http://www.w3.org/2002/07/owl#sameAs> ?film .
    ?x <http://data.linkedmdb.org/resource/movie/genre> ?genre .
 }
-
+Limit 1

@@ -6,3 +6,4 @@ SELECT * WHERE {
 	?p owl:sameAs ?x .
 	?p rdfs:label ?n .
 }
+Limit 1

@@ -18,4 +18,4 @@ drugbank:casRegistryNumber ?casRegistryNumber
 }
 }
 ORDER BY (?drugbankDrug)
-LIMIT 100
+Limit 1

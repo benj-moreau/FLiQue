@@ -16,3 +16,4 @@ WHERE
 ?mdbFilm          <http://data.linkedmdb.org/resource/movie/genre>  ?genre .
 FILTER regex(?geoname, "United")
 }
+Limit 1

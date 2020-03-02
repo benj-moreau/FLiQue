@@ -20,4 +20,4 @@ dbpedia:ethnicGroup ?ethnicGroup;
 dbpedia:motto ?motto.
 }
 }
-LIMIT 50
+Limit 1

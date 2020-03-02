@@ -5,5 +5,4 @@ SELECT ?Drug ?IntDrug ?IntEffect WHERE {
     ?Int <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/interactionDrug2> ?IntDrug .
     ?Int <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/text> ?IntEffect . 
 }
-
-
+Limit 1

@@ -14,3 +14,4 @@ WHERE
 ?chebiDrug          <http://bio2rdf.org/ns/bio2rdf#urlImage>  ?image .
 }
 ORDER BY ?mass
+Limit 1

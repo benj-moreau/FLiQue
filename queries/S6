@@ -4,5 +4,4 @@ SELECT ?name ?location ?news WHERE {
    ?location <http://www.geonames.org/ontology#parentFeature> ?germany . 
    ?germany <http://www.geonames.org/ontology#name> 'Federal Republic of Germany'
 }
-
-
+Limit 1

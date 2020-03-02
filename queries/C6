@@ -17,3 +17,4 @@ WHERE
 	nytimes:latest_use 		?latest_use
 }
 ORDER BY (?actor)
+Limit 1

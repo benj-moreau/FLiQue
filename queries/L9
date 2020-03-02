@@ -15,3 +15,4 @@ SELECT * WHERE {
 	?p dbowl:managerClub ?x .
 	?p foaf:name \"Luiz Felipe Scolari\" @en.
 }
+Limit 1

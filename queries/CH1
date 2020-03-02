@@ -19,3 +19,4 @@ WHERE
 ?dbpediaCountry   <http://data.nytimes.com/elements/latest_use>  ?dateused .
 }
 ORDER BY DESC(?population)
+Limit 1

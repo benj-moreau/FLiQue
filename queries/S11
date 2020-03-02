@@ -7,5 +7,4 @@ SELECT ?drugDesc ?cpd ?equation WHERE {
    ?reaction <http://bio2rdf.org/ns/kegg#xEnzyme> ?enzyme .
    ?reaction <http://bio2rdf.org/ns/kegg#equation> ?equation . 
 }
-
-
+Limit 1

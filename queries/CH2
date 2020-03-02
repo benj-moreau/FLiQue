@@ -13,3 +13,4 @@ WHERE
 ?chebiDrug  <http://bio2rdf.org/ns/bio2rdf#inchi>  ?chebiInchi .
 FILTER regex(?chebiIupacName, "adenosine")
 }
+Limit 1

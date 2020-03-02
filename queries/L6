@@ -10,3 +10,4 @@ SELECT * WHERE {
 	?x foaf:based_near ?y .
 	?y <http://www.geonames.org/ontology#officialName> ?n .
 }
+Limit 1

@@ -17,3 +17,4 @@ SELECT * WHERE {
 	?x dbowl:birthPlace ?p .
 	?p rdfs:label ?l .
 }
+Limit 1
