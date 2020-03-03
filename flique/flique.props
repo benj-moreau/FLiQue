@@ -1,4 +1,4 @@
-# cacheLocation=k:\\projects\\costfed\\cache.db
+#cacheLocation=cache.db
 workerThreads=20
 boundJoinBlockSize=20
 enforceMaxQueryTime=0
@@ -25,10 +25,10 @@ statementGroupOptimizerClass=org.aksw.simba.quetsal.core.JoinOrderOptimizer
 #sparqlEvaluationStrategy=com.fluidops.fedx.evaluation.SparqlFederationEvalStrategy
 sparqlEvaluationStrategy=org.aksw.simba.quetsal.core.TBSSFederationEvalStrategy
 optimizer.enableServiceAsBoundJoin=false
-validateRepositoryConnections=true
+validateRepositoryConnections=false
 debugWorkerScheduler=false
 debugQueryPlan=false
 
 # http client related config
-maxHttpConnectionCount=50
-maxHttpConnectionCountPerRoute=50
+maxHttpConnectionCount=25
+maxHttpConnectionCountPerRoute=25

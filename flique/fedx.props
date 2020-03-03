@@ -16,10 +16,10 @@ quetzal.fedSummaries=summaries/saturated-largeRDFBench-summaries.n3
 #sailEvaluationStrategy=com.fluidops.fedx.evaluation.SailFederationEvalStrategy
 sparqlEvaluationStrategy=com.fluidops.fedx.evaluation.SparqlFederationEvalStrategy
 optimizer.enableServiceAsBoundJoin=false
-validateRepositoryConnections=true
+validateRepositoryConnections=false
 debugWorkerScheduler=false
 debugQueryPlan=false
 
 # http client related config
-maxHttpConnectionCount=50
-maxHttpConnectionCountPerRoute=50
+maxHttpConnectionCount=25
+maxHttpConnectionCountPerRoute=25
