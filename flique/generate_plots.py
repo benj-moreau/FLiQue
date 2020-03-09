@@ -156,6 +156,7 @@ def generate_time_for_fist_result_plot_flique(results, queries=QUERIES, autolabe
     no_relax_rects = ax.bar(x - (0.5*bar_width), no_relax_results, bar_width, label='CostFed')
 
     ax.set_ylabel('Time for first result (ms)')
+    plt.yscale("log") #logarithmic scale
     ax.set_xlabel('Queries')
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
@@ -208,6 +209,7 @@ def is_relaxed(query, results):
 
 results = get_result_dict()
 generate_time_for_fist_result_plot_flique(results, autolabels=True)
+# generate_time_for_fist_result_plot_strategies(results, autolabels=True)
 get_statistics(results, 'LicenseCheckTime')
 get_statistics(results, 'nbGeneratedRelaxedQueries', 'FLIQUE')
 get_statistics(results, 'nbEvaluatedRelaxedQueries', 'FLIQUE')
