@@ -214,3 +214,5 @@ get_statistics(results, 'LicenseCheckTime')
 get_statistics(results, 'nbGeneratedRelaxedQueries', 'FLIQUE')
 get_statistics(results, 'nbEvaluatedRelaxedQueries', 'FLIQUE')
 get_statistics(results, 'ResultSimilarity', 'FLIQUE')
+get_statistics(results, 'totalExecTime')
+
