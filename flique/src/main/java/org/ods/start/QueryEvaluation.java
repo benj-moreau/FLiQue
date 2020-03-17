@@ -188,48 +188,48 @@ public class QueryEvaluation {
             SailRepository repo = null;
             TupleQueryResult res = null;
             try {
-                repo = FedXFactory.initializeSparqlFederation(config, endpoints);
-                TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
-                res = query.evaluate();
-                // This is where FLiQuE is inserted
-                QueryInfo queryInfo = QueryInfo.queryInfo.get();
-                SourceSelection sourceSelection = queryInfo.getSourceSelection();
-                Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
-                log.info("--" + fedName + ":\n");
-                log.info(portsToDatasets(stmtToSources.toString()) + "\n\n");
-                // 1. Check licenses
-                if (this.nbFed == 0) {
-                    this.licenseCheckTime = System.currentTimeMillis();
-                }
-                LicenseChecker licenseChecker = new LicenseChecker(this.licensedSummary);
-                EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
-                Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
-                if (nbFed == 0) {
-                    this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;
-                }
-                this.nbFed += 1;
-                if (relax && consistentLicenses.isEmpty()) {
-                    // a license compatible with licenses of sources does not exists
-                    // We need to eliminate sources
-                    licenseChecker.getEndpointlicenseConflicts();
-                    ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
-                    //remove endpoints
-                    // Collections.reverse(listSourcesToRemove);
-                    for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
-                        ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
-                        newEndpoints.removeAll(sourcesToRemove);
-                        fedName += "'";
-                        log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
-                        // recursive call.. we restart a query execution with the new federation
-                        execute(curQueryName, cfgName, newEndpoints, fedName);
+                if (this.results.get("hasResult").equals("false") || this.error) {
+                    repo = FedXFactory.initializeSparqlFederation(config, endpoints);
+                    TupleQuery query = repo.getConnection().prepareTupleQuery(QueryLanguage.SPARQL, curQuery);
+                    res = query.evaluate();
+                    // This is where FLiQuE is inserted
+                    QueryInfo queryInfo = QueryInfo.queryInfo.get();
+                    SourceSelection sourceSelection = queryInfo.getSourceSelection();
+                    Map<StatementPattern, List<StatementSource>> stmtToSources = sourceSelection.getStmtToSources();
+                    log.info("--" + fedName + ":\n");
+                    log.info(portsToDatasets(stmtToSources.toString()) + "\n\n");
+                    // 1. Check licenses
+                    if (this.nbFed == 0) {
+                        this.licenseCheckTime = System.currentTimeMillis();
                     }
-                    if (null != res) {
-                        res.close();
+                    LicenseChecker licenseChecker = new LicenseChecker(this.licensedSummary);
+                    EndpointManager endpointManager = queryInfo.getFedXConnection().getEndpointManager();
+                    Set<String> consistentLicenses = licenseChecker.getConsistentLicenses(sourceSelection, endpointManager);
+                    if (nbFed == 0) {
+                        this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;
                     }
-                    repo.shutDown();
-                    return;
-                }
-                if (this.results.get("FirstResultTime") == null || this.error) {
+                    this.nbFed += 1;
+                    if (relax && consistentLicenses.isEmpty()) {
+                        // a license compatible with licenses of sources does not exists
+                        // We need to eliminate sources
+                        licenseChecker.getEndpointlicenseConflicts();
+                        ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
+                        //remove endpoints
+                        // Collections.reverse(listSourcesToRemove);
+                        for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
+                            ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
+                            newEndpoints.removeAll(sourcesToRemove);
+                            fedName += "'";
+                            log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
+                            // recursive call.. we restart a query execution with the new federation
+                            execute(curQueryName, cfgName, newEndpoints, fedName);
+                        }
+                        if (null != res) {
+                            res.close();
+                        }
+                        repo.shutDown();
+                        return;
+                    }
                     // Here, we resolved all license conflicts
                     int nbGeneratedRelaxedQueries = 0;
                     int nbEvaluatedRelaxedQueries = 0;
