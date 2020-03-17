@@ -28,7 +28,7 @@ public class QueryEvaluation {
     protected static Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
     protected static Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
     protected static Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
-    protected static  final double minSimilarity = 0.0;
+    protected static  final double minSimilarity = 0.43;
     private HashMap<String, String> results = new HashMap<>();
     private HashMap<String, String> portEndpoints = new HashMap<>();
     private int nbFed = 0;
