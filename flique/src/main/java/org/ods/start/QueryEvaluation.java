@@ -60,6 +60,7 @@ public class QueryEvaluation {
         this.results.put("nbEvaluatedRelaxedQueries", "0");
         this.results.put("ResultSimilarity", "0.0");
         this.results.put("validResult", "false");
+        this.results.put("hasResult", "false");
         //endpoints
         this.portEndpoints.put("8881", "D1");
         this.portEndpoints.put("8882", "D2");
@@ -207,28 +208,26 @@ public class QueryEvaluation {
                     this.licenseCheckTime = System.currentTimeMillis() - this.licenseCheckTime;
                 }
                 this.nbFed += 1;
-                if (relax) {
-                    if (consistentLicenses.isEmpty() && relax) {
-                        // a license compatible with licenses of sources does not exists
-                        // We need to eliminate sources
-                        licenseChecker.getEndpointlicenseConflicts();
-                        ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
-                        //remove endpoints
-                        // Collections.reverse(listSourcesToRemove);
-                        for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
-                            ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
-                            newEndpoints.removeAll(sourcesToRemove);
-                            fedName += "'";
-                            log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
-                            // recursive call.. we restart a query execution with the new federation
-                            execute(curQueryName, cfgName, newEndpoints, fedName);
-                        }
-                        if (null != res) {
-                            res.close();
-                        }
-                        repo.shutDown();
-                        return;
+                if (relax && consistentLicenses.isEmpty()) {
+                    // a license compatible with licenses of sources does not exists
+                    // We need to eliminate sources
+                    licenseChecker.getEndpointlicenseConflicts();
+                    ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
+                    //remove endpoints
+                    // Collections.reverse(listSourcesToRemove);
+                    for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
+                        ArrayList<String> newEndpoints = new ArrayList<>(endpoints);
+                        newEndpoints.removeAll(sourcesToRemove);
+                        fedName += "'";
+                        log.info("We removed the following sources: " + endpointsToDatasets(sourcesToRemove.toString()) + " in " + fedName + ".\n");
+                        // recursive call.. we restart a query execution with the new federation
+                        execute(curQueryName, cfgName, newEndpoints, fedName);
                     }
+                    if (null != res) {
+                        res.close();
+                    }
+                    repo.shutDown();
+                    return;
                 }
                 if (this.results.get("FirstResultTime") == null || this.error) {
                     // Here, we resolved all license conflicts
@@ -240,7 +239,7 @@ public class QueryEvaluation {
                     QueryFactory.parse(relaxedQuery, curQuery, null, null);
                     relaxedQuery.initOriginalTriples();
                     res = relaxedQuery.mayHaveAResult(repo);
-                    if ((res == null || !res.hasNext()) && relax) {
+                    if ((consistentLicenses.isEmpty() && relax) && (res == null || !res.hasNext())) {
                         QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
                         log.info("--------Evaluated Relaxed Queries:-----------\n");
                         if (res == null) {
@@ -277,16 +276,17 @@ public class QueryEvaluation {
                     // Now we can execute the query with FedX
                     // TODO Uncomment next to execute query
                     if (res != null) {
-                        this.results.put("validResult", "true");
                         BindingSet row = res.next();
                         log.info("First result of the query is:");
+                        this.results.put("hasResult", "true");
                         log.info(row.toString());
-                        long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
-                        this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                         // only one result
                     } else {
                         log.info("Final query has no result !");
                     }
+                    this.results.put("validResult", "true");
+                    long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
+                    this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                     log.info(this.results.toString());
                     log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
                 }
