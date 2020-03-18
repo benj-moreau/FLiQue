@@ -275,7 +275,7 @@ public class QueryEvaluation {
                     this.results.put("ResultSimilarity", Double.toString(Math.max(Double.parseDouble(this.results.get("ResultSimilarity")), ResultSimilarity)));
                     // Now we can execute the query with FedX
                     // TODO Uncomment next to execute query
-                    if (res != null) {
+                    if (res != null && res.hasNext()) {
                         BindingSet row = res.next();
                         log.info("First result of the query is:");
                         this.results.put("hasResult", "true");
