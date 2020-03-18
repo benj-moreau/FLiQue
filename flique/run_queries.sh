@@ -119,4 +119,4 @@ timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $
 wait
 rm cache.db
 timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH8 &
-
+wait
