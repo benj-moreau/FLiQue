@@ -143,7 +143,6 @@ def generate_time_for_fist_result_plot_strategies(results, queries=QUERIES, auto
 
 def generate_time_for_fist_result_plot_flique(results, queries=QUERIES, autolabels=False):
     labels = queries
-    print(results)
     labels = [f"{label}  {label}'" if is_relaxed(label, results) else label for label in labels]
     relax_results = get_list_values(results, 'FLIQUE', 'FirstResultTime', queries, True).astype(int)
     no_relax_results = get_list_values(results, 'FLIQUE', 'FirstResultTime', queries, False).astype(int)
@@ -201,7 +200,7 @@ def get_statistics(results, metric_name, strategy=None):
 
 
 def is_relaxed(query, results):
-    for value in results[query][True]['FLIQUE'].get('nbEvaluatedRelaxedQueries', []):
+    for value in results[query][True]['FLIQUE'].get('nbGeneratedRelaxedQueries', []):
         if value > 0:
             return True
     return False

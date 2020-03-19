@@ -28,7 +28,7 @@ public class QueryEvaluation {
     protected static Model ontology = RDFDataMgr.loadModel("ontologies/ontology.n3");
     protected static Model summary = RDFDataMgr.loadModel("summaries/saturated-largeRDFBench-summaries.n3");
     protected static Model licensedSummary = RDFDataMgr.loadModel("summaries/largeRDFBench.n3");
-    protected static  final double minSimilarity = 0.43;
+    protected static  final double minSimilarity = 0.5;
     private HashMap<String, String> results = new HashMap<>();
     private HashMap<String, String> portEndpoints = new HashMap<>();
     private int nbFed = 0;
@@ -242,28 +242,26 @@ public class QueryEvaluation {
                     if (relax && (res == null || !res.hasNext())) {
                         QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
                         log.info("--------Evaluated Relaxed Queries:-----------\n");
-                        if (res == null) {
-                            while (relaxationLattice.hasNext()) {
-                                relaxedQuery = relaxationLattice.next();
-                                nbGeneratedRelaxedQueries += 1;
-                                log.info(relaxedQuery.toString());
-                                if (relaxedQuery.needToEvaluate()) {
-                                    nbEvaluatedRelaxedQueries += 1;
-                                    res = relaxedQuery.mayHaveAResult(repo);
-                                    if (res != null) {
-                                        log.info(" This query may have 1 result (SourceSelection) !\n");
-                                        if (res.hasNext()) {
-                                            log.info(" This query has a result !\n\n");
-                                            ResultSimilarity = relaxedQuery.getSimilarity();
-                                            nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
-                                            break;
-                                        }
+                        while (relaxationLattice.hasNext()) {
+                            relaxedQuery = relaxationLattice.next();
+                            nbGeneratedRelaxedQueries += 1;
+                            log.info(relaxedQuery.toString());
+                            if (relaxedQuery.needToEvaluate()) {
+                                nbEvaluatedRelaxedQueries += 1;
+                                res = relaxedQuery.mayHaveAResult(repo);
+                                if (res != null) {
+                                    log.info(" This query may have 1 result (SourceSelection) !\n");
+                                    if (res.hasNext()) {
+                                        log.info(" This query has a result !\n\n");
+                                        ResultSimilarity = relaxedQuery.getSimilarity();
+                                        nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
+                                        break;
                                     }
-                                    log.info(" This query has no result\n\n");
                                 }
+                                log.info(" This query has no result\n\n");
                             }
-                            nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
                         }
+                        nbGeneratedRelaxedQueries += relaxationLattice.sizeOfRemaining();
                         queryInfo = QueryInfo.queryInfo.get();
                         sourceSelection = queryInfo.getSourceSelection();
                         endpointManager = queryInfo.getFedXConnection().getEndpointManager();
