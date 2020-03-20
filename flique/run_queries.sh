@@ -1,4 +1,3 @@
-
 #!/bin/bash
 rm cache.db
 timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 S1 &
@@ -96,27 +95,27 @@ wait
 rm cache.db
 timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 L8 &
 wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH1 &
-wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH2 &
-wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH3 &
-wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH4 &
-wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH5 &
-wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH6 &
-wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH7 &
-wait
-rm cache.db
-timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH8 &
-wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH1 &
+#wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH2 &
+#wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH3 &
+#wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH4 &
+#wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH5 &
+#wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH6 &
+#wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH7 &
+#wait
+#rm cache.db
+#timeout --signal=SIGKILL $1 java -Xmx50g -jar target/flique-0.0.1-SNAPSHOT.jar $2 $3 CH8 &
+#wait
