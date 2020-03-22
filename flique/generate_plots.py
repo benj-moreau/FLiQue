@@ -9,7 +9,7 @@ RESULTS_PATH = 'results/'
 STRATEGIES = ['OBFS', 'OMBS', 'FLIQUE', 'BFS']
 # QUERIES = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
 QUERIES = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8']
-
+RELAXED_QUERIES = ['S8', 'S10', 'S11', 'C1', 'C8', 'C9', 'C10', 'L2', 'L5', 'L6', 'L7', 'L8']
 
 def result_files():
     for filename in glob.glob(os.path.join(RESULTS_PATH, '*.csv')):
@@ -100,7 +100,7 @@ def get_list_values(results, strategy, metric_name, queries, relax=True):
     return np.asarray(array)
 
 
-def generate_time_for_fist_result_plot_strategies(results, queries=QUERIES, autolabels=False):
+def generate_time_for_fist_result_plot_strategies(results, queries=RELAXED_QUERIES, autolabels=False):
     labels = queries
     labels = [f"{label}'" for label in labels]
     bfs_results = get_list_values(results, 'BFS', 'FirstResultTime', queries).astype(int)
@@ -118,6 +118,7 @@ def generate_time_for_fist_result_plot_strategies(results, queries=QUERIES, auto
     flique_rects = ax.bar(x + (1.5*bar_width), flique_results, bar_width, label='FLiQuE')
 
     ax.set_ylabel('Time for first result (ms)')
+    plt.yscale("log") #logarithmic scale
     ax.set_xlabel('Queries')
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
@@ -208,8 +209,8 @@ def is_relaxed(query, results):
 
 
 results = get_result_dict()
-generate_time_for_fist_result_plot_flique(results, autolabels=True)
-# generate_time_for_fist_result_plot_strategies(results, autolabels=True)
+# generate_time_for_fist_result_plot_flique(results, autolabels=True)
+generate_time_for_fist_result_plot_strategies(results, autolabels=True)
 get_statistics(results, 'LicenseCheckTime')
 get_statistics(results, 'nbGeneratedRelaxedQueries', 'FLIQUE')
 get_statistics(results, 'nbEvaluatedRelaxedQueries', 'FLIQUE')
