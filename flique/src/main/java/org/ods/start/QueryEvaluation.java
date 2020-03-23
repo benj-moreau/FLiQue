@@ -184,6 +184,7 @@ public class QueryEvaluation {
                 this.startQueryExecTime = System.currentTimeMillis();
             }
             String basecfg = "flique.props";
+            if (strategy.equals("PAPER")) { basecfg = "paper_example.props"; }
             String curQuery = qp.getQuery(curQueryName);
             Config config = new Config(basecfg);
             SailRepository repo = null;
@@ -241,7 +242,6 @@ public class QueryEvaluation {
                     relaxedQuery.initOriginalTriples();
                     res = relaxedQuery.mayHaveAResult(repo);
                     if (relax && (res == null || !res.hasNext())) {
-                        if (null != repo) { repo.shutDown(); }
                         config = new Config(cfgName);
                         repo = FedXFactory.initializeSparqlFederation(config, endpoints);
                         QueryRelaxationLattice relaxationLattice = new QueryRelaxationLattice(relaxedQuery, ontology, summary, stmtToSources, minSimilarity, this.queryRelaxer, endpoints);
