@@ -216,6 +216,7 @@ public class QueryEvaluation {
                         // We need to eliminate sources
                         licenseChecker.getEndpointlicenseConflicts();
                         ArrayList<ArrayList> listSourcesToRemove = licenseChecker.getSourcesToRemove();
+                        log.info(curQueryName + " " + endpointsToDatasets(listSourcesToRemove.toString()) + " will be removed from sources");
                         //remove endpoints
                         // Collections.reverse(listSourcesToRemove);
                         for (ArrayList<String> sourcesToRemove : listSourcesToRemove) {
