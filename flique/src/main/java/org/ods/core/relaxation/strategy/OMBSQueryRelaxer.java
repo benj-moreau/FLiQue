@@ -5,6 +5,7 @@ import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.syntax.ElementPathBlock;
 import org.apache.jena.sparql.syntax.ElementVisitorBase;
 import org.apache.jena.sparql.syntax.ElementWalker;
+import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
 import org.ods.core.relaxation.RelaxedQuery;
 import org.ods.core.relaxation.TriplePatternRelaxer;
@@ -58,7 +59,8 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
                 mfs.remove(triple);
                 mfs.add(relaxedTriple);
                 RelaxedQuery relaxedMfsQuery = relaxedQuery.clone(relaxedMfs);
-                if (relaxedMfsQuery.mayHaveAResult(repo) == null) {
+                TupleQueryResult res = relaxedMfsQuery.mayHaveAResult(repo);
+                if (res == null || !res.hasNext()) {
                     itr.add(relaxedMfs);
                     queryRepaired = false;
                 }
