@@ -60,7 +60,7 @@ public class OMBSQueryRelaxer extends QueryRelaxer {
                 mfs.add(relaxedTriple);
                 RelaxedQuery relaxedMfsQuery = relaxedQuery.clone(relaxedMfs);
                 TupleQueryResult res = relaxedMfsQuery.mayHaveAResult(repo);
-                if (res == null || !res.hasNext()) {
+                if (res == null) {
                     itr.add(relaxedMfs);
                     queryRepaired = false;
                 }

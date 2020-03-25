@@ -152,7 +152,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
                     RelaxedQuery evalQuery = query.clone();
                     evalQuery.addTriple(MFS);
                     TupleQueryResult res = evalQuery.mayHaveAResult(repo);
-                    if (res != null && res.hasNext()){
+                    if (res != null){
                         MFS.add(triple);
                     }
                 }
@@ -170,7 +170,7 @@ public class RelaxedQuery extends Query implements Comparable<RelaxedQuery>, Clo
             ArrayList<TriplePath> pxs = pxss.get(0);
             RelaxedQuery query = this.clone(pxs);
             TupleQueryResult res = query.mayHaveAResult(repo);
-            if (res != null && res.hasNext()) {
+            if (res != null) {
                 if (!XSSs.contains(pxs)) { XSSs.add(pxs); }
                 pxss.remove(pxs);
             } else {
