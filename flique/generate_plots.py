@@ -7,9 +7,9 @@ import glob
 
 RESULTS_PATH = 'results/'
 STRATEGIES = ['OBFS', 'OMBS', 'FLIQUE', 'BFS']
-# QUERIES = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8', 'CH1', 'CH2', 'CH3', 'CH4', 'CH5', 'CH6', 'CH7', 'CH8']
 QUERIES = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S12', 'S13', 'S14', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8']
-RELAXED_QUERIES = ['S8', 'S10', 'S11', 'C1', 'C8', 'C9', 'C10', 'L2', 'L5', 'L6', 'L7', 'L8']
+RELAXED_QUERIES = ['S8', 'S10', 'C5', 'C8', 'C9', 'C10', 'L5', 'L6', 'L7', 'L8']
+ORIGINAL_QUERIES_SUB = ['S1', 'S6', 'S9', 'C3', 'L1', 'L3']
 
 def result_files():
     for filename in glob.glob(os.path.join(RESULTS_PATH, '*.csv')):
@@ -150,43 +150,76 @@ def generate_time_for_fist_result_plot_flique(results, queries=QUERIES, autolabe
     no_relax_results = get_list_values(results, 'FLIQUE', 'FirstResultTime', queries, False).astype(int)
 
     x = np.arange(len(labels))
-    bar_width = 0.40
+    bar_width = 0.35
 
-    fig, ax = plt.subplots(figsize=(30, 10))
+    fig, ax = plt.subplots(figsize=(16, 6))
     relax_rects = ax.bar(x + (0.5*bar_width), relax_results, bar_width, label='FLiQuE')
     no_relax_rects = ax.bar(x - (0.5*bar_width), no_relax_results, bar_width, label='CostFed')
 
     ax.set_ylabel('Time for first result (ms)')
-    plt.yscale("log") #logarithmic scale
+    #plt.yscale("log") #logarithmic scale
     ax.set_xlabel('Queries')
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
     ax.legend()
 
-    def autolabel(rects):
-        for rect in rects:
-            height = rect.get_height()
-            if height > 0:
-                ax.annotate('{}'.format(height),
-                            xy=(rect.get_x() + rect.get_width() / 2, height),
+    def autolabel(rects1, rects2):
+        for rect1, rect2 in zip(rects1, rects2):
+            height1 = int(rect1.get_height())
+            height2 = int(rect2.get_height())
+            if height1 > 0:
+                ax.annotate('{}'.format(height1),
+                            xy=(rect1.get_x() + rect1.get_width() / 2, height1),
                             xytext=(0, 3),  # 3 points vertical offset
                             textcoords="offset points",
                             ha='center', va='bottom')
+            if height2 > 0:
+                offset = 0
+                if abs(height1 - height2) < 1000:
+                    offset = 13
+                ax.annotate('{}'.format(height2),
+                            xy=(rect2.get_x() + rect1.get_width() / 2, height2),
+                            xytext=(0, 3 + offset),  # 3 points vertical offset
+                            textcoords="offset points",
+                            ha='center', va='bottom')
     if autolabels:
-        autolabel(relax_rects)
-        autolabel(no_relax_rects)
+        autolabel(no_relax_rects, relax_rects)
 
     fig.tight_layout()
     plt.show()
 
 
-def get_statistics(results, metric_name, strategy=None):
+def generate_nb_gen_exec_result_plot_flique(results, queries=RELAXED_QUERIES, autolabels=False):
+    labels = queries
+    labels = [f"{label}'" for label in labels]
+    nb_gen_results = get_list_values(results, 'FLIQUE', 'nbGeneratedRelaxedQueries', queries, True).astype(int)
+    nb_exec_results = get_list_values(results, 'FLIQUE', 'nbEvaluatedRelaxedQueries', queries, True).astype(int)
+
+    x = np.arange(len(labels))
+    bar_width = 0.5
+
+    fig, ax = plt.subplots(figsize=(13, 6))
+    p1 = plt.bar(x, nb_gen_results, bar_width, label='Generated')
+    p2 = plt.bar(x, nb_exec_results, bar_width, bottom=nb_gen_results, label='Executed')
+
+    ax.set_ylabel('Number of failing relaxed queries')
+    #plt.yscale("log") #logarithmic scale
+    ax.set_xlabel('Candidate queries')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.legend()
+
+    fig.tight_layout()
+    plt.show()
+
+
+def get_statistics(results, metric_name, strategy=None, queries=QUERIES, relax=True):
     metric_times = []
     for strat in STRATEGIES:
         if strategy:
-            metric_times.extend(get_list_values(results, strategy, metric_name, QUERIES))
+            metric_times.extend(get_list_values(results, strategy, metric_name, queries, relax))
             break
-        metric_times.extend(get_list_values(results, strat, metric_name, QUERIES))
+        metric_times.extend(get_list_values(results, strat, metric_name, QUERIES, relax))
     license_check_times = list(filter((0.0).__ne__, metric_times))
     license_check_times = np.asarray(license_check_times)
     if not strategy: strategy = 'all'
@@ -209,11 +242,14 @@ def is_relaxed(query, results):
 
 
 results = get_result_dict()
-# generate_time_for_fist_result_plot_flique(results, autolabels=True)
-generate_time_for_fist_result_plot_strategies(results, autolabels=True)
-get_statistics(results, 'LicenseCheckTime')
-get_statistics(results, 'nbGeneratedRelaxedQueries', 'FLIQUE')
-get_statistics(results, 'nbEvaluatedRelaxedQueries', 'FLIQUE')
-get_statistics(results, 'ResultSimilarity', 'FLIQUE')
-get_statistics(results, 'totalExecTime')
-
+#generate_time_for_fist_result_plot_flique(results, RELAXED_QUERIES, autolabels=True)
+#generate_time_for_fist_result_plot_flique(results, [query for query in QUERIES if query not in RELAXED_QUERIES], autolabels=True)
+#get_statistics(results, 'LicenseCheckTime')
+#get_statistics(results, 'nbGeneratedRelaxedQueries', 'FLIQUE', RELAXED_QUERIES, True)
+#get_statistics(results, 'nbEvaluatedRelaxedQueries', 'FLIQUE', RELAXED_QUERIES, True)
+#get_statistics(results, 'ResultSimilarity', 'FLIQUE')
+#get_statistics(results, 'totalExecTime')
+#get_statistics(results, 'FirstResultTime', 'FLIQUE', [query for query in QUERIES if query in ORIGINAL_QUERIES_SUB], True)
+#get_statistics(results, 'FirstResultTime', 'FLIQUE', [query for query in QUERIES if query in ORIGINAL_QUERIES_SUB], False)
+#get_statistics(results, 'nbFederations', 'FLIQUE', [query for query in QUERIES if query in ORIGINAL_QUERIES_SUB], True)
+#generate_nb_gen_exec_result_plot_flique(results, RELAXED_QUERIES)
