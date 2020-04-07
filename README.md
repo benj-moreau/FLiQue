@@ -8,7 +8,7 @@ To face this problem, we use query relaxation techniques.
 Our problem statement is, **given a SPARQL query and a federation of licensed datasets, how to guarantee a relevant and non-empty query result whose license is compliant with each license of involved datasets?** 
 In a distributed environment, the challenge is to limit communication costs when the query relaxation process is necessary. 
 we propose FLiQue, a license aware query processing strategy for federated query engines. 
-This repository is an implementation of a federated license aware query engine (extension of CostFed).
+This repository is an implementation of a federated license aware query engine (extension of [CostFed](https://github.com/dice-group/CostFed)).
 
 
 ## Running instructions (same as CostFed)
