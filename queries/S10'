@@ -1,0 +1,6 @@
+SELECT ?Drug ?IntDrug ?IntEffect WHERE {
+    ?Int <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/interactionDrug1> ?y .
+    ?Int <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/text> ?IntEffect .
+}
+Limit 1
+# Similarity: 0.11111111111
