@@ -1,0 +1,7 @@
+SELECT $drug $melt WHERE {
+    { $drug <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/meltingPoint> $melt. }
+    UNION
+    { # Empty BGP }
+}
+Limit 1
+# Similarity: 0.666666666666666
