@@ -5,6 +5,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT ?actor ?movie ?movieTitle ?movieDate ?birthDate ?spouseName
 {
         ?actor rdfs:label ?actor_name_en .
+        ?actor ?SxzR4W ?birthDate .
+        ?actor ?1OCiE4 ?spouseURI .
         ?spouseURI rdfs:label ?spouseName .
 
  	?imdbactor linkedmdb:actor_name ?actor_name.
