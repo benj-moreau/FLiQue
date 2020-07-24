@@ -4,6 +4,8 @@ Prefix owl: <http://www.w3.org/2002/07/owl#>
 Prefix drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
 SELECT * WHERE
 {
+?Drug ?0OgzMk ?Cvqg5H .
+?drugbankDrug ?c5DqMr ?Drug .
 ?InteractionName drugbank:interactionDrug1 ?drugbankDrug .
 ?InteractionName drugbank:interactionDrug2 ?drugbankDrug2 .
 ?InteractionName drugbank:text ?IntEffect
