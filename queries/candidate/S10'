@@ -1,6 +1,13 @@
+PREFIX drugbank: <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+
 SELECT ?Drug ?IntDrug ?IntEffect WHERE {
-    ?Int <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/interactionDrug1> ?y .
-    ?Int <http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/text> ?IntEffect .
+ ?Drug ?zkB8o2 ?OKS9kY .
+ ?y ?Y2df3t ?Drug .
+ ?Int drugbank:interactionDrug1 ?y .
+ ?Int ?Q6kLIS ?IntDrug .
+ ?Int drugbank:text ?IntEffect . 
 }
 Limit 1
 # Similarity: 0.11111111111
