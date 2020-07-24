@@ -9,6 +9,7 @@ WHERE
 ?uri tcga:bcr_patient_barcode 			?patient .
 ?patient tcga:gender 					?gender.
 ?patient dbpedia:country 				?country.
+?country ?7sqC60 		?popDensity.
 ?patient tcga:bcr_drug_barcode 			?drugbcr.
 ?drugbcr tcga:drug_name 				?drugName.
 ?drgBnkDrg  drugbank:genericName 		?drugName.
