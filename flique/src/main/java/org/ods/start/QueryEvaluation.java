@@ -58,6 +58,7 @@ public class QueryEvaluation {
         this.results.put("totalExecTime", null);
         this.results.put("nbGeneratedRelaxedQueries", "0");
         this.results.put("nbEvaluatedRelaxedQueries", "0");
+        this.results.put("nbRes", "0");
         this.results.put("ResultSimilarity", "0.0");
         this.results.put("validResult", "false");
         this.results.put("hasResult", "false");
