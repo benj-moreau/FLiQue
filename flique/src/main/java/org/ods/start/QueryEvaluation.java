@@ -172,6 +172,7 @@ public class QueryEvaluation {
             this.results.put("nbFederations", Integer.toString(this.nbFed));
             this.results.put("totalExecTime", Long.toString(totalExecTime));
             this.results.put("LicenseCheckTime", Long.toString(this.licenseCheckTime));
+            this.results.put("nbRes", Integer.toString(0));
             ExecutionWriter.write(String.join(";", this.results.values()) + "\n");
             ExecutionWriter.flush();
         }
@@ -283,6 +284,7 @@ public class QueryEvaluation {
                         log.info("First result of the query is:");
                         this.results.put("hasResult", "true");
                         log.info(row.toString());
+                        this.results.put("nbRes", Integer.toString(Integer.parseInt(this.results.get("nbRes")) + 1));
                         // only one result
                     } else {
                         log.info("Final query has no result !");
@@ -292,10 +294,15 @@ public class QueryEvaluation {
                     this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                     log.info(this.results.toString());
                     log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
+                    while (res.hasNext()) {
+                        BindingSet row = res.next();
+                        log.info(row.toString());
+                        this.results.put("nbRes", Integer.toString(Integer.parseInt(this.results.get("nbRes")) + 1));
+                    }
                 }
             } catch (Throwable e) {
                 long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
-                this.results.put("FirstResultTime", Long.toString(FirstResultTime));
+                //this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                 e.printStackTrace();
                 log.error("", e);
                 if (this.results.get("validResult").equals("false")) {
