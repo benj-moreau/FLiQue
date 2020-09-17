@@ -8,5 +8,6 @@ WHERE
 ?country dbpedia:populationDensity ?popDensity.
 ?patient tcga:bcr_aliquot_barcode ?aliquot.
 ?aliquot ?p ?o.
+FILTER(?popDensity >= 32)
 }
 Limit 1
