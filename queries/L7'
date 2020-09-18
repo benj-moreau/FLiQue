@@ -5,10 +5,9 @@ WHERE
 {
 ?uri tcga:bcr_patient_barcode ?patient .
 ?patient dbpedia:country ?country.
-?country dbpedia:populationDensity ?popDensity.
+?country ?cZP8iP ?popDensity.
 ?patient tcga:bcr_aliquot_barcode ?aliquot.
 ?aliquot ?p ?o.
-FILTER(?popDensity >= 32)
 }
 Limit 1
-# Similarity: 0.66666666666
+# Similarity: 0.66666666666 FILTER REMOVED DURING RELAXATION
