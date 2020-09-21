@@ -280,26 +280,19 @@ public class QueryEvaluation {
                     this.results.put("ResultSimilarity", Double.toString(Math.max(Double.parseDouble(this.results.get("ResultSimilarity")), ResultSimilarity)));
                     // Now we can execute the query with FedX
                     // TODO Uncomment next to execute query
-                    if (res != null && res.hasNext()) {
+                    log.info("results of the query are:");
+                    while (res != null && res.hasNext()) {
                         BindingSet row = res.next();
-                        log.info("First result of the query is:");
                         this.results.put("hasResult", "true");
                         log.info(row.toString());
                         this.results.put("nbRes", Integer.toString(Integer.parseInt(this.results.get("nbRes")) + 1));
                         // only one result
-                    } else {
-                        log.info("Final query has no result !");
                     }
                     this.results.put("validResult", "true");
                     long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
                     this.results.put("FirstResultTime", Long.toString(FirstResultTime));
                     log.info(this.results.toString());
                     log.info(curQueryName + ": Query result have to be protected with one of the following licenses:" + licenseChecker.getLabelLicenses(consistentLicenses) + "\n");
-                    while (res.hasNext()) {
-                        BindingSet row = res.next();
-                        log.info(row.toString());
-                        this.results.put("nbRes", Integer.toString(Integer.parseInt(this.results.get("nbRes")) + 1));
-                    }
                 }
             } catch (Throwable e) {
                 long FirstResultTime = System.currentTimeMillis() - this.startQueryExecTime;
