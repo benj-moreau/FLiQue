@@ -173,7 +173,6 @@ public class QueryEvaluation {
             this.results.put("nbFederations", Integer.toString(this.nbFed));
             this.results.put("totalExecTime", Long.toString(totalExecTime));
             this.results.put("LicenseCheckTime", Long.toString(this.licenseCheckTime));
-            this.results.put("nbRes", Integer.toString(0));
             ExecutionWriter.write(String.join(";", this.results.values()) + "\n");
             ExecutionWriter.flush();
         }
