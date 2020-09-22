@@ -18,5 +18,4 @@ drugbank:casRegistryNumber ?casRegistryNumber
 }
 }
 ORDER BY (?drugbankDrug)
-Limit 1
 # Similarity: 0.222222222222

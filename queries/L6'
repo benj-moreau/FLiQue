@@ -10,5 +10,4 @@ SELECT * WHERE {
 	?x ?6GKJwd ?y .
 	?y <http://www.geonames.org/ontology#officialName> ?n .
 }
-Limit 1
 # Similarity: 0.66666666666

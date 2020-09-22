@@ -3,5 +3,4 @@ SELECT ?drug ?melt WHERE {
     UNION
     { ?drug ?1HmoLC ?melt .}
 }
-Limit 1
 # Similarity: 0.666666666666666

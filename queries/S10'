@@ -9,5 +9,4 @@ SELECT ?Drug ?IntDrug ?IntEffect WHERE {
  ?Int ?Q6kLIS ?IntDrug .
  ?Int drugbank:text ?IntEffect . 
 }
-Limit 1
 # Similarity: 0.11111111111

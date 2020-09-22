@@ -20,6 +20,5 @@ iswc:proceedings swrc:address ?proceedingAddress.
 ?place ?z2uYJB ?language .
 ?place ?de7OQZ ?leaderTitle .
 }
-Limit 1
 # Similarity: 0.07777777777 RELAXATION DOES NOT HANDLE OPTIONAL YET
 # OPTIONAL CLAUSE IS IGNORED DURING EVAL

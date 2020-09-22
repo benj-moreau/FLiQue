@@ -10,5 +10,4 @@ SELECT * WHERE {
 	?s rdfs:label ?o .
 	?s skos:subject ?sub .
 }
-Limit 1
 # Similarity: 0.5410266188142039

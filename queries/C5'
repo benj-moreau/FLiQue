@@ -15,5 +15,5 @@ SELECT ?actor ?movie ?movieTitle ?movieDate ?birthDate ?spouseName
              dcterms:date ?movieDate
       FILTER(STR(?actor_name_en )= STR(?actor_name))
 
-} Limit 1
+}
 # Similarity: 0.44444444444

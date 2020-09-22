@@ -15,5 +15,4 @@ SELECT * WHERE {
 	?a rdf:type dbowl:Album .
 	?a rdfs:label ?n .
 }
-Limit 1
 # Similarity: 0.8115399282213058

@@ -17,5 +17,4 @@ WHERE
 ?drgBnkDrg  drugbank:chemicalFormula 	?formula.
 ?drgBnkDrg 	drugbank:keggCompoundId 	?compound .
 }
-Limit 1
 # Similarity: 0.66666666666
